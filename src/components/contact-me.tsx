@@ -1,5 +1,5 @@
 import Email from '@/components/icons/email.svg'
-import { Button } from '@aamini/ui/components/button'
+import { Button } from '@/components/ui/button'
 import {
 	Card,
 	CardContent,
@@ -7,7 +7,7 @@ import {
 	CardFooter,
 	CardHeader,
 	CardTitle,
-} from '@aamini/ui/components/card'
+} from '@/components/ui/card'
 import {
 	Form,
 	FormControl,
@@ -15,9 +15,9 @@ import {
 	FormItem,
 	FormLabel,
 	FormMessage,
-} from '@aamini/ui/components/form'
-import { Input } from '@aamini/ui/components/input'
-import { Textarea } from '@aamini/ui/components/textarea'
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
 import { standardSchemaResolver } from '@hookform/resolvers/standard-schema'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
@@ -64,7 +64,7 @@ export function ContactCard() {
 				method="POST"
 				onSubmit={form.handleSubmit(onSubmit)}
 			>
-				<Card data-testid="contact-card">
+				<Card data-testid="contact-card" className="w-full">
 					<CardHeader>
 						<CardTitle>Reach out!</CardTitle>
 						<CardDescription>

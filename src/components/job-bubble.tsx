@@ -1,6 +1,6 @@
 import type { JobInfo } from '@/lib/jobs'
-import { Button } from '@aamini/ui/components/button'
-import { Card } from '@aamini/ui/components/card'
+import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
 import {
 	Collapsible,
 	CollapsibleContent,

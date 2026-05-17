@@ -1,0 +1,25 @@
+# env files
+.env*.local
+.mise.local.toml
+
+# Build
+.turbo
+.vercel
+.output
+.nitro
+.tanstack
+node_modules
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# Testing
+test-results/
+playwright-report/
+.playwright
+.vitest-attachments
+html
+
+.pnpm-store
+.worktrees

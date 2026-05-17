@@ -1,7 +1,7 @@
 import { ContactCard } from '@/components/contact-me'
-import { expect, test } from 'vitest'
+import { expect, test } from 'vite-plus/test'
+import { userEvent } from 'vite-plus/test/browser'
 import { render } from 'vitest-browser-react'
-import { userEvent } from 'vitest/browser'
 
 test('render card', async () => {
 	const screen = await render(<ContactCard />)
