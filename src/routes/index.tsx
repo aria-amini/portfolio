@@ -67,7 +67,7 @@ function Index() {
 								className="px-4"
 								asChild={true}
 							>
-								<a href="/Aria_Amini_Resume.pdf" download={true}>
+								<a href="/Aria_Amini_Software_Engineer_2026.pdf" download={true}>
 									<Pdf />
 									Resume (.pdf)
 								</a>

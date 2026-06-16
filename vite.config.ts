@@ -1,4 +1,4 @@
-import { createAppConfig } from '@aamini/config'
+import { createAppConfig } from '@aamini/config/vite'
 import { mergeConfig } from 'vite-plus'
 import { playwright } from 'vite-plus/test/browser-playwright'
 
