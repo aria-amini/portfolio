@@ -5,11 +5,14 @@ import { playwright } from 'vite-plus/test/browser-playwright'
 const root = new URL('.', import.meta.url).pathname
 
 export default mergeConfig(
-	createAppConfig(root, {
-		browser: {
-			test: {
-				browser: {
-					provider: playwright(),
+	createAppConfig({
+		root,
+		projectOverrides: {
+			browser: {
+				test: {
+					browser: {
+						provider: playwright(),
+					},
 				},
 			},
 		},
@@ -17,6 +20,16 @@ export default mergeConfig(
 	{
 		ssr: {
 			noExternal: ['@aamini/config'],
+		},
+		lint: {
+			overrides: [
+				{
+					files: ['scripts/**/*'],
+					rules: {
+						'no-console': 'off',
+					},
+				},
+			],
 		},
 	},
 )
