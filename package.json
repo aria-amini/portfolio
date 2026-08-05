@@ -21,8 +21,8 @@
 		"test:ui": "vp test dev --ui --open=false --api.port 5123 --api.strictPort --project browser"
 	},
 	"dependencies": {
-		"@aamini/config": "0.0.12",
-		"@aamini/lib": "0.0.12",
+		"@aamini/config": "0.0.19",
+		"@aamini/lib": "0.0.19",
 		"@fontsource-variable/dm-sans": "^5.2.8",
 		"@hookform/resolvers": "^5.2.2",
 		"@radix-ui/react-accordion": "^1.2.12",
