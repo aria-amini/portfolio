@@ -24,6 +24,7 @@
 		"test:watch": "vp test --watch",
 		"test:ui": "vp test dev --ui --open=false --project browser --api.port ${APP_PORT:-5123} --api.strictPort",
 		"e2e": "varlock run -- playwright test",
+		"e2e:domains": "CHECK_DOMAINS=1 BASE_URL=https://www.ariaamini.dev varlock run -- playwright test e2e/domains.spec.ts",
 		"report": "playwright show-report .playwright/report",
 		"prepare": "vp config --no-hooks"
 	},
