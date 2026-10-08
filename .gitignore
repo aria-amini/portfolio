@@ -1,4 +1,5 @@
 # env files
+.env
 .env*.local
 .mise.local.toml
 
@@ -23,3 +24,4 @@ html
 
 .pnpm-store
 .worktrees
+.vite

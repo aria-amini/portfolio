@@ -1,5 +1,5 @@
-import { test } from '@aamini/config/test/browser'
 import type { ComponentType } from 'react'
+import { test } from 'vite-plus/test'
 import type { Locator } from 'vite-plus/test/browser'
 import type { RenderResult } from 'vitest-browser-react'
 
@@ -46,12 +46,14 @@ const viewports = [
 	{ name: 'desktop', width: 1280, height: 720 },
 	{ name: 'mobile', width: 390, height: 844 },
 ] as const
-test.each(pages)('$name page matches screenshots', async (visualPage) => {
-	for (const viewport of viewports) {
-		await expectPageScreenshot({
-			...visualPage,
-			name: `${visualPage.name}-${viewport.name}`,
-			viewport,
-		})
-	}
+const visualCases = pages.flatMap((visualPage) =>
+	viewports.map((viewport) => ({
+		...visualPage,
+		name: `${visualPage.name}-${viewport.name}`,
+		viewport,
+	})),
+)
+
+test.each(visualCases)('$name page matches screenshots', async (visualPage) => {
+	await expectPageScreenshot(visualPage)
 })
