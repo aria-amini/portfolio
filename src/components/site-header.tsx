@@ -9,16 +9,7 @@ import { profile } from '@/lib/profile'
 
 export function SiteHeader() {
 	return (
-		<header className="flex h-20 items-center justify-between border-b">
-			<a href="#main" className="flex items-center gap-3 font-bold">
-				<span
-					aria-hidden="true"
-					className="bg-foreground text-background grid size-8 place-items-center font-serif text-xl italic"
-				>
-					a.
-				</span>
-				<span className="sr-only sm:not-sr-only">{profile.name}</span>
-			</a>
+		<header className="flex h-20 items-center justify-end border-b">
 			<nav aria-label="Main navigation" className="flex items-center gap-2">
 				<ButtonLink
 					variant="ghost"

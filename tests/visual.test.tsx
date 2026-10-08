@@ -1,10 +1,6 @@
-import { afterEach, expect, test } from 'vite-plus/test'
+import { expect, test } from 'vite-plus/test'
 
 import { renderHome } from './render-home'
-
-afterEach(() => {
-	document.documentElement.classList.remove('dark')
-})
 
 const viewport = () => (window.innerWidth < 600 ? 'mobile' : 'desktop')
 
@@ -15,8 +11,7 @@ function hideEmbeds() {
 	}
 }
 
-test.each(['light', 'dark'] as const)('home sections in %s', async (theme) => {
-	if (theme === 'dark') document.documentElement.classList.add('dark')
+test('home sections', async () => {
 	const screen = await renderHome('/')
 	await expect
 		.element(screen.getByRole('heading', { name: /aria amini/i }))
@@ -25,10 +20,10 @@ test.each(['light', 'dark'] as const)('home sections in %s', async (theme) => {
 
 	await expect
 		.element(screen.getByRole('region', { name: /aria amini/i }))
-		.toMatchScreenshot(`hero-${theme}-${viewport()}`)
+		.toMatchScreenshot(`hero-${viewport()}`)
 	await expect
-		.element(screen.getByRole('region', { name: 'Projects' }))
-		.toMatchScreenshot(`projects-${theme}-${viewport()}`)
+		.element(screen.getByRole('region', { name: 'Side projects' }))
+		.toMatchScreenshot(`projects-${viewport()}`)
 })
 
 test.each(['resume', 'schedule'] as const)('%s dialog', async (dialog) => {

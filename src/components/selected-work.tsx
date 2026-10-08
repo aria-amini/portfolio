@@ -9,8 +9,8 @@ import { project } from '@/lib/profile'
 export function SelectedWork() {
 	return (
 		<section id="projects" aria-labelledby="projects-title" className="py-12">
-			<h2 id="projects-title" className="mb-6 text-2xl">
-				Projects
+			<h2 id="projects-title" className="mb-6 text-3xl">
+				Side projects
 			</h2>
 			<div className="grid items-center gap-8 lg:grid-cols-[2fr_3fr]">
 				<a
@@ -18,7 +18,7 @@ export function SelectedWork() {
 					target="_blank"
 					rel="noreferrer"
 					aria-label="Explore Breaking Bad episode ratings on imdbgraph.org"
-					className="group bg-card block overflow-hidden rounded-xl border"
+					className="group bg-card ink-shadow block rounded-xl border p-2"
 				>
 					<img
 						src={project.preview}
@@ -26,15 +26,7 @@ export function SelectedWork() {
 						height={1000}
 						alt={project.previewAlt}
 						loading="lazy"
-						className="dark:hidden"
-					/>
-					<img
-						src={project.previewDark}
-						width={1400}
-						height={1000}
-						alt={project.previewAlt}
-						loading="lazy"
-						className="hidden dark:block"
+						className="ring-border/30 rounded-md ring-1"
 					/>
 				</a>
 				<article>

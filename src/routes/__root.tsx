@@ -4,15 +4,11 @@ import {
 	ClientOnly,
 	HeadContent,
 	Outlet,
-	ScriptOnce,
 	Scripts,
 	createRootRoute,
 } from '@tanstack/react-router'
 import posthog from 'posthog-js'
 import { useEffect, type ReactNode } from 'react'
-
-import { ThemeProvider, ThemeSwitch } from '@/components/theme-switch'
-import { createThemeBootstrapScript, getThemePreference } from '@/lib/theme'
 
 import '../styles.css'
 
@@ -34,7 +30,6 @@ function Analytics() {
 }
 
 export const Route = createRootRoute({
-	beforeLoad: () => ({ theme: getThemePreference() }),
 	head: () => ({
 		meta: [
 			{ charSet: 'utf-8' },
@@ -55,16 +50,13 @@ export const Route = createRootRoute({
 })
 
 function DocumentShell({ children }: { children: ReactNode }) {
-	const { theme } = Route.useRouteContext()
-
 	return (
-		<html lang="en" suppressHydrationWarning className={theme ?? undefined}>
+		<html lang="en">
 			<head>
 				<HeadContent />
 			</head>
 			<body className="flex min-h-dvh min-w-80 flex-col font-sans">
-				<ScriptOnce>{createThemeBootstrapScript(theme)}</ScriptOnce>
-				<ThemeProvider preference={theme}>{children}</ThemeProvider>
+				{children}
 				<Scripts />
 			</body>
 		</html>
@@ -77,11 +69,6 @@ function RootComponent() {
 			<div className="flex-1">
 				<Outlet />
 			</div>
-			<ClientOnly fallback={null}>
-				<div className="fixed right-4 bottom-4 z-50">
-					<ThemeSwitch />
-				</div>
-			</ClientOnly>
 			<ClientOnly fallback={null}>
 				<Analytics />
 			</ClientOnly>

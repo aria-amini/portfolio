@@ -62,7 +62,6 @@ export const project = {
 	exampleUrl: 'https://www.imdbgraph.org/ratings/tt0903747',
 	sourceUrl: 'https://github.com/aria-amini/imdbgraph',
 	preview: '/imdbgraph-preview.png',
-	previewDark: '/imdbgraph-preview-dark.png',
 	previewAlt:
 		'imdbgraph.org displays Breaking Bad episode ratings as color-coded blocks grouped by season.',
 } as const

@@ -12,21 +12,26 @@ export function Hero() {
 			className="grid gap-10 py-12 lg:grid-cols-2 lg:gap-16"
 		>
 			<div>
-				<div className="mb-6 flex items-center gap-5">
+				<div className="mb-6 flex items-center gap-4 sm:gap-6">
 					<img
 						src="/aria-amini-192.jpg"
 						alt=""
 						width={96}
 						height={96}
 						fetchPriority="high"
-						className="size-24 shrink-0 rounded-full border object-cover"
+						className="bg-secondary ink-shadow size-20 shrink-0 -rotate-3 rounded-full border object-cover sm:size-28"
 					/>
-					<h1 id="intro-title" className="text-4xl sm:text-5xl">
-						{profile.name}
-						<em className="text-primary mt-2 block font-serif text-3xl font-normal">
+					<div className="min-w-0">
+						<h1
+							id="intro-title"
+							className="misprint text-4xl leading-none font-extrabold tracking-tight whitespace-nowrap sm:text-6xl"
+						>
+							{profile.name}
+						</h1>
+						<p className="bg-secondary text-secondary-foreground ink-shadow stamp-in mt-4 inline-block -rotate-2 rounded-md border px-3 py-1.5 text-base font-bold sm:text-lg">
 							{profile.title}
-						</em>
-					</h1>
+						</p>
+					</div>
 				</div>
 				<p className="text-muted-foreground max-w-md leading-7">
 					{profile.intro}
