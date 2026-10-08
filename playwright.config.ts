@@ -1,17 +1,20 @@
 import { defineConfig, devices } from '@playwright/test'
 
+const deploymentURL = process.env.BASE_URL?.trim()
 const baseURL =
-	process.env.BASE_URL ?? `http://127.0.0.1:${process.env.APP_PORT ?? '3000'}`
+	deploymentURL || `http://127.0.0.1:${process.env.APP_PORT ?? '3000'}`
 
 export default defineConfig({
-	...(process.env.BASE_URL
+	...(deploymentURL
 		? {}
 		: {
 				webServer: {
-					command: 'vp run build && vp run start',
+					command:
+						'vp run build && exec vp exec varlock run -- node .output/server/index.mjs',
 					url: baseURL,
 					reuseExistingServer: !process.env.CI,
 					timeout: 120_000,
+					gracefulShutdown: { signal: 'SIGTERM', timeout: 5_000 },
 					env: {
 						NODE_ENV: 'production',
 						PORT: process.env.APP_PORT ?? '3000',

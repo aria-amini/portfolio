@@ -10,8 +10,10 @@ vp install
 vp dev
 ```
 
-Use `pitchfork start dev` to run the development server as a daemon. The default
-server URL is `http://127.0.0.1:3000`.
+Use `pitchfork start dev` to run the development server as a daemon. Pitchfork
+assigns a port from 3000 and checks that same port for readiness. To select a
+port, run `pitchfork start dev --expected-port 3001`. For standalone `vp dev`,
+use `APP_PORT` to select the port.
 
 ## Environment
 
