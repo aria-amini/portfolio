@@ -1,5 +1,5 @@
-import { test } from '@aamini/config/test/browser'
 import type { ComponentType } from 'react'
+import { test } from 'vite-plus/test'
 import type { Locator } from 'vite-plus/test/browser'
 import type { RenderResult } from 'vitest-browser-react'
 

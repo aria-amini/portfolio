@@ -1,6 +1,7 @@
-import { sendEmail } from '@/lib/email'
 import { createFileRoute } from '@tanstack/react-router'
 import { z } from 'zod'
+
+import { sendEmail } from '@/lib/email'
 
 const inputSchema = z.object({
 	message: z.string().min(1),

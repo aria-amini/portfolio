@@ -1,3 +1,6 @@
+import { ClientOnly, createFileRoute } from '@tanstack/react-router'
+import { ArrowDown } from 'lucide-react'
+
 import { ContactCard } from '@/components/contact-me'
 import GitHub from '@/components/icons/github.svg'
 import Linkedin from '@/components/icons/linkedin.svg'
@@ -8,8 +11,6 @@ import { SkillBubble } from '@/components/skill-bubble'
 import { Button } from '@/components/ui/button'
 import { jobs } from '@/lib/jobs'
 import { skills } from '@/lib/skills'
-import { ClientOnly, createFileRoute } from '@tanstack/react-router'
-import { ArrowDown } from 'lucide-react'
 
 export const Route = createFileRoute('/')({
 	component: Index,

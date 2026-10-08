@@ -1,7 +1,8 @@
-import { RateLimiter } from '@/lib/rate-limiter'
 import FormData from 'form-data'
 import Mailgun from 'mailgun.js'
+
 import { env } from '@/env'
+import { RateLimiter } from '@/lib/rate-limiter'
 
 const rateLimiter = new RateLimiter()
 const mailgun = new Mailgun(FormData)

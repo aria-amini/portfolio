@@ -1,3 +1,8 @@
+import { standardSchemaResolver } from '@hookform/resolvers/standard-schema'
+import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
+import { z } from 'zod'
+
 import Email from '@/components/icons/email.svg'
 import { Button } from '@/components/ui/button'
 import {
@@ -18,10 +23,6 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
-import { standardSchemaResolver } from '@hookform/resolvers/standard-schema'
-import { useForm } from 'react-hook-form'
-import { toast } from 'sonner'
-import { z } from 'zod'
 
 const formSchema = z.object({
 	email: z.email({ message: 'Invalid email address' }),

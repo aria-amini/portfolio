@@ -1,6 +1,5 @@
 /// <reference types="vite/client" />
 
-import { Toaster } from '@/components/sonner'
 import {
 	ClientOnly,
 	HeadContent,
@@ -8,8 +7,11 @@ import {
 	Scripts,
 	createRootRoute,
 } from '@tanstack/react-router'
-import { useEffect } from 'react'
 import posthog from 'posthog-js'
+import { useEffect } from 'react'
+
+import { Toaster } from '@/components/sonner'
+
 import appCss from '../styles.css?url'
 
 function Analytics() {

@@ -5,4 +5,4 @@ buildCommand = "vp build"
 [deploy]
 runtime = "V2"
 numReplicas = 1
-startCommand = "node .output/server/index.mjs"
+startCommand = "vp run start"
