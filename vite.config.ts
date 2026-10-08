@@ -208,20 +208,7 @@ export default defineConfig({
 			? []
 			: [
 					devtools({ injectSource: { enabled: false } }),
-					nitro({
-						sourcemap: true,
-						experimental: { sourcemapMinify: false },
-						// PostHog reverse proxy for the browser SDK (`api_host: '/api/ingest'`).
-						routeRules: {
-							'/api/ingest/static/**': {
-								proxy: 'https://us-assets.i.posthog.com/static/**',
-							},
-							'/api/ingest/array/**': {
-								proxy: 'https://us-assets.i.posthog.com/array/**',
-							},
-							'/api/ingest/**': { proxy: 'https://us.i.posthog.com/**' },
-						},
-					}),
+					nitro({ sourcemap: true, experimental: { sourcemapMinify: false } }),
 				]),
 		tailwindcss(),
 		viteReact(),
