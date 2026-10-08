@@ -32,3 +32,10 @@ test('portfolio loads and recruiter paths work after hydration', async ({
 	await expect(page.getByRole('dialog', { name: /find a time/i })).toBeVisible()
 	expect(errors).toEqual([])
 })
+
+test('proxies PostHog assets through the app', async ({ request }) => {
+	const response = await request.get('/api/ingest/static/array.js')
+
+	expect(response.status()).toBe(200)
+	expect(response.headers()['content-type']).toContain('javascript')
+})

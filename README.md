@@ -18,9 +18,9 @@ use `APP_PORT` to select the port.
 ## Environment
 
 Varlock validates `.env.schema` and generates `env.d.ts`. Keep local values in
-`.env.local` or the existing `.env` file. Set `MAILGUN_API_KEY` and
-`MAILGUN_DOMAIN` to enable the contact form. Set `VITE_PUBLIC_POSTHOG_KEY` to
-enable production analytics.
+`.env.local` or the existing `.env` file. Set `VITE_PUBLIC_POSTHOG_KEY` to
+enable production analytics. The server proxies PostHog requests from
+`/api/ingest` to PostHog, so ad blockers do not drop them.
 
 ```sh
 vp exec varlock load --agent
