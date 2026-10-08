@@ -42,17 +42,11 @@ export function ThemeProvider({
 			return
 		}
 
-		// The bootstrap script can apply a legacy stored theme when the browser
-		// rejects the cookie write. Adopt it instead of overwriting it with the OS theme.
-		const applied = document.documentElement.classList.contains('dark')
-			? 'dark'
-			: 'light'
+		// The bootstrap script keeps a legacy stored theme in localStorage when the
+		// browser rejects the cookie write. Adopt it instead of following the OS.
+		const legacy = readLegacyTheme()
 
-		const system = matchMedia('(prefers-color-scheme: dark)').matches
-			? 'dark'
-			: 'light'
-
-		if (applied !== system) setPreference(applied)
+		if (legacy) setPreference(legacy)
 	}, [])
 
 	useBrowserLayoutEffect(() => {
@@ -94,6 +88,16 @@ export function useTheme() {
 	if (!context) throw new Error('useTheme must be used within ThemeProvider')
 
 	return context
+}
+
+function readLegacyTheme(): Theme | null {
+	try {
+		const value = localStorage.getItem('theme')
+
+		return value === 'light' || value === 'dark' ? value : null
+	} catch {
+		return null
+	}
 }
 
 const options: {

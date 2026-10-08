@@ -12,11 +12,13 @@ function renderSwitch() {
 }
 
 beforeEach(() => {
+	localStorage.removeItem('theme')
 	document.cookie = 'theme=; Max-Age=0; Path=/'
 	document.documentElement.classList.remove('light', 'dark')
 })
 
 afterEach(() => {
+	localStorage.removeItem('theme')
 	document.cookie = 'theme=; Max-Age=0; Path=/'
 	document.documentElement.classList.remove('light', 'dark')
 })
@@ -29,25 +31,24 @@ test('follows the system theme when nothing is stored', async () => {
 		.toHaveAttribute('aria-pressed', 'true')
 })
 
-test('keeps a theme that the bootstrap script applied without a cookie', async () => {
-	const system = matchMedia('(prefers-color-scheme: dark)').matches
-		? 'dark'
-		: 'light'
+test.each(['light', 'dark'] as const)(
+	'keeps a legacy %s theme when the cookie write fails',
+	async (legacy) => {
+		localStorage.setItem('theme', legacy)
+		document.documentElement.classList.add(legacy)
 
-	const applied = system === 'dark' ? 'light' : 'dark'
-	document.documentElement.classList.add(applied)
+		const screen = await renderSwitch()
 
-	const screen = await renderSwitch()
-
-	await expect
-		.element(
-			screen.getByRole('button', {
-				name: applied === 'dark' ? 'Dark theme' : 'Light theme',
-			}),
-		)
-		.toHaveAttribute('aria-pressed', 'true')
-	expect(document.documentElement.classList.contains(applied)).toBe(true)
-})
+		await expect
+			.element(
+				screen.getByRole('button', {
+					name: legacy === 'dark' ? 'Dark theme' : 'Light theme',
+				}),
+			)
+			.toHaveAttribute('aria-pressed', 'true')
+		expect(document.documentElement.classList.contains(legacy)).toBe(true)
+	},
+)
 
 test('saves and applies an explicit choice', async () => {
 	const screen = await renderSwitch()
