@@ -4,6 +4,21 @@ const baseURL =
 	process.env.BASE_URL ?? `http://127.0.0.1:${process.env.APP_PORT ?? '3000'}`
 
 export default defineConfig({
+	...(process.env.BASE_URL
+		? {}
+		: {
+				webServer: {
+					command: 'vp run build && vp run start',
+					url: baseURL,
+					reuseExistingServer: !process.env.CI,
+					timeout: 120_000,
+					env: {
+						NODE_ENV: 'production',
+						PORT: process.env.APP_PORT ?? '3000',
+						HOST: '127.0.0.1',
+					},
+				},
+			}),
 	testDir: './e2e',
 	outputDir: '.playwright/test-results',
 	fullyParallel: true,

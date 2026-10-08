@@ -34,8 +34,9 @@ vp run build
 
 Vitest runs unit tests and browser tests. Browser tests use Playwright to launch
 full Chromium. Screenshot assertions use Vitest Browser Mode. Reserve Playwright
-e2e tests for smoke checks. With the server active, run `vp run e2e` for desktop
-and mobile smoke checks.
+e2e tests for smoke checks. Run `vp run e2e` for desktop and mobile smoke
+checks. Without `BASE_URL`, Playwright starts the production server or reuses a
+local server. Set `BASE_URL` to test an existing deployment.
 
 Install the browser with `vp exec playwright install chromium --no-shell`. For
 Ubuntu 26.04 ARM64, set `PLAYWRIGHT_HOST_PLATFORM_OVERRIDE=ubuntu24.04-arm64`
