@@ -5,6 +5,7 @@ import { env } from '@/env'
 import { RateLimiter } from '@/lib/rate-limiter'
 
 const rateLimiter = new RateLimiter()
+
 const mailgun = new Mailgun(FormData)
 
 export async function sendEmail({
@@ -21,12 +22,14 @@ export async function sendEmail({
 	}
 
 	const result = rateLimiter.consume(ipAddress)
+
 	if (!result.success) {
 		throw new Error('TOO_MANY_REQUESTS: Rate limit exceeded')
 	}
 
 	const mailgunApiKey = env.MAILGUN_API_KEY
 	const mailgunDomain = env.MAILGUN_DOMAIN
+
 	if (!mailgunApiKey || !mailgunDomain) {
 		throw new Error('INTERNAL_SERVER_ERROR: Email service is not configured')
 	}
@@ -36,6 +39,7 @@ export async function sendEmail({
 			username: 'api',
 			key: mailgunApiKey,
 		})
+
 		await client.messages.create(mailgunDomain, {
 			from: `Portfolio Contact Form <postmaster@${mailgunDomain}>`,
 			to: 'Aria Amini <aamini1024@gmail.com>',

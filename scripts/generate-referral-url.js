@@ -9,9 +9,11 @@ async function generateUrl() {
 		const utmSource = await rl.question(
 			'Enter the UTM Source (e.g., "linkedin"): ',
 		)
+
 		const utmMedium = await rl.question(
 			'Enter the UTM Medium (e.g., "job-application"): ',
 		)
+
 		const utmCampaign = await rl.question(
 			'Enter the UTM Campaign (e.g., "stubhub"): ',
 		)

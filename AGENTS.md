@@ -21,3 +21,17 @@ Docs are local at `node_modules/vite-plus/docs` or online at:
 - [ ] Run `vp check` and `vp test` to format, lint, type check and test changes.
 - [ ] Check if there are `vite.config.ts` tasks or `package.json` scripts
       necessary for validation, run via `vp run <script>`.
+
+## Template
+
+This repo follows `~/templates/tanstack` (Copier). It uses the template tooling,
+lint, `src/components/ui` (shadcn `base-vega`, Base UI), and theme code. It does
+not use the template database, auth, S3, or Docker parts.
+
+## Style rules
+
+- Build `className` with `cn()` from `cn`. Never use template literals.
+- Take every color from theme tokens in `src/styles.css`. Do not use raw colors.
+- Use `ButtonLink` or `RouterButtonLink` for links that look like buttons. Base
+  UI `Button` with `nativeButton={false}` sets `role="button"` on anchors.
+- Run `vp check` and `vp test run` before every commit.

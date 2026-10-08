@@ -19,6 +19,7 @@ export class RateLimiter {
 		} else {
 			// Per IP rate limit check
 			this.slidingWindow.allowRequest()
+
 			return this.bucket.consume(ip)
 		}
 	}
@@ -53,13 +54,16 @@ class TokenBucket {
 			tokens: TokenBucket.BUCKET_SIZE,
 			lastRefill: now,
 		}
+
 		if (tokens > 0) {
 			this.buckets.set(ip, { tokens: tokens - 1, lastRefill })
+
 			return { success: true, remaining: tokens - 1 }
 		} else {
 			const retryAfter = Math.floor(
 				(lastRefill + TokenBucket.REFILL_RATE - now) / (1000 * 60),
 			)
+
 			return { success: false, retryAfter }
 		}
 	}
@@ -77,6 +81,7 @@ class SlidingWindow {
 	allowRequest(): boolean {
 		if (!this.hasReachedLimit()) {
 			this.currRequestCount++
+
 			return true
 		} else {
 			return false
@@ -97,6 +102,7 @@ class SlidingWindow {
 		const lastWindowPercent = this.prevRequestCount / this.MAX_REQUESTS
 		const x = this.currRequestCount / this.MAX_REQUESTS
 		const weight = (1 - x) * lastWindowPercent + this.currRequestCount
+
 		return weight + 1 > this.MAX_REQUESTS
 	}
 }

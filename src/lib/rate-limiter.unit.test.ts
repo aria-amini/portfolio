@@ -50,6 +50,7 @@ test('Block after global limit of 100 is reached', () => {
 			remaining: 2,
 		})
 	}
+
 	expect(limiter.consume(TEST_IP)).toEqual({
 		success: false,
 		message: 'Server cannot handle requests',
