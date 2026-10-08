@@ -20,13 +20,12 @@ export function CopyEmailButton() {
 	return (
 		<Button
 			type="button"
-			variant="outline"
-			size="sm"
-			aria-label="Copy email address"
+			variant="ghost"
+			size="icon-sm"
+			aria-label={copied ? 'Email address copied' : 'Copy email address'}
 			onClick={copy}
 		>
 			{copied ? <CheckIcon /> : <CopyIcon />}
-			{copied ? 'Copied' : 'Copy'}
 		</Button>
 	)
 }

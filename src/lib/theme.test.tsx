@@ -82,6 +82,14 @@ describe('theme helpers', () => {
 			expect(storedCookieValue()).toBe('dark')
 		})
 
+		test('clears the cookie when the user chooses system', () => {
+			writeThemeCookie('dark')
+			writeThemeCookie('system')
+
+			expect(storedCookieValue()).toBeUndefined()
+			expect(getThemePreference()).toBeNull()
+		})
+
 		test('persists light the same way', () => {
 			writeThemeCookie('light')
 

@@ -41,10 +41,10 @@ test('shows the recruiter actions', async () => {
 		.element(screen.getByRole('heading', { name: /aria amini/i }))
 		.toBeVisible()
 	await expect
-		.element(screen.getByRole('link', { name: /view résumé/i }))
+		.element(screen.getByRole('link', { name: /view resume/i }))
 		.toBeVisible()
 	await expect
-		.element(screen.getByRole('link', { name: /schedule a call/i }))
+		.element(screen.getByRole('link', { name: /book a 30-min call/i }).first())
 		.toBeVisible()
 })
 

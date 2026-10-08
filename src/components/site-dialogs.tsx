@@ -1,12 +1,12 @@
 import {
-	ArrowUpRightIcon,
-	DownloadSimpleIcon,
+	CornersOutIcon,
+	EnvelopeSimpleIcon,
+	FileDocIcon,
+	FilePdfIcon,
 } from '@phosphor-icons/react/dist/ssr'
 import { useNavigate } from '@tanstack/react-router'
 
-import { ButtonLink, RouterButtonLink } from '@/components/button-link'
-import { ContactForm } from '@/components/contact-form'
-import { CopyEmailButton } from '@/components/copy-email-button'
+import { ButtonLink } from '@/components/button-link'
 import {
 	Dialog,
 	DialogContent,
@@ -14,8 +14,11 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from '@/components/ui/dialog'
-import { Separator } from '@/components/ui/separator'
-import { type DialogName, profile, scheduleCallUrl } from '@/lib/profile'
+import { type DialogName, profile, scheduleEmailHref } from '@/lib/profile'
+
+const resumePreviewUrl = `${profile.resumeUrl}#navpanes=0&pagemode=none&view=FitH`
+
+const resumeFullScreenUrl = `${profile.resumeUrl}#navpanes=0&pagemode=none&zoom=100`
 
 export function SiteDialogs({ open }: { open: DialogName | undefined }) {
 	const navigate = useNavigate({ from: '/' })
@@ -33,52 +36,49 @@ export function SiteDialogs({ open }: { open: DialogName | undefined }) {
 			<Dialog open={open === 'resume'} onOpenChange={onOpenChange('resume')}>
 				<DialogContent className="sm:max-w-3xl">
 					<DialogHeader>
-						<DialogTitle>Résumé</DialogTitle>
-						<DialogDescription>
-							Download the PDF or read it here.
-						</DialogDescription>
+						<DialogTitle>Resume</DialogTitle>
 					</DialogHeader>
-					<ButtonLink href={profile.resumeUrl} download={true}>
-						Download the PDF <DownloadSimpleIcon />
-					</ButtonLink>
 					<object
-						data={profile.resumeUrl}
+						data={resumePreviewUrl}
 						type="application/pdf"
-						aria-label={`${profile.name} résumé`}
-						className="h-[60vh] w-full rounded-lg border"
-					>
-						<a href={profile.resumeUrl}>Open the résumé directly ↗</a>
-					</object>
-				</DialogContent>
-			</Dialog>
-
-			<Dialog open={open === 'contact'} onOpenChange={onOpenChange('contact')}>
-				<DialogContent>
-					<DialogHeader>
-						<DialogTitle>Let’s connect.</DialogTitle>
-						<DialogDescription>
-							Have a role or a technical problem in mind? Email me, send a
-							message, or book a short call.
-						</DialogDescription>
-					</DialogHeader>
-					<div className="flex flex-wrap items-center gap-2">
+						aria-label={`${profile.name} resume`}
+						className="hidden h-[60vh] w-full rounded-lg border md:block"
+					/>
+					<div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
 						<ButtonLink
-							href={`mailto:${profile.email}`}
-							className="tracking-normal normal-case"
+							size="lg"
+							className="h-11"
+							href={resumeFullScreenUrl}
+							target="_blank"
+							rel="noreferrer"
 						>
-							{profile.email} <ArrowUpRightIcon />
+							<CornersOutIcon data-icon="inline-start" />
+							View Full-Screen
 						</ButtonLink>
-						<CopyEmailButton />
+						<div className="flex flex-wrap items-center gap-3">
+							<span className="label-mono text-muted-foreground">Download</span>
+							<ButtonLink
+								variant="outline"
+								size="lg"
+								className="h-11"
+								href={profile.resumeUrl}
+								download={`${profile.name} - Resume.pdf`}
+							>
+								<FilePdfIcon className="size-5" data-icon="inline-start" />
+								PDF
+							</ButtonLink>
+							<ButtonLink
+								variant="outline"
+								size="lg"
+								className="h-11"
+								href={profile.resumeDocxUrl}
+								download={`${profile.name} - Resume.docx`}
+							>
+								<FileDocIcon className="size-5" data-icon="inline-start" />
+								Word
+							</ButtonLink>
+						</div>
 					</div>
-					<RouterButtonLink
-						variant="outline"
-						to="/"
-						search={{ dialog: 'schedule' }}
-					>
-						Schedule a {profile.callMinutes}-minute call <ArrowUpRightIcon />
-					</RouterButtonLink>
-					<Separator />
-					<ContactForm />
 				</DialogContent>
 			</Dialog>
 
@@ -101,16 +101,11 @@ export function SiteDialogs({ open }: { open: DialogName | undefined }) {
 							className="h-[60vh] w-full rounded-lg border"
 						/>
 					) : (
-						<ButtonLink href={scheduleCallUrl()}>
-							Create a calendar invite <ArrowUpRightIcon />
+						<ButtonLink href={scheduleEmailHref()}>
+							<EnvelopeSimpleIcon data-icon="inline-start" />
+							Email me times that work
 						</ButtonLink>
 					)}
-					<ButtonLink
-						variant="outline"
-						href={`mailto:${profile.email}?subject=${encodeURIComponent('Let’s schedule a call')}`}
-					>
-						Email to arrange a time <ArrowUpRightIcon />
-					</ButtonLink>
 				</DialogContent>
 			</Dialog>
 		</>

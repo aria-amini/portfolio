@@ -1,45 +1,73 @@
-import { Moon, Sun } from '@phosphor-icons/react/dist/ssr'
+import { MonitorIcon, MoonIcon, SunIcon } from '@phosphor-icons/react/dist/ssr'
 import { cn } from 'cn'
-import { createContext, useContext, useState, type ReactNode } from 'react'
+import {
+	createContext,
+	useContext,
+	useState,
+	type ComponentType,
+	type ReactNode,
+} from 'react'
 
-import { applyThemeToDocument, writeThemeCookie, type Theme } from '@/lib/theme'
+import {
+	applyThemeToDocument,
+	getThemePreference,
+	writeThemeCookie,
+	type Theme,
+	type ThemePreference,
+} from '@/lib/theme'
 import { useBrowserLayoutEffect } from '@/lib/use-browser-layout-effect'
 
 const ThemeContext = createContext<{
-	theme: Theme
-	setThemePreference: (theme: Theme) => void
+	preference: ThemePreference
+	setThemePreference: (preference: ThemePreference) => void
 } | null>(null)
 
 export function ThemeProvider({
-	preference,
+	preference: serverPreference,
 	children,
 }: {
 	preference: Theme | null
 	children: ReactNode
 }) {
-	const [theme, setThemeState] = useState<Theme>(preference ?? 'light')
-	const [mounted, setMounted] = useState(false)
+	const [preference, setPreference] = useState<ThemePreference>(
+		serverPreference ?? 'system',
+	)
 
 	useBrowserLayoutEffect(() => {
-		// Adopt the bootstrap result, including OS detection and legacy migration.
-		setThemeState(
-			document.documentElement.classList.contains('dark') ? 'dark' : 'light',
-		)
-		setMounted(true)
+		// Adopt a cookie that the bootstrap script migrated from legacy storage.
+		const stored = getThemePreference()
+
+		if (stored) setPreference(stored)
 	}, [])
 
 	useBrowserLayoutEffect(() => {
-		if (!mounted) return
-		applyThemeToDocument(theme)
-	}, [theme, mounted])
+		const media = matchMedia('(prefers-color-scheme: dark)')
 
-	function setThemePreference(next: Theme) {
+		const apply = () =>
+			applyThemeToDocument(
+				preference === 'system'
+					? media.matches
+						? 'dark'
+						: 'light'
+					: preference,
+			)
+
+		apply()
+
+		if (preference !== 'system') return
+
+		media.addEventListener('change', apply)
+
+		return () => media.removeEventListener('change', apply)
+	}, [preference])
+
+	function setThemePreference(next: ThemePreference) {
 		writeThemeCookie(next)
-		setThemeState(next)
+		setPreference(next)
 	}
 
 	return (
-		<ThemeContext value={{ theme, setThemePreference }}>
+		<ThemeContext value={{ preference, setThemePreference }}>
 			{children}
 		</ThemeContext>
 	)
@@ -53,41 +81,44 @@ export function useTheme() {
 	return context
 }
 
-/** Console key for the board's night/day rendition; the knob rides the
- * `.dark` class applied by the pre-hydration theme bootstrap, so the visual
- * state is correct before hydration. */
-export function ThemeSwitch({ className }: { className?: string }) {
-	const { theme, setThemePreference } = useTheme()
+const options: {
+	value: ThemePreference
+	label: string
+	Icon: ComponentType<{ className?: string; weight?: 'bold' }>
+}[] = [
+	{ value: 'system', label: 'System theme', Icon: MonitorIcon },
+	{ value: 'light', label: 'Light theme', Icon: SunIcon },
+	{ value: 'dark', label: 'Dark theme', Icon: MoonIcon },
+]
 
-	const toggle = () => setThemePreference(theme === 'dark' ? 'light' : 'dark')
+export function ThemeSwitch({ className }: { className?: string }) {
+	const { preference, setThemePreference } = useTheme()
 
 	return (
-		<button
-			type="button"
-			role="switch"
-			aria-checked={theme === 'dark'}
-			aria-label="Dark mode"
-			onClick={toggle}
+		<fieldset
 			className={cn(
-				'relative flex h-8 w-16 shrink-0 items-center border bg-card shadow-sm outline-none',
-				'focus-visible:ring-3 focus-visible:ring-ring/50',
+				'bg-card m-0 flex min-w-0 items-center gap-0.5 border p-0.5 shadow-sm',
 				className,
 			)}
 		>
-			<Moon
-				aria-hidden
-				className="text-muted-foreground absolute left-1.5 size-3.5"
-				weight="bold"
-			/>
-			<Sun
-				aria-hidden
-				className="text-muted-foreground absolute right-1.5 size-3.5"
-				weight="bold"
-			/>
-			<span
-				aria-hidden
-				className="bg-muted ring-border/50 dark:bg-primary absolute top-0.5 bottom-0.5 left-0.5 w-7 shadow-sm ring-1 transition-transform motion-reduce:transition-none dark:translate-x-8"
-			/>
-		</button>
+			<legend className="sr-only">Theme</legend>
+			{options.map(({ value, label, Icon }) => (
+				<button
+					key={value}
+					type="button"
+					aria-label={label}
+					aria-pressed={preference === value}
+					onClick={() => setThemePreference(value)}
+					className={cn(
+						'focus-visible:ring-ring/50 grid size-8 place-items-center outline-none focus-visible:ring-3',
+						preference === value
+							? 'bg-primary text-primary-foreground'
+							: 'text-muted-foreground hover:text-foreground',
+					)}
+				>
+					<Icon aria-hidden className="size-4" weight="bold" />
+				</button>
+			))}
+		</fieldset>
 	)
 }

@@ -3,6 +3,8 @@ import { getCookie } from '@tanstack/react-start/server'
 
 export type Theme = 'light' | 'dark'
 
+export type ThemePreference = Theme | 'system'
+
 const THEME_COOKIE_NAME = 'theme'
 
 const COOKIE_MAX_AGE_SECONDS = 60 * 60 * 24 * 365
@@ -32,10 +34,13 @@ export function applyThemeToDocument(theme: Theme): void {
 	root.style.colorScheme = theme
 }
 
-/** Save an explicit user choice without changing the active document. */
-export function writeThemeCookie(theme: Theme): void {
+/** Save an explicit choice without changing the active document. The system
+ * choice clears the cookie, because no cookie means "follow the OS". */
+export function writeThemeCookie(preference: ThemePreference): void {
 	const secure = location.protocol === 'https:' ? '; Secure' : ''
-	document.cookie = `${THEME_COOKIE_NAME}=${theme}; Path=/; SameSite=Lax; Max-Age=${COOKIE_MAX_AGE_SECONDS}${secure}`
+	const maxAge = preference === 'system' ? 0 : COOKIE_MAX_AGE_SECONDS
+	const value = preference === 'system' ? '' : preference
+	document.cookie = `${THEME_COOKIE_NAME}=${value}; Path=/; SameSite=Lax; Max-Age=${maxAge}${secure}`
 }
 
 /** Runs before hydration. The cookie wins; legacy localStorage is migrated

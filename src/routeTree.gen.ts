@@ -10,43 +10,33 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as ApiSendEmailRouteImport } from './routes/api/sendEmail'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiSendEmailRoute = ApiSendEmailRouteImport.update({
-  id: '/api/sendEmail',
-  path: '/api/sendEmail',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/api/sendEmail': typeof ApiSendEmailRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/api/sendEmail': typeof ApiSendEmailRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/api/sendEmail': typeof ApiSendEmailRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/api/sendEmail'
+  fullPaths: '/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api/sendEmail'
-  id: '__root__' | '/' | '/api/sendEmail'
+  to: '/'
+  id: '__root__' | '/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  ApiSendEmailRoute: typeof ApiSendEmailRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -58,19 +48,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/sendEmail': {
-      id: '/api/sendEmail'
-      path: '/api/sendEmail'
-      fullPath: '/api/sendEmail'
-      preLoaderRoute: typeof ApiSendEmailRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  ApiSendEmailRoute: ApiSendEmailRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
