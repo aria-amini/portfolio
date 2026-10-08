@@ -100,12 +100,16 @@ export function SiteDialogs({ open }: { open: DialogName | undefined }) {
 							title="Book a call"
 							className="h-[60vh] w-full rounded-lg border"
 						/>
-					) : (
-						<ButtonLink href={scheduleEmailHref()}>
-							<EnvelopeSimpleIcon data-icon="inline-start" />
-							Email me times that work
-						</ButtonLink>
-					)}
+					) : null}
+					<ButtonLink
+						variant={profile.bookingUrl ? 'outline' : 'default'}
+						href={scheduleEmailHref()}
+					>
+						<EnvelopeSimpleIcon data-icon="inline-start" />
+						{profile.bookingUrl
+							? 'Email me instead'
+							: 'Email me times that work'}
+					</ButtonLink>
 				</DialogContent>
 			</Dialog>
 		</>

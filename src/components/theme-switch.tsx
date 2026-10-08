@@ -34,10 +34,25 @@ export function ThemeProvider({
 	)
 
 	useBrowserLayoutEffect(() => {
-		// Adopt a cookie that the bootstrap script migrated from legacy storage.
 		const stored = getThemePreference()
 
-		if (stored) setPreference(stored)
+		if (stored) {
+			setPreference(stored)
+
+			return
+		}
+
+		// The bootstrap script can apply a legacy stored theme when the browser
+		// rejects the cookie write. Adopt it instead of overwriting it with the OS theme.
+		const applied = document.documentElement.classList.contains('dark')
+			? 'dark'
+			: 'light'
+
+		const system = matchMedia('(prefers-color-scheme: dark)').matches
+			? 'dark'
+			: 'light'
+
+		if (applied !== system) setPreference(applied)
 	}, [])
 
 	useBrowserLayoutEffect(() => {
