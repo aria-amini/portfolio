@@ -15,6 +15,11 @@ const cellHeight = 9
 
 const revealSeconds = 1.2
 
+// JetBrains Mono glyphs fill their cell, so draw them below cell height to leave air between rows.
+const glyphScale = 0.8
+
+const fontWeight = 500
+
 // Terminal-style scenes need fixed-width glyphs so columns line up. Matches --font-glyph in styles.css.
 const fontFamily = "'JetBrains Mono Variable', ui-monospace, monospace"
 
@@ -127,7 +132,7 @@ export function AsciiStage({
 
 		context.setTransform(dpr, 0, 0, dpr, 0, 0)
 		context.clearRect(0, 0, width, height)
-		context.font = `600 ${cellH * 0.95}px ${fontFamily}`
+		context.font = `${fontWeight} ${cellH * glyphScale}px ${fontFamily}`
 		context.textAlign = 'center'
 		context.textBaseline = 'middle'
 		const ink = rgba(inks.ink)
@@ -153,7 +158,9 @@ export function AsciiStage({
 
 	// The reduced-motion still draws once, so draw it again when the self-hosted font arrives.
 	useEffect(() => {
-		void document.fonts.load(`600 ${cellHeight}px ${fontFamily}`).then(redraw)
+		void document.fonts
+			.load(`${fontWeight} ${cellHeight}px ${fontFamily}`)
+			.then(redraw)
 	}, [redraw])
 
 	return (
