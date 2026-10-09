@@ -177,9 +177,99 @@
 	text-shadow: 0.045em 0.045em 0 var(--shadow-color);
 }
 
-/* One-time page-load drop, like a stamp landing. */
+/* ===== Print run ===== */
+/* Page-load sequence: portrait develops, roller inks the name, second ink registers, title stamps. */
+@property --halftone-dot {
+	syntax: '<length>';
+	inherits: false;
+	initial-value: 0px;
+}
+
+/* Brayer pass. The inset overshoots so the off-register shadow is never clipped. */
+@utility ink-roll {
+	animation:
+		ink-roll 460ms cubic-bezier(0.16, 1, 0.3, 1) 120ms backwards,
+		ink-register 520ms cubic-bezier(0.16, 1, 0.3, 1) 380ms backwards;
+
+	@media (prefers-reduced-motion: reduce) {
+		animation: none;
+	}
+}
+
+@keyframes ink-roll {
+	from {
+		clip-path: inset(-0.4em 100% -0.4em -0.4em);
+	}
+	to {
+		clip-path: inset(-0.4em);
+	}
+}
+
+@keyframes ink-register {
+	from {
+		text-shadow: 0.3em 0.16em 0
+			color-mix(in oklch, var(--shadow-color) 0%, transparent);
+	}
+}
+
+/* Halftone develop: dots on a 45° screen grow until they merge into the full image.
+   At rest the dots overlap completely, so the mask is invisible. */
+@utility halftone-develop {
+	--halftone-cell: 6px;
+	--halftone-dot: calc(var(--halftone-cell) * 0.6);
+	mask-image:
+		radial-gradient(
+			circle,
+			var(--foreground) var(--halftone-dot),
+			transparent calc(var(--halftone-dot) + 0.75px)
+		),
+		radial-gradient(
+			circle,
+			var(--foreground) var(--halftone-dot),
+			transparent calc(var(--halftone-dot) + 0.75px)
+		);
+	mask-size: var(--halftone-cell) var(--halftone-cell);
+	mask-position:
+		0 0,
+		calc(var(--halftone-cell) / 2) calc(var(--halftone-cell) / 2);
+	animation: halftone-develop 900ms cubic-bezier(0.45, 0, 0.25, 1) backwards;
+
+	@media (prefers-reduced-motion: reduce) {
+		animation: fade-in 300ms ease-out backwards;
+	}
+}
+
+/* Scrubbed by scroll. Browsers without view timelines show the image as is. */
+@utility halftone-develop-on-view {
+	@apply halftone-develop;
+	--halftone-cell: 8px;
+	animation: none;
+
+	@supports (animation-timeline: view()) {
+		@media (prefers-reduced-motion: no-preference) {
+			animation: halftone-develop linear both;
+			animation-timeline: view();
+			animation-range: entry 0% entry 90%;
+		}
+	}
+}
+
+@keyframes halftone-develop {
+	from {
+		--halftone-dot: 0px;
+		filter: grayscale(1) contrast(1.5);
+	}
+}
+
+@keyframes fade-in {
+	from {
+		opacity: 0;
+	}
+}
+
+/* Lands last in the print run, like a stamp. */
 @utility stamp-in {
-	animation: stamp-in 420ms cubic-bezier(0.2, 1.4, 0.4, 1) 150ms backwards;
+	animation: stamp-in 420ms cubic-bezier(0.2, 1.4, 0.4, 1) 640ms backwards;
 
 	@media (prefers-reduced-motion: reduce) {
 		animation: none;
@@ -191,5 +281,91 @@
 		opacity: 0;
 		scale: 1.25;
 		rotate: -8deg;
+	}
+}
+
+/* ===== Feedback ===== */
+/* Highlighter ink sweeps across text while the parent carries data-active. */
+@utility highlight-sweep {
+	background-image: linear-gradient(var(--secondary), var(--secondary));
+	background-repeat: no-repeat;
+	background-position: left center;
+	background-size: 0% 100%;
+	transition: background-size 180ms ease-in;
+
+	[data-active] > & {
+		background-size: 100% 100%;
+		transition: background-size 320ms cubic-bezier(0.16, 1, 0.3, 1);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		transition: none;
+
+		[data-active] > & {
+			transition: none;
+		}
+	}
+}
+
+/* Same landing as stamp-in, without the print-run delay. */
+@utility stamp-press {
+	animation: stamp-in 240ms cubic-bezier(0.2, 1.4, 0.4, 1);
+
+	@media (prefers-reduced-motion: reduce) {
+		animation: none;
+	}
+}
+
+/* ===== Color bar ===== */
+/* Steps patch to patch like a press operator reading each ink. */
+@utility densitometer {
+	animation: densitometer 9.6s steps(var(--patches)) infinite;
+
+	@media (prefers-reduced-motion: reduce) {
+		animation: none;
+	}
+}
+
+@keyframes densitometer {
+	to {
+		translate: calc(var(--patches) * 100%) 0;
+	}
+}
+
+/* ===== Dialogs ===== */
+/* A sheet laid on the desk: it settles from a slight tilt, then lifts off faster. */
+@utility sheet-in {
+	animation: sheet-in 260ms cubic-bezier(0.16, 1, 0.3, 1);
+
+	@media (prefers-reduced-motion: reduce) {
+		animation: fade-in 150ms ease-out;
+	}
+}
+
+@utility sheet-out {
+	animation: sheet-out 140ms ease-in forwards;
+
+	@media (prefers-reduced-motion: reduce) {
+		animation: fade-out 100ms ease-in forwards;
+	}
+}
+
+@keyframes sheet-in {
+	from {
+		opacity: 0;
+		transform: translateY(0.75rem) rotate(-1.5deg) scale(0.98);
+	}
+}
+
+@keyframes sheet-out {
+	to {
+		opacity: 0;
+		transform: translateY(-0.375rem) rotate(0.75deg);
+	}
+}
+
+@keyframes fade-out {
+	to {
+		opacity: 0;
 	}
 }

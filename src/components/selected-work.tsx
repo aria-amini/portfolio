@@ -26,7 +26,7 @@ export function SelectedWork() {
 						height={1200}
 						alt={project.previewAlt}
 						loading="lazy"
-						className="ring-border/30 rounded-md ring-1"
+						className="ring-border/30 halftone-develop-on-view rounded-md ring-1"
 					/>
 				</a>
 				<article>

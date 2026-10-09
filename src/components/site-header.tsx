@@ -5,11 +5,13 @@ import {
 } from '@phosphor-icons/react/dist/ssr'
 
 import { ButtonLink, RouterButtonLink } from '@/components/button-link'
+import { ColorBar } from '@/components/color-bar'
 import { profile } from '@/lib/profile'
 
 export function SiteHeader() {
 	return (
 		<header className="flex h-20 items-center justify-end border-b">
+			<ColorBar className="mr-auto hidden sm:flex" />
 			<nav aria-label="Main navigation" className="flex items-center gap-2">
 				<ButtonLink
 					variant="ghost"
@@ -29,7 +31,11 @@ export function SiteHeader() {
 				>
 					<LinkedinLogoIcon className="size-5" />
 				</ButtonLink>
-				<RouterButtonLink size="sm" to="/" search={{ dialog: 'schedule' }}>
+				<RouterButtonLink
+					size="sm"
+					to="/"
+					search={(prev) => ({ ...prev, dialog: 'schedule' })}
+				>
 					<CalendarDotsIcon data-icon="inline-start" />
 					Book a call
 				</RouterButtonLink>

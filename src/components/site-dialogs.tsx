@@ -24,7 +24,10 @@ export function SiteDialogs({ open }: { open: DialogName | undefined }) {
 	function onOpenChange(name: DialogName) {
 		return (isOpen: boolean) => {
 			if (!isOpen && open === name) {
-				void navigate({ search: {}, resetScroll: false })
+				void navigate({
+					search: (prev) => ({ ...prev, dialog: undefined }),
+					resetScroll: false,
+				})
 			}
 		}
 	}

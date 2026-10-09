@@ -286,6 +286,8 @@ export default defineConfig({
 								args: ['--disable-lcd-text', '--headless=new'],
 							},
 							actionTimeout: 3_000,
+							// Ambient canvases loop forever; reduced motion renders them as still frames.
+							contextOptions: { reducedMotion: 'reduce' },
 						}),
 						enabled: true,
 						headless: true,
