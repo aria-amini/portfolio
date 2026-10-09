@@ -35,6 +35,13 @@ dependencies, registers the Pitchfork proxy URL, starts the dev daemon, and
 verifies the page. The root checkout uses `https://portfolio.dev.ariaamini.com`.
 Other checkouts use `https://portfolio-<checkout-name>.dev.ariaamini.com`.
 
+Repeat the command after a checkout moves to repair its proxy mapping.
+
+The dev server is a Pitchfork daemon (`pitchfork.toml`). Interactive shells
+auto-start it on `cd`. Pitchfork passes its assigned `PORT` to Vite as
+`APP_PORT` and probes that same port. Start the daemon through bootstrap first;
+daemon auto-start alone does not register the proxy URL.
+
 ## Style rules
 
 - Build `className` with `cn()` from `cn`. Never use template literals.
