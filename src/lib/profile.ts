@@ -16,7 +16,7 @@ interface Profile {
 
 export const profile: Profile = {
 	name: 'Aria Amini',
-	title: 'Senior AI/Infra Engineer @ NYC',
+	title: 'Senior AI/Infra Engineer',
 	intro:
 		'I build AI services, cloud infrastructure, and the tools that connect them.',
 	about:
