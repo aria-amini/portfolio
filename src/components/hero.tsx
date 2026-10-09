@@ -7,6 +7,7 @@ import { RouterButtonLink } from '@/components/button-link'
 import { CopyEmail } from '@/components/copy-email'
 import { ExperiencePanel } from '@/components/experience-panel'
 import { Badge } from '@/components/ui/badge'
+import { Separator } from '@/components/ui/separator'
 import { createLifeGunsScene } from '@/lib/ascii/life'
 import { profile } from '@/lib/profile'
 
@@ -96,6 +97,7 @@ export function Hero() {
 					/>
 				</div>
 			</div>
+			<Separator className="lg:hidden" />
 			<ExperiencePanel />
 		</section>
 	)
