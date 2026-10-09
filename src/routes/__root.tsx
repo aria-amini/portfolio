@@ -18,6 +18,9 @@ const siteUrl = 'https://www.ariaamini.dev'
 
 const siteTitle = `${profile.name} — ${profile.title}`
 
+// Without an explicit preview image, iMessage picks the largest image on the page.
+const previewImageUrl = `${siteUrl}/icon.png`
+
 function Analytics() {
 	useEffect(() => {
 		const posthogKey = import.meta.env.VITE_PUBLIC_POSTHOG_KEY?.trim()
@@ -52,11 +55,19 @@ export const Route = createRootRoute({
 			{ property: 'og:url', content: siteUrl },
 			{ property: 'og:title', content: siteTitle },
 			{ property: 'og:description', content: profile.intro },
+			{ property: 'og:image', content: previewImageUrl },
+			{ property: 'og:image:width', content: '256' },
+			{ property: 'og:image:height', content: '256' },
+			{ property: 'og:image:alt', content: `${profile.name} site icon` },
 			{ name: 'twitter:card', content: 'summary' },
 			{ name: 'twitter:title', content: siteTitle },
 			{ name: 'twitter:description', content: profile.intro },
+			{ name: 'twitter:image', content: previewImageUrl },
 		],
-		links: [{ rel: 'icon', type: 'image/svg+xml', href: '/favicon.ico' }],
+		links: [
+			{ rel: 'icon', type: 'image/png', href: '/favicon.ico' },
+			{ rel: 'apple-touch-icon', href: '/icon.png' },
+		],
 	}),
 	component: RootComponent,
 	shellComponent: DocumentShell,
