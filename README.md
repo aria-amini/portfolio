@@ -6,9 +6,12 @@ project setup follows `~/templates/tanstack`.
 ## Development
 
 ```sh
-vp install
-vp dev
+mise run bootstrap
 ```
+
+Bootstrap installs tools and packages, registers the workspace URL, starts the
+daemon, and verifies the portfolio page. Add `--verbose` for direct command
+output.
 
 Use `pitchfork start dev` to run the development server as a daemon. Pitchfork
 assigns a port from 3000 and checks that same port for readiness. To select a
