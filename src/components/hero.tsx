@@ -36,7 +36,7 @@ function NameHeading() {
 	return (
 		<h1
 			id="intro-title"
-			className="misprint ink-roll text-4xl leading-none font-extrabold tracking-tight whitespace-nowrap sm:text-6xl"
+			className="ink-roll text-4xl leading-none font-extrabold tracking-tight whitespace-nowrap sm:text-6xl"
 		>
 			{profile.name}
 		</h1>

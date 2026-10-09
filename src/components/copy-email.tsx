@@ -29,7 +29,7 @@ export function CopyEmail({ className }: { className?: string }) {
 			data-active={copied || undefined}
 			className={cn('flex flex-wrap items-center gap-x-2 text-sm', className)}
 		>
-			<span className="text-muted-foreground">Or email me at</span>
+			<span className="text-muted-foreground">Or email me at:</span>
 			<a
 				href={`mailto:${profile.email}`}
 				className="highlight-sweep -mx-1 rounded-sm px-1 font-medium underline-offset-4 hover:underline"
@@ -40,6 +40,7 @@ export function CopyEmail({ className }: { className?: string }) {
 				type="button"
 				variant="ghost"
 				size="icon-sm"
+				className="-ml-2.5"
 				aria-label={copied ? 'Email address copied' : 'Copy email address'}
 				onClick={copy}
 			>

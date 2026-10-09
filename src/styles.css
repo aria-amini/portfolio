@@ -179,24 +179,17 @@
 	}
 }
 
-/* Two-pass print: the second ink sits slightly off register. */
-@utility misprint {
-	text-shadow: 0.045em 0.045em 0 var(--shadow-color);
-}
-
 /* ===== Print run ===== */
-/* Page-load sequence: portrait develops, roller inks the name, second ink registers, title stamps. */
+/* Page-load sequence: portrait develops, roller inks the name, title stamps. */
 @property --halftone-dot {
 	syntax: '<length>';
 	inherits: false;
 	initial-value: 0px;
 }
 
-/* Brayer pass. The inset overshoots so the off-register shadow is never clipped. */
+/* Brayer pass. The inset overshoots so descenders are never clipped. */
 @utility ink-roll {
-	animation:
-		ink-roll 460ms cubic-bezier(0.16, 1, 0.3, 1) 120ms backwards,
-		ink-register 520ms cubic-bezier(0.16, 1, 0.3, 1) 380ms backwards;
+	animation: ink-roll 460ms cubic-bezier(0.16, 1, 0.3, 1) 120ms backwards;
 
 	@media (prefers-reduced-motion: reduce) {
 		animation: none;
@@ -209,13 +202,6 @@
 	}
 	to {
 		clip-path: inset(-0.4em);
-	}
-}
-
-@keyframes ink-register {
-	from {
-		text-shadow: 0.3em 0.16em 0
-			color-mix(in oklch, var(--shadow-color) 0%, transparent);
 	}
 }
 
