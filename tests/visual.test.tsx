@@ -1,4 +1,4 @@
-import { expect, test } from 'vite-plus/test'
+import { afterEach, beforeEach, expect, test, vi } from 'vite-plus/test'
 import { commands, page } from 'vite-plus/test/browser'
 
 import { renderHome } from './render-home'
@@ -8,6 +8,16 @@ declare module 'vite-plus/test/browser' {
 		resizeBrowserViewport: (width: number, height: number) => Promise<void>
 	}
 }
+
+// The header clock shows New York time, so pin the date for stable screenshots.
+beforeEach(() => {
+	vi.useFakeTimers({ toFake: ['Date'] })
+	vi.setSystemTime(new Date('2026-01-15T14:30:00-05:00'))
+})
+
+afterEach(() => {
+	vi.useRealTimers()
+})
 
 const viewport = () => (window.innerWidth < 600 ? 'mobile' : 'desktop')
 

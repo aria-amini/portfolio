@@ -35,7 +35,6 @@
 	--font-sans:
 		'Bricolage Grotesque Variable', ui-sans-serif, system-ui, sans-serif;
 	--font-mono: var(--font-sans);
-	--font-glyph: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
 @theme inline {
@@ -69,6 +68,7 @@
 	--text-glyph--line-height: 1;
 
 	--font-heading: var(--font-sans);
+	--font-glyph: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 	--font-stretch-board: 80%;
 	--font-stretch-panel: 84%;
 
@@ -320,26 +320,10 @@
 	}
 }
 
-/* ===== Color bar ===== */
-/* Steps patch to patch like a press operator reading each ink. */
-@utility densitometer {
-	animation: densitometer 9.6s steps(var(--patches)) infinite;
-
-	@media (prefers-reduced-motion: reduce) {
-		animation: none;
-	}
-}
-
-@keyframes densitometer {
-	to {
-		translate: calc(var(--patches) * 100%) 0;
-	}
-}
-
 /* ===== Header ===== */
-/* A skyline window switches on in spot pink, then goes dark again. */
+/* A skyline window switches on in highlighter yellow, then goes dark again. */
 @utility window-light {
-	animation: window-light 9s steps(1) infinite;
+	animation: window-light 9s steps(1) var(--light-delay, 0s) infinite;
 
 	@media (prefers-reduced-motion: reduce) {
 		animation: none;
@@ -349,11 +333,11 @@
 @keyframes window-light {
 	0%,
 	88% {
-		color: var(--muted-foreground);
+		background-color: transparent;
 	}
 
 	70% {
-		color: var(--primary);
+		background-color: var(--secondary);
 	}
 }
 
