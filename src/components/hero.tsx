@@ -5,6 +5,7 @@ import { DitherPortrait } from '@/components/ambient/dither-portrait'
 import { RouterButtonLink } from '@/components/button-link'
 import { CopyEmail } from '@/components/copy-email'
 import { ExperiencePanel } from '@/components/experience-panel'
+import { Badge } from '@/components/ui/badge'
 import { profile } from '@/lib/profile'
 
 const portraitSrc = '/aria-amini-192.jpg'
@@ -56,8 +57,15 @@ export function Hero() {
 					</div>
 				</div>
 				<p className="text-muted-foreground max-w-md leading-7">
-					{profile.intro}
+					{profile.about}
 				</p>
+				<ul aria-label="Focus areas" className="mt-4 flex flex-wrap gap-2">
+					{profile.focus.map((area) => (
+						<li key={area}>
+							<Badge variant="outline">{area}</Badge>
+						</li>
+					))}
+				</ul>
 				<div className="mt-6 flex flex-wrap gap-3">
 					<RouterButtonLink
 						size="lg"

@@ -1,7 +1,10 @@
 interface Profile {
 	name: string
 	title: string
+	/** Short pitch for search and social previews. */
 	intro: string
+	about: string
+	focus: string[]
 	email: string
 	github: string
 	linkedin: string
@@ -16,6 +19,9 @@ export const profile: Profile = {
 	title: 'Senior AI/Infra Engineer @ NYC',
 	intro:
 		'I build AI services, cloud infrastructure, and the tools that connect them.',
+	about:
+		"I'm a passionate dev who loves CS and math, and I've been coding since 16. Originally from New Orleans, I moved to NYC four years ago. I'm looking for remote or hybrid roles with fast-moving, passionate teams.",
+	focus: ['AI', 'Platform & infra', 'Distributed systems', 'React/TS'],
 	email: 'aamini1024@gmail.com',
 	github: 'https://github.com/aamini11',
 	linkedin: 'https://linkedin.com/in/aria-amini',
