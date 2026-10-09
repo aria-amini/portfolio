@@ -1,12 +1,12 @@
 {
 	"include": ["**/*.ts", "**/*.tsx"],
-	"exclude": [".output"],
+	"exclude": [".output", "tools/oxlint/anti-slop/**/*.test.ts"],
 	"compilerOptions": {
 		"target": "ES2022",
 		"jsx": "react-jsx",
 		"module": "ESNext",
 		"lib": ["ES2022", "DOM", "DOM.Iterable"],
-		"types": ["vite-plus/client", "vite-plugin-svgr/client"],
+		"types": ["vite-plus/client"],
 		"moduleResolution": "bundler",
 		"allowImportingTsExtensions": true,
 		"verbatimModuleSyntax": false,
