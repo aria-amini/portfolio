@@ -1,6 +1,5 @@
 import {
 	CornersOutIcon,
-	EnvelopeSimpleIcon,
 	FileDocIcon,
 	FilePdfIcon,
 } from '@phosphor-icons/react/dist/ssr'
@@ -14,7 +13,7 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from '@/components/ui/dialog'
-import { type DialogName, profile, scheduleEmailHref } from '@/lib/profile'
+import { type DialogName, profile } from '@/lib/profile'
 
 const resumePreviewUrl = `${profile.resumeUrl}#navpanes=0&pagemode=none&view=FitH`
 
@@ -101,15 +100,6 @@ export function SiteDialogs({ open }: { open: DialogName | undefined }) {
 							className="h-[60vh] w-full rounded-lg border"
 						/>
 					) : null}
-					<ButtonLink
-						variant={profile.bookingUrl ? 'outline' : 'default'}
-						href={scheduleEmailHref()}
-					>
-						<EnvelopeSimpleIcon data-icon="inline-start" />
-						{profile.bookingUrl
-							? 'Email me instead'
-							: 'Email me times that work'}
-					</ButtonLink>
 				</DialogContent>
 			</Dialog>
 		</>

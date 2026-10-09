@@ -61,7 +61,7 @@ export const project = {
 	liveUrl: 'https://www.imdbgraph.org',
 	exampleUrl: 'https://www.imdbgraph.org/ratings/tt0944947',
 	sourceUrl: 'https://github.com/aria-amini/imdbgraph',
-	preview: '/imdbgraph-preview.png',
+	preview: '/imdbgraph-game-of-thrones.png',
 	previewAlt:
 		'imdbgraph.org displays Game of Thrones episode ratings as color-coded blocks grouped by season.',
 } as const
@@ -69,10 +69,3 @@ export const project = {
 export const dialogs = ['resume', 'schedule'] as const
 
 export type DialogName = (typeof dialogs)[number]
-
-export function scheduleEmailHref() {
-	const subject = `${profile.callMinutes}-minute intro call`
-	const body = `Hi Aria,\n\nI would like to set up a ${profile.callMinutes}-minute call. These times work for me:\n\n- \n- \n- \n\nRole and company:\n`
-
-	return `mailto:${profile.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
-}
