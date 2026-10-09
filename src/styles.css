@@ -245,21 +245,6 @@
 	}
 }
 
-/* Scrubbed by scroll. Browsers without view timelines show the image as is. */
-@utility halftone-develop-on-view {
-	@apply halftone-develop;
-	--halftone-cell: 8px;
-	animation: none;
-
-	@supports (animation-timeline: view()) {
-		@media (prefers-reduced-motion: no-preference) {
-			animation: halftone-develop linear both;
-			animation-timeline: view();
-			animation-range: entry 0% entry 90%;
-		}
-	}
-}
-
 @keyframes halftone-develop {
 	from {
 		--halftone-dot: 0px;
