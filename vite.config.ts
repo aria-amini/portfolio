@@ -299,6 +299,13 @@ export default defineConfig({
 						}),
 						enabled: true,
 						headless: true,
+						expect: {
+							toMatchScreenshot: {
+								comparatorName: 'pixelmatch',
+								// CI and local Chromium can disagree on a few anti-aliased canvas pixels.
+								comparatorOptions: { allowedMismatchedPixels: 50 },
+							},
+						},
 						// Failure captures land beside the goldens and get committed by accident.
 						screenshotFailures: false,
 					},
