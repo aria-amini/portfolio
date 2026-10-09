@@ -20,7 +20,7 @@ export const profile: Profile = {
 	intro:
 		'I build AI services, cloud infrastructure, and the tools that connect them.',
 	about:
-		"I'm a passionate dev who loves CS and math, and I've been coding since 16. Originally from New Orleans, I moved to NYC four years ago. I'm looking for remote or hybrid roles with fast-moving, passionate teams.",
+		"I'm a passionate dev who loves CS and math, and I've been coding since I was 16. Originally from New Orleans, I moved to NYC four years ago. I'm looking for remote or hybrid roles with fast-moving, passionate teams.",
 	focus: [
 		'AI',
 		'Infra / Devops',
