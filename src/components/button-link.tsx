@@ -11,6 +11,7 @@ export function ButtonLink({
 	variant,
 	size,
 	className,
+	children,
 	...props
 }: ComponentProps<'a'> & ButtonStyle) {
 	return (
@@ -18,7 +19,9 @@ export function ButtonLink({
 			data-slot="button"
 			className={cn(buttonVariants({ variant, size, className }))}
 			{...props}
-		/>
+		>
+			{children}
+		</a>
 	)
 }
 

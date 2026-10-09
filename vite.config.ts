@@ -57,6 +57,7 @@ const lint = {
 	],
 	categories: {},
 	options: {
+		maxWarnings: 0,
 		typeAware: true,
 		typeCheck: true,
 	},

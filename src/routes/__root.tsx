@@ -15,7 +15,9 @@ import { profile } from '@/lib/profile'
 import '../styles.css'
 
 const siteUrl = 'https://www.ariaamini.dev'
+
 const siteTitle = `${profile.name} — ${profile.title}`
+
 const previewImageUrl = `${siteUrl}/aria-amini.jpg`
 
 function Analytics() {
@@ -53,6 +55,8 @@ export const Route = createRootRoute({
 			{ property: 'og:title', content: siteTitle },
 			{ property: 'og:description', content: profile.intro },
 			{ property: 'og:image', content: previewImageUrl },
+			{ property: 'og:image:width', content: '800' },
+			{ property: 'og:image:height', content: '800' },
 			{ property: 'og:image:alt', content: `Portrait of ${profile.name}` },
 			{ name: 'twitter:card', content: 'summary' },
 			{ name: 'twitter:title', content: siteTitle },
