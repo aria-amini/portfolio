@@ -8,7 +8,8 @@ test('portfolio loads and recruiter paths work after hydration', async ({
 
 	const response = await page.goto('/')
 	expect(response?.status()).toBe(200)
-	await expect(page).toHaveTitle('Aria Amini - Portfolio')
+	// The title follows profile.title, so pin only the stable name prefix.
+	await expect(page).toHaveTitle(/^Aria Amini — /)
 	await expect(page.getByRole('heading', { name: /aria amini/i })).toBeVisible()
 
 	const resume = await page.request.get('/aria-amini-resume.pdf')
