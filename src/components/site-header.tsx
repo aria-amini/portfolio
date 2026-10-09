@@ -15,19 +15,19 @@ export function SiteHeader() {
 			<nav aria-label="Main navigation" className="flex items-center gap-2">
 				<ButtonLink
 					variant="ghost"
-					className="size-11 sm:w-auto sm:px-3"
+					className="size-11 md:w-auto md:px-3"
 					href={profile.github}
 				>
 					<GithubLogoIcon className="size-5" />
-					<span className="sr-only sm:not-sr-only">GitHub</span>
+					<span className="sr-only md:not-sr-only">GitHub</span>
 				</ButtonLink>
 				<ButtonLink
 					variant="ghost"
-					className="size-11 sm:w-auto sm:px-3"
+					className="size-11 md:w-auto md:px-3"
 					href={profile.linkedin}
 				>
 					<LinkedinLogoIcon className="size-5" />
-					<span className="sr-only sm:not-sr-only">LinkedIn</span>
+					<span className="sr-only md:not-sr-only">LinkedIn</span>
 				</ButtonLink>
 				<RouterButtonLink
 					size="sm"

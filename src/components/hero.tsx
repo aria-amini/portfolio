@@ -13,7 +13,7 @@ import { profile } from '@/lib/profile'
 
 function Avatar() {
 	return (
-		<div className="bg-secondary ink-shadow size-20 shrink-0 -rotate-3 overflow-hidden rounded-full border sm:size-28">
+		<div className="bg-secondary ink-shadow size-20 shrink-0 -rotate-3 overflow-hidden rounded-full border @md:size-28">
 			<DitherPortrait />
 		</div>
 	)
@@ -23,7 +23,7 @@ function TitleStamp({ className }: { className?: string }) {
 	return (
 		<p
 			className={cn(
-				'bg-secondary text-secondary-foreground ink-shadow stamp-in inline-block -rotate-2 rounded-md border px-3 py-1.5 text-base font-bold sm:text-lg',
+				'bg-secondary text-secondary-foreground ink-shadow stamp-in inline-block -rotate-2 rounded-md border px-3 py-1.5 text-base font-bold @md:text-lg',
 				className,
 			)}
 		>
@@ -36,7 +36,7 @@ function NameHeading() {
 	return (
 		<h1
 			id="intro-title"
-			className="ink-roll text-4xl leading-none font-extrabold tracking-tight whitespace-nowrap sm:text-6xl"
+			className="ink-roll text-4xl leading-none font-extrabold tracking-tight whitespace-nowrap @md:text-6xl"
 		>
 			{profile.name}
 		</h1>
@@ -47,10 +47,11 @@ export function Hero() {
 	return (
 		<section
 			aria-labelledby="intro-title"
-			className="grid gap-10 py-12 lg:grid-cols-2 lg:gap-16"
+			className="grid gap-10 py-12 md:grid-cols-2 lg:gap-16"
 		>
-			<div className="flex flex-col">
-				<div className="mb-6 flex items-center gap-4 sm:gap-6">
+			{/* Sized by its own width, so the name and portrait fit a half-width column. */}
+			<div className="@container flex flex-col">
+				<div className="mb-6 flex items-center gap-4 @md:gap-6">
 					<Avatar />
 					<div className="min-w-0">
 						<NameHeading />
@@ -90,14 +91,14 @@ export function Hero() {
 				</div>
 				<CopyEmail className="mt-3" />
 				{/* Fills the left column's leftover height beside the Experience card. */}
-				<div className="relative mt-6 h-40 lg:h-auto lg:min-h-32 lg:flex-1">
+				<div className="relative mt-6 h-40 md:h-auto md:min-h-32 md:flex-1">
 					<AsciiStage
 						scene={createLifeGunsScene}
 						className="absolute inset-0 size-full"
 					/>
 				</div>
 			</div>
-			<Separator className="lg:hidden" />
+			<Separator className="md:hidden" />
 			<ExperiencePanel />
 		</section>
 	)

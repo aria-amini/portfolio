@@ -12,13 +12,13 @@ export function SelectedWork() {
 			<h2 id="projects-title" className="mb-6 text-3xl">
 				Side projects
 			</h2>
-			<div className="grid items-center gap-8 lg:grid-cols-[2fr_3fr]">
+			<div className="grid items-center gap-8 md:grid-cols-[2fr_3fr]">
 				<a
 					href={project.exampleUrl}
 					target="_blank"
 					rel="noreferrer"
 					aria-label="Explore Game of Thrones episode ratings on imdbgraph.org"
-					className="group bg-card ink-shadow block rounded-xl border p-2"
+					className="group bg-card ink-shadow block max-w-sm rounded-xl border p-2"
 				>
 					<img
 						src={project.preview}
