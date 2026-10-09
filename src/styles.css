@@ -1,6 +1,7 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 @import '@fontsource-variable/bricolage-grotesque';
+@import '@fontsource-variable/jetbrains-mono';
 
 /* ===== Theme tokens ===== */
 /* Riso: two-ink print on warm paper. Every color on the site comes from these tokens. */
@@ -68,7 +69,8 @@
 	--text-glyph--line-height: 1;
 
 	--font-heading: var(--font-sans);
-	--font-glyph: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+	/* Self-hosted, so ASCII art lines up the same on every OS and in CI goldens. */
+	--font-glyph: 'JetBrains Mono Variable', ui-monospace, monospace;
 	--font-stretch-board: 80%;
 	--font-stretch-panel: 84%;
 
