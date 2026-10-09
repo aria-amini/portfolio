@@ -21,7 +21,12 @@ export const profile: Profile = {
 		'I build AI services, cloud infrastructure, and the tools that connect them.',
 	about:
 		"I'm a passionate dev who loves CS and math, and I've been coding since 16. Originally from New Orleans, I moved to NYC four years ago. I'm looking for remote or hybrid roles with fast-moving, passionate teams.",
-	focus: ['AI', 'Platform & infra', 'Distributed systems', 'React/TS'],
+	focus: [
+		'AI',
+		'Infra / Devops',
+		'Distributed systems',
+		'Full Stack - React/TS',
+	],
 	email: 'aamini1024@gmail.com',
 	github: 'https://github.com/aamini11',
 	linkedin: 'https://linkedin.com/in/aria-amini',
