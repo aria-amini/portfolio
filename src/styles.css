@@ -35,6 +35,7 @@
 	--font-sans:
 		'Bricolage Grotesque Variable', ui-sans-serif, system-ui, sans-serif;
 	--font-mono: var(--font-sans);
+	--font-glyph: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
 @theme inline {
@@ -63,6 +64,9 @@
 	/* Readability floor: smallest text in the app is 13px */
 	--text-xs: 0.8125rem;
 	--text-xs--line-height: 1.4;
+	/* Decorative ASCII art only. It sits under the floor because it is not read as text. */
+	--text-glyph: 0.625rem;
+	--text-glyph--line-height: 1;
 
 	--font-heading: var(--font-sans);
 	--font-stretch-board: 80%;
@@ -329,6 +333,41 @@
 @keyframes densitometer {
 	to {
 		translate: calc(var(--patches) * 100%) 0;
+	}
+}
+
+/* ===== Header ===== */
+/* A skyline window switches on in spot pink, then goes dark again. */
+@utility window-light {
+	animation: window-light 9s steps(1) infinite;
+
+	@media (prefers-reduced-motion: reduce) {
+		animation: none;
+	}
+}
+
+@keyframes window-light {
+	0%,
+	88% {
+		color: var(--muted-foreground);
+	}
+
+	70% {
+		color: var(--primary);
+	}
+}
+
+@utility clock-tick {
+	animation: clock-tick 2s steps(1) infinite;
+
+	@media (prefers-reduced-motion: reduce) {
+		animation: none;
+	}
+}
+
+@keyframes clock-tick {
+	50% {
+		opacity: 0.25;
 	}
 }
 
