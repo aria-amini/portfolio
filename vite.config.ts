@@ -1,3 +1,4 @@
+import { writeFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
 
 import babel from '@rolldown/plugin-babel'
@@ -260,6 +261,13 @@ export default defineConfig({
 							async resetScreenshotPointer({ page }) {
 								await page.mouse.move(0, 0)
 							},
+							// Writes the prebuilt avatar print; see tests/dither-print.test.tsx.
+							async writePublicPng(_context, name: string, base64: string) {
+								await writeFile(
+									resolve(import.meta.dirname, 'public', name),
+									Buffer.from(base64, 'base64'),
+								)
+							},
 							async resizeBrowserViewport(
 								{ page },
 								width: number,
@@ -291,6 +299,8 @@ export default defineConfig({
 						}),
 						enabled: true,
 						headless: true,
+						// Failure captures land beside the goldens and get committed by accident.
+						screenshotFailures: false,
 					},
 				},
 			},

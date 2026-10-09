@@ -8,12 +8,10 @@ import { ExperiencePanel } from '@/components/experience-panel'
 import { Badge } from '@/components/ui/badge'
 import { profile } from '@/lib/profile'
 
-const portraitSrc = '/aria-amini-192.jpg'
-
 function Avatar() {
 	return (
 		<div className="bg-secondary ink-shadow size-20 shrink-0 -rotate-3 overflow-hidden rounded-full border sm:size-28">
-			<DitherPortrait src={portraitSrc} />
+			<DitherPortrait />
 		</div>
 	)
 }
