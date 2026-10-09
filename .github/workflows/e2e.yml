@@ -1,0 +1,73 @@
+name: E2E
+
+# Railway waits for CI before it deploys, so e2e cannot be part of CI.
+# Railway's GitHub integration posts deployment statuses; this runs the
+# Playwright suite against the live site after each production deploy.
+# It is never a required check.
+on:
+  deployment_status:
+  workflow_dispatch:
+    inputs:
+      base_url:
+        description: Public URL to test, e.g. https://www.ariaamini.dev
+        required: true
+        type: string
+
+concurrency:
+  group: e2e-${{ github.event.deployment.environment || inputs.base_url }}
+  cancel-in-progress: true
+
+jobs:
+  e2e:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.deployment_status.state == 'success' &&
+      github.event.deployment.environment == 'portfolio / production')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      # Railway reports dashboard URLs in deployment_status, not the site URL.
+      CANDIDATE_URL: ${{ inputs.base_url || 'https://www.ariaamini.dev' }}
+      CHECK_DOMAINS:
+        ${{ github.event_name == 'deployment_status' && '1' || '' }}
+    steps:
+      - name: checkout
+        uses: actions/checkout@v6
+        with:
+          # Manual dispatch: empty ref checks out the branch picked in the UI.
+          ref: ${{ github.event.deployment.sha }}
+      - name: setup vite+
+        uses: voidzero-dev/setup-vp@v1
+        with:
+          node-version-file: .node-version
+          cache: true
+      - name: Install Playwright Browsers
+        run: vp exec playwright install chromium --with-deps --no-shell
+      # Railway can report success before the new release takes traffic.
+      - name: Wait for deployment to be reachable
+        run: |
+          url="${CANDIDATE_URL%/}"
+          for attempt in $(seq 1 30); do
+            status=$(curl -sL -o /dev/null -w '%{http_code}' --max-time 20 "$url" || true)
+            if [ "$status" = "200" ]; then
+              echo "BASE_URL=$url" >> "$GITHUB_ENV"
+              echo "Deployment is up at $url (attempt $attempt)"
+              exit 0
+            fi
+            echo "attempt $attempt: $url returned HTTP $status"
+            sleep 10
+          done
+          echo "Deployment never became reachable at $url" >&2
+          exit 1
+      - name: Run Playwright tests
+        run: vp exec playwright test
+      - name: Upload Playwright report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: |
+            .playwright/report/
+            .playwright/test-results/
+          include-hidden-files: true
+          retention-days: 14

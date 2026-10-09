@@ -51,26 +51,3 @@ jobs:
           name: visual-test-diagnostics
           path: .vitest-attachments/
           include-hidden-files: true
-
-  test-smoke:
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    steps:
-      - name: checkout
-        uses: actions/checkout@v6
-      - name: setup vite+
-        uses: voidzero-dev/setup-vp@v1
-        with:
-          node-version-file: .node-version
-          cache: true
-      - name: Install Chromium
-        run: vp exec playwright install chromium --with-deps --no-shell
-      - name: Run production smoke tests
-        run: vp run e2e
-      - name: Upload smoke test diagnostics
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: smoke-test-diagnostics
-          path: .playwright/
-          include-hidden-files: true

@@ -6,6 +6,12 @@ import {
 
 const deploymentURL = process.env.BASE_URL?.trim()
 
+// Playwright never starts a server. CI tests deployed URLs only; locally it
+// falls back to the dev server that Pitchfork already runs.
+if (process.env.CI && !deploymentURL) {
+	throw new Error('Set BASE_URL to a deployed URL; CI does not start a server.')
+}
+
 const baseURL =
 	deploymentURL || `http://127.0.0.1:${process.env.APP_PORT ?? '3000'}`
 
@@ -46,22 +52,6 @@ const config: PlaywrightTestConfig = {
 			},
 		},
 	],
-}
-
-if (!deploymentURL) {
-	config.webServer = {
-		command:
-			'vp run build && exec vp exec varlock run -- node .output/server/index.mjs',
-		url: baseURL,
-		reuseExistingServer: !process.env.CI,
-		timeout: 120_000,
-		gracefulShutdown: { signal: 'SIGTERM', timeout: 5_000 },
-		env: {
-			NODE_ENV: 'production',
-			PORT: process.env.APP_PORT ?? '3000',
-			HOST: '127.0.0.1',
-		},
-	}
 }
 
 export default defineConfig(config)
