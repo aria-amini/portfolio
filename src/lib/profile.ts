@@ -59,11 +59,11 @@ export const project = {
 	name: 'imdbgraph.org',
 	summary: 'Visualize IMDb episode ratings for TV shows. ~2K monthly visits.',
 	liveUrl: 'https://www.imdbgraph.org',
-	exampleUrl: 'https://www.imdbgraph.org/ratings/tt0903747',
+	exampleUrl: 'https://www.imdbgraph.org/ratings/tt0944947',
 	sourceUrl: 'https://github.com/aria-amini/imdbgraph',
 	preview: '/imdbgraph-preview.png',
 	previewAlt:
-		'imdbgraph.org displays Breaking Bad episode ratings as color-coded blocks grouped by season.',
+		'imdbgraph.org displays Game of Thrones episode ratings as color-coded blocks grouped by season.',
 } as const
 
 export const dialogs = ['resume', 'schedule'] as const

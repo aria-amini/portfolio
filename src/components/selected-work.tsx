@@ -17,13 +17,13 @@ export function SelectedWork() {
 					href={project.exampleUrl}
 					target="_blank"
 					rel="noreferrer"
-					aria-label="Explore Breaking Bad episode ratings on imdbgraph.org"
+					aria-label="Explore Game of Thrones episode ratings on imdbgraph.org"
 					className="group bg-card ink-shadow block rounded-xl border p-2"
 				>
 					<img
 						src={project.preview}
 						width={1400}
-						height={1000}
+						height={1200}
 						alt={project.previewAlt}
 						loading="lazy"
 						className="ring-border/30 rounded-md ring-1"
