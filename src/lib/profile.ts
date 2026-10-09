@@ -22,8 +22,8 @@ export const profile: Profile = {
 	resumeUrl: '/aria-amini-resume.pdf',
 	resumeDocxUrl: '/aria-amini-resume.docx',
 	// Set to a Cal.com or Calendly URL to embed live booking in the schedule dialog.
-	bookingUrl: 'https://cal.com/aria-amini/30min',
-	callMinutes: 30,
+	bookingUrl: 'https://cal.com/aria-amini/15min',
+	callMinutes: 15,
 }
 
 export const yearsOfExperience = 8

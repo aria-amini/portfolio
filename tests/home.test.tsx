@@ -12,7 +12,7 @@ test('shows the recruiter actions', async () => {
 		.element(screen.getByRole('link', { name: /view resume/i }))
 		.toBeVisible()
 	await expect
-		.element(screen.getByRole('link', { name: /book a 30-min call/i }).first())
+		.element(screen.getByRole('link', { name: /book a 15-min call/i }).first())
 		.toBeVisible()
 })
 
@@ -26,7 +26,7 @@ test('opens the schedule dialog from the URL', async () => {
 
 test('opens and closes the calendar from the booking action', async () => {
 	const screen = await renderHome('/')
-	await screen.getByRole('link', { name: /book a 30-min call/i }).click()
+	await screen.getByRole('link', { name: /book a 15-min call/i }).click()
 
 	const dialog = screen.getByRole('dialog', { name: /find a time/i })
 	await expect.element(dialog).toBeVisible()

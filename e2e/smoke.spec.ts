@@ -25,7 +25,7 @@ test('portfolio loads and recruiter paths work after hydration', async ({
 	await expect(page.getByRole('dialog')).toBeHidden()
 
 	await page
-		.getByRole('link', { name: /book a 30-min call/i })
+		.getByRole('link', { name: /book a 15-min call/i })
 		.first()
 		.click()
 	await expect(page).toHaveURL(/dialog=schedule/)
