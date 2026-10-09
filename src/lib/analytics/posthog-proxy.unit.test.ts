@@ -65,6 +65,20 @@ describe('header filters', () => {
 		])
 	})
 
+	test('strips Cloudflare headers that make PostHog reject the request', () => {
+		const headers = filterRequestHeaders(
+			new Headers({
+				'cf-connecting-ip': '203.0.113.7',
+				'cf-ray': 'a47ac9fbced00aec-EWR',
+				'cf-ipcountry': 'US',
+				'cdn-loop': 'cloudflare',
+				'x-forwarded-for': '203.0.113.7',
+			}),
+		)
+
+		expect([...headers.keys()]).toEqual(['x-forwarded-for'])
+	})
+
 	test('strips encoding and hop-by-hop headers from the response', () => {
 		const headers = filterResponseHeaders(
 			new Headers({

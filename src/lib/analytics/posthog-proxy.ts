@@ -15,6 +15,11 @@ const blockedRequestHeaders = [
 	'transfer-encoding',
 ]
 
+// Our site sits behind Cloudflare, and so does PostHog. Cloudflare answers a
+// request that already carries its `cf-*` headers (`cf-connecting-ip` in
+// particular) with error 1000, so those headers must not travel upstream.
+const blockedRequestHeaderPrefixes = ['cf-', 'cdn-loop']
+
 const blockedResponseHeaders = [
 	'connection',
 	'content-encoding',
@@ -49,6 +54,14 @@ export function filterRequestHeaders(headers: Headers): Headers {
 	const filtered = new Headers(headers)
 
 	for (const name of blockedRequestHeaders) filtered.delete(name)
+
+	// Snapshot the names: deleting during live iteration skips entries.
+	const names = Array.from(filtered.keys())
+
+	for (const name of names) {
+		if (blockedRequestHeaderPrefixes.some((prefix) => name.startsWith(prefix)))
+			filtered.delete(name)
+	}
 
 	return filtered
 }
