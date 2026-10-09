@@ -9,7 +9,6 @@ import { ButtonLink } from '@/components/button-link'
 import {
 	Dialog,
 	DialogContent,
-	DialogDescription,
 	DialogHeader,
 	DialogTitle,
 } from '@/components/ui/dialog'
@@ -85,19 +84,15 @@ export function SiteDialogs({ open }: { open: DialogName | undefined }) {
 				open={open === 'schedule'}
 				onOpenChange={onOpenChange('schedule')}
 			>
-				<DialogContent>
+				<DialogContent className="sm:max-w-[min(72rem,calc(100%-4rem))]">
 					<DialogHeader>
 						<DialogTitle>Let’s find a time.</DialogTitle>
-						<DialogDescription>
-							A {profile.callMinutes}-minute conversation about your team, the
-							role, or an interesting technical problem.
-						</DialogDescription>
 					</DialogHeader>
 					{profile.bookingUrl ? (
 						<iframe
 							src={profile.bookingUrl}
 							title="Book a call"
-							className="h-[60vh] w-full rounded-lg border"
+							className="h-[75dvh] w-full rounded-lg border"
 						/>
 					) : null}
 				</DialogContent>

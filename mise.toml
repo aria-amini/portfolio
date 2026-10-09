@@ -1,0 +1,3 @@
+[tasks.bootstrap]
+description = "Install dependencies and start the portfolio dev server"
+run = "node scripts/bootstrap.ts"

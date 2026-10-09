@@ -40,3 +40,22 @@ test('landing page', async () => {
 		await page.viewport(width, height)
 	}
 })
+
+test('calendar dialog', async () => {
+	const screen = await renderHome('/?dialog=schedule')
+	const dialog = screen.getByRole('dialog', { name: /find a time/i })
+	await expect.element(dialog).toBeVisible()
+	await document.fonts.ready
+
+	const calendar = document.querySelector('iframe[title="Book a call"]')
+
+	if (!(calendar instanceof HTMLIFrameElement)) {
+		throw new Error('The calendar iframe is missing')
+	}
+
+	// Cal.com content changes independently; the snapshot protects the dialog layout.
+	calendar.style.visibility = 'hidden'
+	await expect
+		.element(dialog)
+		.toMatchScreenshot(`calendar-dialog-${viewport()}`)
+})

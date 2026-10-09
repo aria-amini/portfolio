@@ -28,6 +28,13 @@ This repo follows `~/templates/tanstack` (Copier). It uses the template tooling,
 lint, `src/components/ui` (shadcn `base-vega`, Base UI), and theme code. It does
 not use the template database, auth, S3, or Docker parts.
 
+## Local development
+
+Run `mise run bootstrap` for each checkout or workspace. It installs
+dependencies, registers the Pitchfork proxy URL, starts the dev daemon, and
+verifies the page. The root checkout uses `https://portfolio.dev.ariaamini.com`.
+Other checkouts use `https://portfolio-<checkout-name>.dev.ariaamini.com`.
+
 ## Style rules
 
 - Build `className` with `cn()` from `cn`. Never use template literals.
