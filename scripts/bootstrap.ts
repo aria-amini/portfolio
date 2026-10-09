@@ -48,7 +48,8 @@ async function bootstrap() {
 		return
 	}
 
-	const verbose = args[0] === '--verbose'
+	const verbose =
+		args[0] === '--verbose' || process.env.usage_verbose === 'true'
 
 	const appName = run(
 		'gum',
