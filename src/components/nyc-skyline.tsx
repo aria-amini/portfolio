@@ -51,7 +51,10 @@ function NycClock({ className }: { className?: string }) {
 
 	return (
 		<p
-			className={cn('label-mono text-muted-foreground tabular-nums', className)}
+			className={cn(
+				'label-mono text-muted-foreground whitespace-nowrap tabular-nums',
+				className,
+			)}
 		>
 			<span className="text-foreground">NYC</span>{' '}
 			{time ? (
@@ -68,13 +71,16 @@ function NycClock({ className }: { className?: string }) {
 }
 
 /** Manhattan in ASCII, standing on the header rule. A few windows light up at random. */
-function Skyline() {
+function Skyline({ className }: { className?: string }) {
 	let windows = 0
 
 	return (
 		<pre
 			aria-hidden
-			className="font-glyph text-glyph text-muted-foreground font-semibold"
+			className={cn(
+				'font-glyph text-glyph text-muted-foreground font-semibold',
+				className,
+			)}
 		>
 			{skyline.map((row, rowIndex) => (
 				<span key={rowIndex} className="block">
@@ -103,7 +109,8 @@ function Skyline() {
 export function NycSkyline({ className }: { className?: string }) {
 	return (
 		<div className={cn('flex items-end gap-3', className)}>
-			<Skyline />
+			{/* Phones have room for the clock but not the skyline. */}
+			<Skyline className="hidden sm:block" />
 			<NycClock className="self-center" />
 		</div>
 	)
