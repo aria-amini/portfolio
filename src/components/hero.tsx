@@ -1,6 +1,7 @@
 import { CalendarDotsIcon, FileTextIcon } from '@phosphor-icons/react/dist/ssr'
 
 import { RouterButtonLink } from '@/components/button-link'
+import { CopyEmailButton } from '@/components/copy-email-button'
 import { ExperiencePanel } from '@/components/experience-panel'
 import { profile } from '@/lib/profile'
 
@@ -56,7 +57,10 @@ export function Hero() {
 						View resume
 					</RouterButtonLink>
 				</div>
-				<p className="mt-3 text-sm">{profile.email}</p>
+				<div className="mt-3 flex flex-wrap items-center gap-x-4 text-sm">
+					<span>{profile.email}</span>
+					<CopyEmailButton />
+				</div>
 			</div>
 			<ExperiencePanel />
 		</section>

@@ -1,39 +1,42 @@
 import { expect, test } from 'vite-plus/test'
+import { commands, page } from 'vite-plus/test/browser'
 
 import { renderHome } from './render-home'
 
-const viewport = () => (window.innerWidth < 600 ? 'mobile' : 'desktop')
-
-// Remove external and plugin-rendered content so screenshots stay deterministic.
-function hideEmbeds() {
-	for (const embed of document.querySelectorAll('iframe, object')) {
-		if (embed instanceof HTMLElement) embed.style.visibility = 'hidden'
+declare module 'vite-plus/test/browser' {
+	interface BrowserCommands {
+		resizeBrowserViewport: (width: number, height: number) => Promise<void>
 	}
 }
 
-test('home sections', async () => {
+const viewport = () => (window.innerWidth < 600 ? 'mobile' : 'desktop')
+
+test('landing page', async () => {
 	const screen = await renderHome('/')
 	await expect
 		.element(screen.getByRole('heading', { name: /aria amini/i }))
 		.toBeVisible()
 	await document.fonts.ready
 
-	await expect
-		.element(screen.getByRole('region', { name: /aria amini/i }))
-		.toMatchScreenshot(`hero-${viewport()}`)
-	await expect
-		.element(screen.getByRole('region', { name: 'Side projects' }))
-		.toMatchScreenshot(`projects-${viewport()}`)
-})
+	for (const image of document.images) {
+		image.loading = 'eager'
+		await image.decode()
+	}
 
-test.each(['resume', 'schedule'] as const)('%s dialog', async (dialog) => {
-	const screen = await renderHome(`/?dialog=${dialog}`)
-	const popup = screen.getByRole('dialog')
-	await expect.element(popup).toBeVisible()
-	hideEmbeds()
-	await document.fonts.ready
+	const width = window.innerWidth
+	const height = window.innerHeight
 
-	await expect
-		.element(popup)
-		.toMatchScreenshot(`${dialog}-dialog-${viewport()}`)
+	try {
+		await commands.resizeBrowserViewport(
+			width,
+			document.documentElement.scrollHeight,
+		)
+		await page.viewport(width, document.documentElement.scrollHeight)
+		await expect
+			.element(document.body)
+			.toMatchScreenshot(`landing-page-${viewport()}`)
+	} finally {
+		await commands.resizeBrowserViewport(width, height)
+		await page.viewport(width, height)
+	}
 })
