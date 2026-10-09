@@ -27,11 +27,15 @@ export function CopyEmail({ className }: { className?: string }) {
 	return (
 		<div
 			data-active={copied || undefined}
-			className={cn('flex flex-wrap items-center gap-x-4 text-sm', className)}
+			className={cn('flex flex-wrap items-center gap-x-2 text-sm', className)}
 		>
-			<span className="highlight-sweep -mx-1 rounded-sm px-1">
+			<span className="text-muted-foreground">Or email me</span>
+			<a
+				href={`mailto:${profile.email}`}
+				className="highlight-sweep -mx-1 rounded-sm px-1 font-medium underline-offset-4 hover:underline"
+			>
 				{profile.email}
-			</span>
+			</a>
 			<Button
 				type="button"
 				variant="ghost"
