@@ -18,7 +18,7 @@ export const profile: Profile = {
 	name: 'Aria Amini',
 	title: 'Senior AI/Infra Engineer',
 	intro:
-		'I build AI services, cloud infrastructure, and the tools that connect them.',
+		'AI and infra engineer in NYC who loves CS and math, coding since I was 16. Open to remote or hybrid roles with fast-moving teams.',
 	about:
 		"I'm a passionate dev who loves CS and math, and I've been coding since I was 16. Originally from New Orleans, I moved to NYC four years ago. I'm looking for remote or hybrid roles with fast-moving, passionate teams.",
 	focus: [

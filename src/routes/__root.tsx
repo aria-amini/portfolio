@@ -18,8 +18,6 @@ const siteUrl = 'https://www.ariaamini.dev'
 
 const siteTitle = `${profile.name} — ${profile.title}`
 
-const previewImageUrl = `${siteUrl}/aria-amini.jpg`
-
 function Analytics() {
 	useEffect(() => {
 		const posthogKey = import.meta.env.VITE_PUBLIC_POSTHOG_KEY?.trim()
@@ -54,15 +52,9 @@ export const Route = createRootRoute({
 			{ property: 'og:url', content: siteUrl },
 			{ property: 'og:title', content: siteTitle },
 			{ property: 'og:description', content: profile.intro },
-			{ property: 'og:image', content: previewImageUrl },
-			{ property: 'og:image:width', content: '800' },
-			{ property: 'og:image:height', content: '800' },
-			{ property: 'og:image:alt', content: `Portrait of ${profile.name}` },
 			{ name: 'twitter:card', content: 'summary' },
 			{ name: 'twitter:title', content: siteTitle },
 			{ name: 'twitter:description', content: profile.intro },
-			{ name: 'twitter:image', content: previewImageUrl },
-			{ name: 'twitter:image:alt', content: `Portrait of ${profile.name}` },
 		],
 		links: [{ rel: 'icon', type: 'image/svg+xml', href: '/favicon.ico' }],
 	}),
