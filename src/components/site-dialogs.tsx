@@ -87,15 +87,18 @@ export function SiteDialogs({ open }: { open: DialogName | undefined }) {
 				open={open === 'schedule'}
 				onOpenChange={onOpenChange('schedule')}
 			>
-				<DialogContent className="sm:max-w-[min(72rem,calc(100%-4rem))]">
-					<DialogHeader>
+				<DialogContent
+					layout="bleed"
+					className="sm:max-w-[min(72rem,calc(100%-4rem))]"
+				>
+					<DialogHeader variant="bar">
 						<DialogTitle>Let’s find a time.</DialogTitle>
 					</DialogHeader>
 					{profile.bookingUrl ? (
 						<iframe
 							src={profile.bookingUrl}
 							title="Book a call"
-							className="h-[75dvh] w-full rounded-lg border"
+							className="h-[75dvh] w-full"
 						/>
 					) : null}
 				</DialogContent>

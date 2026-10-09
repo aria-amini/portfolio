@@ -41,9 +41,12 @@ function DialogContent({
 	className,
 	children,
 	showCloseButton = true,
+	layout = 'padded',
 	...props
 }: DialogPrimitive.Popup.Props & {
 	showCloseButton?: boolean
+	/** `bleed` drops the padding and gap, so content such as an embed reaches the edges. */
+	layout?: 'padded' | 'bleed'
 }) {
 	return (
 		<DialogPortal>
@@ -51,7 +54,8 @@ function DialogContent({
 			<DialogPrimitive.Popup
 				data-slot="dialog-content"
 				className={cn(
-					'fixed top-1/2 left-1/2 z-50 grid max-h-[calc(100dvh-2rem)] w-full max-w-[calc(100%-2rem)] -translate-x-1/2 overflow-y-auto -translate-y-1/2 gap-6 ink-shadow rounded-xl border bg-popover p-6 text-sm text-popover-foreground outline-none sm:max-w-md data-open:sheet-in data-closed:sheet-out',
+					'fixed top-1/2 left-1/2 z-50 grid max-h-[calc(100dvh-2rem)] w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 ink-shadow rounded-xl border bg-popover text-sm text-popover-foreground outline-none sm:max-w-md data-open:sheet-in data-closed:sheet-out',
+					layout === 'padded' ? 'gap-6 overflow-y-auto p-6' : 'overflow-hidden',
 					className,
 				)}
 				{...props}
@@ -77,11 +81,22 @@ function DialogContent({
 	)
 }
 
-function DialogHeader({ className, ...props }: React.ComponentProps<'div'>) {
+function DialogHeader({
+	className,
+	variant = 'stack',
+	...props
+}: React.ComponentProps<'div'> & {
+	/** `bar` is a ruled title strip for `bleed` dialogs. Its padding centers the title on the close button. */
+	variant?: 'stack' | 'bar'
+}) {
 	return (
 		<div
 			data-slot="dialog-header"
-			className={cn('flex flex-col gap-2', className)}
+			className={cn(
+				'flex flex-col gap-2',
+				variant === 'bar' && 'border-b px-6 py-5 pr-14',
+				className,
+			)}
 			{...props}
 		/>
 	)
