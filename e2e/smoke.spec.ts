@@ -29,7 +29,7 @@ test('portfolio loads and recruiter paths work after hydration', async ({
 		.getByRole('link', { name: /book a 15-min call/i })
 		.first()
 		.click()
-	await expect(page).toHaveURL(/dialog=schedule/)
+	await expect(page).toHaveURL(/dialog=book/)
 	await expect(page.getByRole('dialog', { name: /find a time/i })).toBeVisible()
 	expect(errors).toEqual([])
 })

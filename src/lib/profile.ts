@@ -32,7 +32,7 @@ export const profile: Profile = {
 	linkedin: 'https://linkedin.com/in/aria-amini',
 	resumeUrl: '/aria-amini-resume.pdf',
 	resumeDocxUrl: '/aria-amini-resume.docx',
-	// Set to a Cal.com or Calendly URL to embed live booking in the schedule dialog.
+	// Set to a Cal.com or Calendly URL to embed live booking in the booking dialog.
 	bookingUrl: 'https://cal.com/aria-amini/15min',
 	callMinutes: 15,
 }
@@ -77,6 +77,6 @@ export const project = {
 		'imdbgraph.org displays Game of Thrones episode ratings as color-coded blocks grouped by season.',
 } as const
 
-export const dialogs = ['resume', 'schedule'] as const
+export const dialogs = ['resume', 'book'] as const
 
 export type DialogName = (typeof dialogs)[number]

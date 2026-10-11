@@ -52,7 +52,7 @@ test('landing page', async () => {
 })
 
 test('calendar dialog', async () => {
-	const screen = await renderHome('/?dialog=schedule')
+	const screen = await renderHome('/?dialog=book')
 	const dialog = screen.getByRole('dialog', { name: /find a time/i })
 	await expect.element(dialog).toBeVisible()
 	await document.fonts.ready

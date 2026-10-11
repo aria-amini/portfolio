@@ -16,8 +16,8 @@ test('shows the recruiter actions', async () => {
 		.toBeVisible()
 })
 
-test('opens the schedule dialog from the URL', async () => {
-	const screen = await renderHome('/?dialog=schedule')
+test('opens the booking dialog from the URL', async () => {
+	const screen = await renderHome('/?dialog=book')
 
 	await expect
 		.element(screen.getByRole('dialog', { name: /find a time/i }))

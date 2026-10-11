@@ -83,10 +83,7 @@ export function SiteDialogs({ open }: { open: DialogName | undefined }) {
 				</DialogContent>
 			</Dialog>
 
-			<Dialog
-				open={open === 'schedule'}
-				onOpenChange={onOpenChange('schedule')}
-			>
+			<Dialog open={open === 'book'} onOpenChange={onOpenChange('book')}>
 				<DialogContent
 					layout="bleed"
 					className="sm:max-w-[min(72rem,calc(100%-4rem))]"

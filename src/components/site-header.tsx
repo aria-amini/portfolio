@@ -32,7 +32,7 @@ export function SiteHeader() {
 				<RouterButtonLink
 					size="sm"
 					to="/"
-					search={(prev) => ({ ...prev, dialog: 'schedule' })}
+					search={(prev) => ({ ...prev, dialog: 'book' })}
 				>
 					<CalendarDotsIcon data-icon="inline-start" />
 					Book a call

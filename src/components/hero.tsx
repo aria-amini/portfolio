@@ -73,7 +73,7 @@ export function Hero() {
 						size="lg"
 						className="h-11"
 						to="/"
-						search={(prev) => ({ ...prev, dialog: 'schedule' })}
+						search={(prev) => ({ ...prev, dialog: 'book' })}
 					>
 						<CalendarDotsIcon data-icon="inline-start" />
 						Book a {profile.callMinutes}-min call

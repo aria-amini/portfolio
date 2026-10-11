@@ -10,11 +10,23 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BookRouteImport } from './routes/book'
+import { Route as BookACallRouteImport } from './routes/book-a-call'
 import { Route as ApiIngestSplatRouteImport } from './routes/api/ingest.$'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BookRoute = BookRouteImport.update({
+  id: '/book',
+  path: '/book',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BookACallRoute = BookACallRouteImport.update({
+  id: '/book-a-call',
+  path: '/book-a-call',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiIngestSplatRoute = ApiIngestSplatRouteImport.update({
@@ -25,27 +37,35 @@ const ApiIngestSplatRoute = ApiIngestSplatRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/book': typeof BookRoute
+  '/book-a-call': typeof BookACallRoute
   '/api/ingest/$': typeof ApiIngestSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/book': typeof BookRoute
+  '/book-a-call': typeof BookACallRoute
   '/api/ingest/$': typeof ApiIngestSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/book': typeof BookRoute
+  '/book-a-call': typeof BookACallRoute
   '/api/ingest/$': typeof ApiIngestSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/api/ingest/$'
+  fullPaths: '/' | '/book' | '/book-a-call' | '/api/ingest/$'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api/ingest/$'
-  id: '__root__' | '/' | '/api/ingest/$'
+  to: '/' | '/book' | '/book-a-call' | '/api/ingest/$'
+  id: '__root__' | '/' | '/book' | '/book-a-call' | '/api/ingest/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BookRoute: typeof BookRoute
+  BookACallRoute: typeof BookACallRoute
   ApiIngestSplatRoute: typeof ApiIngestSplatRoute
 }
 
@@ -56,6 +76,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/book': {
+      id: '/book'
+      path: '/book'
+      fullPath: '/book'
+      preLoaderRoute: typeof BookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/book-a-call': {
+      id: '/book-a-call'
+      path: '/book-a-call'
+      fullPath: '/book-a-call'
+      preLoaderRoute: typeof BookACallRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/ingest/$': {
@@ -70,6 +104,8 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BookRoute: BookRoute,
+  BookACallRoute: BookACallRoute,
   ApiIngestSplatRoute: ApiIngestSplatRoute,
 }
 export const routeTree = rootRouteImport
