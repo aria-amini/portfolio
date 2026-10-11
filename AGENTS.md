@@ -37,6 +37,9 @@ Other checkouts use `https://portfolio-<checkout-name>.dev.ariaamini.com`.
 
 Repeat the command after a checkout moves to repair its proxy mapping.
 
+Bootstrap sets the daemon namespace to the URL slug, for example
+`portfolio-animations/dev`.
+
 The dev server is a Pitchfork daemon (`pitchfork.toml`). Interactive shells
 auto-start it on `cd`. Pitchfork passes its assigned `PORT` to Vite as
 `APP_PORT` and probes that same port. Start the daemon through bootstrap first;

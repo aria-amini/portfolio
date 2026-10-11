@@ -107,9 +107,7 @@ async function bootstrap() {
 		'true',
 		'--global',
 	])
-	step('Register workspace URL', 'pitchfork', [
-		'proxy',
-		'add',
+	step('Register workspace URL', 'pitchfork-register', [
 		slug,
 		'--daemon',
 		'dev',

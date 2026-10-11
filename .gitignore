@@ -2,6 +2,7 @@
 .env
 .env*.local
 .mise.local.toml
+pitchfork.local.toml
 
 # Build
 .turbo
