@@ -1,8 +1,4 @@
-import {
-	CornersOutIcon,
-	FileDocIcon,
-	FilePdfIcon,
-} from '@phosphor-icons/react/dist/ssr'
+import { CornersOutIcon, FilePdfIcon } from '@phosphor-icons/react/dist/ssr'
 import { useNavigate } from '@tanstack/react-router'
 
 import { ButtonLink } from '@/components/button-link'
@@ -56,29 +52,16 @@ export function SiteDialogs({ open }: { open: DialogName | undefined }) {
 							<CornersOutIcon data-icon="inline-start" />
 							View Full-Screen
 						</ButtonLink>
-						<div className="flex flex-wrap items-center gap-3">
-							<span className="label-mono text-muted-foreground">Download</span>
-							<ButtonLink
-								variant="outline"
-								size="lg"
-								className="h-11"
-								href={profile.resumeUrl}
-								download={`${profile.name} - Resume.pdf`}
-							>
-								<FilePdfIcon className="size-5" data-icon="inline-start" />
-								PDF
-							</ButtonLink>
-							<ButtonLink
-								variant="outline"
-								size="lg"
-								className="h-11"
-								href={profile.resumeDocxUrl}
-								download={`${profile.name} - Resume.docx`}
-							>
-								<FileDocIcon className="size-5" data-icon="inline-start" />
-								Word
-							</ButtonLink>
-						</div>
+						<ButtonLink
+							variant="outline"
+							size="lg"
+							className="h-11"
+							href={profile.resumeUrl}
+							download={`${profile.name} - Resume.pdf`}
+						>
+							<FilePdfIcon className="size-5" data-icon="inline-start" />
+							Download PDF
+						</ButtonLink>
 					</div>
 				</DialogContent>
 			</Dialog>

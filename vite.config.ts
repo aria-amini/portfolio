@@ -11,6 +11,8 @@ import { nitro } from 'nitro/vite'
 import { defineConfig, type UserConfig } from 'vite-plus'
 import { playwright } from 'vite-plus/test/browser-playwright'
 
+import { resumePlugin } from './resume/vite-plugin.ts'
+
 const fmt = {
 	singleQuote: true,
 	semi: false,
@@ -212,6 +214,7 @@ export default defineConfig({
 					devtools({ injectSource: { enabled: false } }),
 					nitro({ sourcemap: true, experimental: { sourcemapMinify: false } }),
 				]),
+		resumePlugin(),
 		tailwindcss(),
 		viteReact(),
 		babel({ presets: [reactCompilerPreset()] }),
