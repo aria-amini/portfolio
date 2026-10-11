@@ -1,20 +1,24 @@
 import { CalendarDotsIcon, FileTextIcon } from '@phosphor-icons/react/dist/ssr'
 import { cn } from 'cn'
 
-import { AsciiStage } from '@/components/ambient/ascii-stage'
-import { DitherPortrait } from '@/components/ambient/dither-portrait'
 import { RouterButtonLink } from '@/components/button-link'
 import { CopyEmail } from '@/components/copy-email'
 import { ExperiencePanel } from '@/components/experience-panel'
 import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
-import { createLifeGunsScene } from '@/lib/ascii/life'
 import { profile } from '@/lib/profile'
 
 function Avatar() {
 	return (
 		<div className="bg-secondary ink-shadow size-20 shrink-0 -rotate-3 overflow-hidden rounded-full border @md:size-28">
-			<DitherPortrait />
+			<img
+				src="/aria-amini-192.jpg"
+				alt=""
+				width={192}
+				height={192}
+				fetchPriority="high"
+				className="size-full object-cover"
+			/>
 		</div>
 	)
 }
@@ -90,13 +94,6 @@ export function Hero() {
 					</RouterButtonLink>
 				</div>
 				<CopyEmail className="mt-3" />
-				{/* Fills the left column's leftover height beside the Experience card. */}
-				<div className="relative mt-6 h-40 md:h-auto md:min-h-32 md:flex-1">
-					<AsciiStage
-						scene={createLifeGunsScene}
-						className="absolute inset-0 size-full"
-					/>
-				</div>
 			</div>
 			<Separator className="md:hidden" />
 			<ExperiencePanel />
