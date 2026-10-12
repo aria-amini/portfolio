@@ -26,26 +26,32 @@ export function CopyEmail({ className }: { className?: string }) {
 
 	return (
 		<div
-			data-active={copied || undefined}
 			className={cn('flex flex-wrap items-center gap-x-2 text-sm', className)}
 		>
 			<span className="text-muted-foreground">Or email me at:</span>
-			<a
-				href={`mailto:${profile.email}`}
-				className="highlight-sweep -mx-1 rounded-sm px-1 font-medium underline-offset-4 hover:underline"
+			<span
+				data-active={copied || undefined}
+				className="inline-flex items-center"
 			>
-				{profile.email}
-			</a>
-			<Button
-				type="button"
-				variant="ghost"
-				size="icon-sm"
-				className="-ml-2.5"
-				aria-label={copied ? 'Email address copied' : 'Copy email address'}
-				onClick={copy}
-			>
-				{copied ? <CheckIcon className="stamp-press" /> : <CopyIcon />}
-			</Button>
+				<a
+					href={`mailto:${profile.email}`}
+					className="highlight-sweep -mx-1 inline-flex min-h-11 items-center rounded-sm px-1 font-medium underline-offset-4 hover:underline"
+				>
+					{profile.email}
+				</a>
+				<Button
+					type="button"
+					variant="ghost"
+					size="icon-touch"
+					aria-label={copied ? 'Email address copied' : 'Copy email address'}
+					onClick={copy}
+				>
+					{copied ? <CheckIcon className="stamp-press" /> : <CopyIcon />}
+				</Button>
+			</span>
+			<output className="sr-only">
+				{copied ? 'Email address copied' : ''}
+			</output>
 		</div>
 	)
 }

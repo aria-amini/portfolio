@@ -1,5 +1,6 @@
 import { CornersOutIcon, FilePdfIcon } from '@phosphor-icons/react/dist/ssr'
 import { useNavigate } from '@tanstack/react-router'
+import { useEffect, useRef } from 'react'
 
 import { ButtonLink } from '@/components/button-link'
 import {
@@ -16,6 +17,28 @@ const resumeFullScreenUrl = `${profile.resumeUrl}#navpanes=0&pagemode=none&zoom=
 
 export function SiteDialogs({ open }: { open: DialogName | undefined }) {
 	const navigate = useNavigate({ from: '/' })
+	const returnFocus = useRef<HTMLElement | null>(null)
+
+	useEffect(() => {
+		function rememberFocus(event: FocusEvent) {
+			// Base UI places focus guards outside the dialog, so ignore all modal focus changes.
+			if (document.querySelector('[role="dialog"]')) return
+
+			const target = event.target
+
+			if (target instanceof HTMLElement && !target.closest('[role="dialog"]')) {
+				returnFocus.current = target
+			}
+		}
+
+		document.addEventListener('focusin', rememberFocus)
+
+		return () => document.removeEventListener('focusin', rememberFocus)
+	}, [])
+
+	function restoreFocus() {
+		return returnFocus.current ?? document.getElementById('main')
+	}
 
 	function onOpenChange(name: DialogName) {
 		return (isOpen: boolean) => {
@@ -31,7 +54,7 @@ export function SiteDialogs({ open }: { open: DialogName | undefined }) {
 	return (
 		<>
 			<Dialog open={open === 'resume'} onOpenChange={onOpenChange('resume')}>
-				<DialogContent className="sm:max-w-3xl">
+				<DialogContent finalFocus={restoreFocus} className="sm:max-w-3xl">
 					<DialogHeader>
 						<DialogTitle>Resume</DialogTitle>
 					</DialogHeader>
@@ -68,6 +91,7 @@ export function SiteDialogs({ open }: { open: DialogName | undefined }) {
 
 			<Dialog open={open === 'book'} onOpenChange={onOpenChange('book')}>
 				<DialogContent
+					finalFocus={restoreFocus}
 					layout="bleed"
 					className="sm:max-w-[min(72rem,calc(100%-4rem))]"
 				>

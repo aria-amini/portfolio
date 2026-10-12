@@ -49,6 +49,20 @@ test('opens and closes the calendar from the booking action', async () => {
 
 	await screen.getByRole('button', { name: 'Close', exact: true }).click()
 	await expect.element(dialog).not.toBeInTheDocument()
+	await expect
+		.element(screen.getByRole('link', { name: /book a 15-min call/i }))
+		.toHaveFocus()
+})
+
+test('returns focus to the resume action after the dialog closes', async () => {
+	const screen = await renderHome('/')
+	const resumeAction = screen.getByRole('link', { name: /view resume/i })
+	await resumeAction.click()
+	await expect
+		.element(screen.getByRole('dialog', { name: 'Resume', exact: true }))
+		.toBeVisible()
+	await screen.getByRole('button', { name: 'Close', exact: true }).click()
+	await expect.element(resumeAction).toHaveFocus()
 })
 
 test('keeps the header on screen and under the booking dialog after scrolling', async () => {

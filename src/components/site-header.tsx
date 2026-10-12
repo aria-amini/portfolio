@@ -13,7 +13,10 @@ export function SiteHeader() {
 		<header className="bg-background sticky top-0 z-20 border-b">
 			<div className="mx-auto flex h-20 w-full max-w-5xl items-center justify-end px-6">
 				<NycSkyline className="mr-auto self-stretch" />
-				<nav aria-label="Main navigation" className="flex items-center gap-2">
+				<nav
+					aria-label="Main navigation"
+					className="flex items-center gap-1 sm:gap-2"
+				>
 					<ButtonLink
 						variant="ghost"
 						className="size-11 md:w-auto md:px-3"
@@ -32,6 +35,7 @@ export function SiteHeader() {
 					</ButtonLink>
 					<RouterButtonLink
 						size="sm"
+						className="h-11"
 						to="/"
 						search={(prev) => ({ ...prev, dialog: 'book' })}
 					>
