@@ -37,6 +37,10 @@ Other checkouts use `https://portfolio-<checkout-name>.dev.ariaamini.com`.
 
 Repeat the command after a checkout moves to repair its proxy mapping.
 
+Bootstrap needs `pitchfork-register` on `PATH`. The helper ships with the
+chezmoi dotfiles. If it is missing, run
+`chezmoi apply ~/.local/bin/pitchfork-register`.
+
 Bootstrap sets the daemon namespace to the URL slug, for example
 `portfolio-animations/dev`.
 

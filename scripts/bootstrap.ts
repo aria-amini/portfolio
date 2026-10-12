@@ -29,6 +29,16 @@ function run(command: string, args: string[], capture = false): string {
 	return result.stdout?.trim() ?? ''
 }
 
+function requireCommand(command: string, installHint: string) {
+	const lookup = spawnSync('sh', ['-c', 'command -v "$0"', command], {
+		stdio: 'ignore',
+	})
+
+	if (lookup.status !== 0) {
+		throw new Error(`${command} is not on PATH. ${installHint}`)
+	}
+}
+
 async function bootstrap() {
 	const args = process.argv.slice(2)
 
@@ -47,6 +57,12 @@ async function bootstrap() {
 
 		return
 	}
+
+	// pitchfork-register ships with the dotfiles, not with mise, so check it before any step runs.
+	requireCommand(
+		'pitchfork-register',
+		'Install it from the dotfiles with `chezmoi apply ~/.local/bin/pitchfork-register`.',
+	)
 
 	const verbose =
 		args[0] === '--verbose' || process.env.usage_verbose === 'true'

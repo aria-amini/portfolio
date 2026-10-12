@@ -50,3 +50,27 @@ test('opens and closes the calendar from the booking action', async () => {
 	await screen.getByRole('button', { name: 'Close', exact: true }).click()
 	await expect.element(dialog).not.toBeInTheDocument()
 })
+
+test('keeps the header on screen and under the booking dialog after scrolling', async () => {
+	const screen = await renderHome('/')
+	// The open dialog hides the page from the accessibility tree, so keep the node.
+	const header = screen.getByRole('banner').element()
+
+	window.scrollTo(0, document.documentElement.scrollHeight)
+	await expect.poll(() => window.scrollY).toBeGreaterThan(0)
+	expect(header.getBoundingClientRect().top).toBe(0)
+
+	await screen.getByRole('link', { name: 'Book a call', exact: true }).click()
+	await expect
+		.element(screen.getByRole('dialog', { name: /find a time/i }))
+		.toBeVisible()
+
+	const bounds = header.getBoundingClientRect()
+
+	const topmost = document.elementFromPoint(
+		bounds.left + bounds.width / 2,
+		bounds.top + bounds.height / 2,
+	)
+
+	expect(header.contains(topmost)).toBe(false)
+})
