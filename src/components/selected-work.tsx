@@ -35,7 +35,12 @@ export function SelectedWork() {
 						{project.summary}
 					</p>
 					<div className="mt-6 flex flex-wrap items-center gap-3">
-						<ButtonLink href={project.liveUrl} target="_blank" rel="noreferrer">
+						<ButtonLink
+							variant="outline"
+							href={project.liveUrl}
+							target="_blank"
+							rel="noreferrer"
+						>
 							Visit Site <ArrowUpRightIcon />
 						</ButtonLink>
 						<ButtonLink variant="link" href={project.sourceUrl}>

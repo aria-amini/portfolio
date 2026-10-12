@@ -7,14 +7,14 @@ import type { DialogName } from '@/lib/profile'
 
 export function HomePage({ dialog }: { dialog: DialogName | undefined }) {
 	return (
-		<div className="mx-auto w-full max-w-5xl px-6 pb-20">
+		<>
 			<SiteHeader />
-			<main id="main">
+			<main id="main" className="mx-auto w-full max-w-5xl px-6 pb-20">
 				<Hero />
 				<Separator />
 				<SelectedWork />
 			</main>
 			<SiteDialogs open={dialog} />
-		</div>
+		</>
 	)
 }
