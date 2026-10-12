@@ -1,4 +1,5 @@
 import { expect, test } from 'vite-plus/test'
+import { userEvent } from 'vite-plus/test/browser'
 
 import { renderHome } from './render-home'
 
@@ -49,6 +50,49 @@ test('opens and closes the calendar from the booking action', async () => {
 
 	await screen.getByRole('button', { name: 'Close', exact: true }).click()
 	await expect.element(dialog).not.toBeInTheDocument()
+	await expect
+		.element(screen.getByRole('link', { name: /book a 15-min call/i }))
+		.toHaveFocus()
+})
+
+test('returns focus to the resume action after the dialog closes', async () => {
+	const screen = await renderHome('/')
+	const resumeAction = screen.getByRole('link', { name: /view resume/i })
+	await resumeAction.click()
+	await expect
+		.element(screen.getByRole('dialog', { name: 'Resume', exact: true }))
+		.toBeVisible()
+	await screen.getByRole('button', { name: 'Close', exact: true }).click()
+	await expect.element(resumeAction).toHaveFocus()
+})
+
+test('keeps keyboard focus inside the resume dialog and returns it after Escape', async () => {
+	const screen = await renderHome('/')
+	const resumeAction = screen.getByRole('link', { name: /view resume/i })
+	resumeAction.element().focus()
+	await expect.element(resumeAction).toHaveFocus()
+
+	await userEvent.keyboard('{Enter}')
+	const dialog = screen.getByRole('dialog', { name: 'Resume', exact: true })
+	await expect.element(dialog).toBeVisible()
+	await expect
+		.poll(() => dialog.element().contains(document.activeElement))
+		.toBe(true)
+
+	const closeAction = screen.getByRole('button', { name: 'Close', exact: true })
+	closeAction.element().focus()
+	await expect.element(closeAction).toHaveFocus()
+	await userEvent.tab()
+	await expect.element(closeAction).not.toHaveFocus()
+	await expect
+		.poll(() => dialog.element().contains(document.activeElement))
+		.toBe(true)
+
+	await userEvent.tab({ shift: true })
+	await expect.element(closeAction).toHaveFocus()
+	await userEvent.keyboard('{Escape}')
+	await expect.element(dialog).not.toBeInTheDocument()
+	await expect.element(resumeAction).toHaveFocus()
 })
 
 test('keeps the header on screen and under the booking dialog after scrolling', async () => {

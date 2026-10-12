@@ -37,13 +37,18 @@ export function SelectedWork() {
 					<div className="mt-6 flex flex-wrap items-center gap-3">
 						<ButtonLink
 							variant="outline"
+							className="h-11"
 							href={project.liveUrl}
 							target="_blank"
 							rel="noreferrer"
 						>
 							Visit Site <ArrowUpRightIcon />
 						</ButtonLink>
-						<ButtonLink variant="link" href={project.sourceUrl}>
+						<ButtonLink
+							variant="link"
+							className="h-11"
+							href={project.sourceUrl}
+						>
 							<GithubLogoIcon data-icon="inline-start" />
 							View Source Code
 						</ButtonLink>

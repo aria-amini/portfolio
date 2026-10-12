@@ -52,7 +52,7 @@ function NycClock({ className }: { className?: string }) {
 	return (
 		<p
 			className={cn(
-				'label-mono text-muted-foreground whitespace-nowrap tabular-nums',
+				'label-mono text-muted-foreground flex flex-col whitespace-nowrap tabular-nums sm:block',
 				className,
 			)}
 		>
@@ -64,7 +64,7 @@ function NycClock({ className }: { className?: string }) {
 					{time.minute} {time.period}
 				</time>
 			) : (
-				<span className="invisible">0:00 AM</span>
+				<span className="invisible">12:00 AM</span>
 			)}
 		</p>
 	)

@@ -75,6 +75,7 @@ export function Hero() {
 				<div className="mt-6 flex flex-wrap gap-3">
 					<RouterButtonLink
 						size="xl"
+						className="w-full @md:w-auto"
 						to="/"
 						search={(prev) => ({ ...prev, dialog: 'book' })}
 					>
@@ -84,6 +85,7 @@ export function Hero() {
 					<RouterButtonLink
 						size="xl"
 						variant="outline"
+						className="w-full @md:w-auto"
 						to="/"
 						search={(prev) => ({ ...prev, dialog: 'resume' })}
 					>
