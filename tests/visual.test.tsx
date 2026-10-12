@@ -6,11 +6,14 @@ import { renderHome } from './render-home'
 declare module 'vite-plus/test/browser' {
 	interface BrowserCommands {
 		resizeBrowserViewport: (width: number, height: number) => Promise<void>
+		resetScreenshotPointer: () => Promise<void>
 	}
 }
 
 // The header clock shows New York time, so pin the date for stable screenshots.
-beforeEach(() => {
+beforeEach(async () => {
+	// Earlier test files can leave the pointer over a control in its hover state.
+	await commands.resetScreenshotPointer()
 	vi.useFakeTimers({ toFake: ['Date'] })
 	vi.setSystemTime(new Date('2026-01-15T14:30:00-05:00'))
 })
