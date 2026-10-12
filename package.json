@@ -13,6 +13,7 @@
 		"build": "vp build",
 		"dev": "vp dev",
 		"preview": "vp preview",
+		"resume": "node resume/build.ts",
 		"start": "varlock run -- node .output/server/index.mjs",
 		"check": "vp check",
 		"test": "vp test run --passWithNoTests",
@@ -47,6 +48,7 @@
 		"zod": "^4.4.3"
 	},
 	"devDependencies": {
+		"@myriaddreamin/typst-ts-node-compiler": "^0.7.0",
 		"@oxlint/plugins": "1.83.0",
 		"@playwright/test": "^1.61.0",
 		"@rolldown/plugin-babel": "^0.2.3",

@@ -16,9 +16,6 @@ test('portfolio loads and recruiter paths work after hydration', async ({
 	expect(resume.status()).toBe(200)
 	expect(resume.headers()['content-type']).toContain('application/pdf')
 
-	const docx = await page.request.get('/aria-amini-resume.docx')
-	expect(docx.status()).toBe(200)
-
 	await page.getByRole('link', { name: /view resume/i }).click()
 	await expect(page).toHaveURL(/dialog=resume/)
 	await expect(page.getByRole('dialog', { name: 'Resume' })).toBeVisible()
