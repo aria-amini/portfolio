@@ -23,11 +23,11 @@ function Avatar() {
 	)
 }
 
-function TitleStamp({ className }: { className?: string }) {
+function RoleLabel({ className }: { className?: string }) {
 	return (
 		<p
 			className={cn(
-				'bg-secondary text-secondary-foreground ink-shadow stamp-in inline-block -rotate-2 rounded-md border px-3 py-1.5 text-base font-bold @md:text-lg',
+				'text-muted-foreground text-base font-medium @md:text-lg',
 				className,
 			)}
 		>
@@ -59,7 +59,7 @@ export function Hero() {
 					<Avatar />
 					<div className="min-w-0">
 						<NameHeading />
-						<TitleStamp className="mt-4" />
+						<RoleLabel className="mt-3" />
 					</div>
 				</div>
 				<p className="text-muted-foreground max-w-md leading-7">
@@ -68,14 +68,13 @@ export function Hero() {
 				<ul aria-label="Focus areas" className="mt-4 flex flex-wrap gap-2">
 					{profile.focus.map((area) => (
 						<li key={area}>
-							<Badge variant="outline">{area}</Badge>
+							<Badge variant="muted">{area}</Badge>
 						</li>
 					))}
 				</ul>
 				<div className="mt-6 flex flex-wrap gap-3">
 					<RouterButtonLink
-						size="lg"
-						className="h-11"
+						size="xl"
 						to="/"
 						search={(prev) => ({ ...prev, dialog: 'book' })}
 					>
@@ -83,9 +82,8 @@ export function Hero() {
 						Book a {profile.callMinutes}-min call
 					</RouterButtonLink>
 					<RouterButtonLink
-						size="lg"
+						size="xl"
 						variant="outline"
-						className="h-11"
 						to="/"
 						search={(prev) => ({ ...prev, dialog: 'resume' })}
 					>
