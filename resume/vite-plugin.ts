@@ -12,6 +12,8 @@ import {
  * compiles on every request (about 10 ms), so the dialog always shows the
  * latest resume.yaml.
  */
+const rebuildEvents = new Set(['add', 'change', 'unlink'])
+
 export function resumePlugin(): Plugin {
 	return {
 		name: 'resume-pdf',
@@ -19,8 +21,8 @@ export function resumePlugin(): Plugin {
 
 		configureServer(server) {
 			server.watcher.add(resumeDir)
-			server.watcher.on('change', (file) => {
-				if (!file.startsWith(resumeDir)) return
+			server.watcher.on('all', (event, file) => {
+				if (!rebuildEvents.has(event) || !file.startsWith(resumeDir)) return
 
 				const build = buildResume()
 				server.ws.send(
