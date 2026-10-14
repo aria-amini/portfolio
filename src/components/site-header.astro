@@ -10,7 +10,8 @@ import { NycSkyline } from '@/components/nyc-skyline'
 import { profile } from '@/lib/profile'
 ---
 
-<header class="site-header bg-background sticky top-0 z-20 border-b">
+<div aria-hidden="true" class="site-header-space"></div>
+<header class="site-header bg-background fixed inset-x-0 top-0 z-20 border-b">
 	<div class="page-gutter mx-auto flex h-20 w-full max-w-5xl items-center justify-end">
 		<NycSkyline client:load className="mr-auto self-stretch" />
 		<nav aria-label="Main navigation" class="flex items-center gap-1 sm:gap-2">

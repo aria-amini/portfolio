@@ -137,6 +137,47 @@ test('keeps the header on screen and below the booking dialog', async ({
 	).toBe(false)
 })
 
+test('keeps the header anchored through scroll bursts and viewport resizing', async ({
+	page,
+}) => {
+	const viewport = page.viewportSize()!
+	const header = page.getByRole('banner')
+
+	for (const height of [
+		viewport.height,
+		viewport.height - 120,
+		viewport.height,
+	]) {
+		await page.setViewportSize({ width: viewport.width, height })
+
+		const positions = await page.evaluate(async () => {
+			const banner = document.querySelector('header')!
+			const samples = []
+
+			for (const offset of [0, 600, 20, 1200, 80, 0]) {
+				window.scrollTo({ top: offset, behavior: 'instant' })
+				await new Promise<void>((resolve) =>
+					requestAnimationFrame(() => resolve()),
+				)
+				samples.push(banner.getBoundingClientRect().top)
+			}
+
+			return samples
+		})
+
+		expect(positions).toEqual([0, 0, 0, 0, 0, 0])
+		await expect(header.getByRole('navigation')).toBeVisible()
+
+		const heading = (await page
+			.getByRole('heading', { name: 'Aria Amini', exact: true })
+			.boundingBox())!
+
+		expect(heading.y).toBeGreaterThanOrEqual(
+			(await header.boundingBox())!.height,
+		)
+	}
+})
+
 test('supports Back and Forward without replacing the page', async ({
 	page,
 }) => {
