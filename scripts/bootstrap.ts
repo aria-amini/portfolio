@@ -156,7 +156,7 @@ async function bootstrap() {
 	}
 
 	if (!(await poll())) {
-		step('Restart stale dev daemon', 'pitchfork', ['restart', 'dev', '--force'])
+		step('Restart stale dev daemon', 'pitchfork', ['restart', 'dev'])
 
 		if (!(await poll()))
 			throw new Error(`${url} did not return the portfolio page`)
