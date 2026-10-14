@@ -14,7 +14,7 @@
 		"dev": "astro dev --ignore-lock",
 		"preview": "astro preview --ignore-lock",
 		"resume": "node resume/build.ts",
-		"start": "NODE_ENV=production node dist/server/entry.mjs",
+		"start": "NODE_ENV=production HOST=${HOST:-0.0.0.0} node dist/server/entry.mjs",
 		"check": "vp check && prettier --check \"**/*.astro\" && eslint && astro check",
 		"test": "vp test run --passWithNoTests",
 		"test:unit": "vp test run --project unit --passWithNoTests",
