@@ -9,6 +9,7 @@ interface Profile {
 	github: string
 	linkedin: string
 	resumeUrl: string
+	resumePreviewUrl: string
 	bookingUrl: string | null
 	callMinutes: number
 }
@@ -30,6 +31,7 @@ export const profile: Profile = {
 	github: 'https://github.com/aamini11',
 	linkedin: 'https://linkedin.com/in/aria-amini',
 	resumeUrl: '/aria-amini-resume.pdf',
+	resumePreviewUrl: '/aria-amini-resume.svg',
 	// Set to a Cal.com or Calendly URL to embed live booking in the booking dialog.
 	bookingUrl: 'https://cal.com/aria-amini/15min',
 	callMinutes: 15,

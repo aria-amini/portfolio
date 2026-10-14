@@ -11,8 +11,6 @@ import {
 import { dialogUrl, readDialog } from '@/lib/dialog-url'
 import { type DialogName, profile } from '@/lib/profile'
 
-const resumePreviewUrl = `${profile.resumeUrl}#navpanes=0&pagemode=none&view=FitH`
-
 const resumeFullScreenUrl = `${profile.resumeUrl}#navpanes=0&pagemode=none&zoom=100`
 
 export function SiteDialogs({
@@ -116,12 +114,19 @@ export function SiteDialogs({
 					<DialogHeader>
 						<DialogTitle>Resume</DialogTitle>
 					</DialogHeader>
-					<object
-						data={resumePreviewUrl}
-						type="application/pdf"
-						aria-label={`${profile.name} resume`}
-						className="hidden h-[60vh] w-full rounded-lg border md:block"
-					/>
+					{/* oxlint-disable jsx-a11y/no-noninteractive-tabindex -- Keyboard focus allows scrolling the resume without a pointer. */}
+					<section
+						aria-label="Resume preview"
+						tabIndex={0}
+						className="max-h-[60dvh] overflow-auto rounded-lg border"
+					>
+						<img
+							src={profile.resumePreviewUrl}
+							alt={`${profile.name} resume`}
+							className="block h-auto w-full"
+						/>
+					</section>
+					{/* oxlint-enable jsx-a11y/no-noninteractive-tabindex */}
 					<div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
 						<ButtonLink
 							size="lg"

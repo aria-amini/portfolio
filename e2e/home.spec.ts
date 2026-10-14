@@ -22,6 +22,40 @@ test('shows the recruiter actions', async ({ page }) => {
 	).toBeVisible()
 })
 
+for (const entry of ['homepage', 'direct URL']) {
+	test(`shows the resume preview from the ${entry}`, async ({ page }) => {
+		if (entry === 'homepage') {
+			await page.getByRole('link', { name: /view resume/i }).click()
+		} else {
+			await page.goto('/?dialog=resume')
+		}
+
+		const dialog = page.getByRole('dialog', { name: 'Resume', exact: true })
+		const preview = dialog.getByRole('img', { name: 'Aria Amini resume' })
+		await expect(preview).toBeVisible()
+		await expect
+			.poll(() =>
+				preview.evaluate(
+					(image: HTMLImageElement) => image.complete && image.naturalWidth > 0,
+				),
+			)
+			.toBe(true)
+
+		const viewport = page.viewportSize()!
+		const bounds = (await dialog.boundingBox())!
+		expect(bounds.x).toBeGreaterThanOrEqual(0)
+		expect(bounds.x + bounds.width).toBeLessThanOrEqual(viewport.width)
+		expect(bounds.y).toBeGreaterThanOrEqual(0)
+		expect(bounds.y + bounds.height).toBeLessThanOrEqual(viewport.height)
+		await expect(
+			dialog.getByRole('link', { name: 'View Full-Screen' }),
+		).toHaveAttribute('href', /^\/aria-amini-resume\.pdf#/)
+		await expect(
+			dialog.getByRole('link', { name: 'Download PDF' }),
+		).toHaveAttribute('download', 'Aria Amini - Resume.pdf')
+	})
+}
+
 test('opens the booking dialog from the URL', async ({ page }) => {
 	await page.goto('/?dialog=book')
 	await expect(page.getByRole('dialog', { name: /find a time/i })).toBeVisible()

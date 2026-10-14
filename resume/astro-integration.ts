@@ -4,9 +4,9 @@ import type { AstroIntegration } from 'astro'
 
 import {
 	buildResume,
-	compileResume,
 	resumeDir,
 	resumeFileName,
+	resumePreviewFileName,
 } from './compile.ts'
 
 const rebuildEvents = new Set(['add', 'change', 'unlink'])
@@ -28,7 +28,16 @@ export function resumeIntegration(): AstroIntegration {
 					)
 				})
 
-				server.middlewares.use(`/${resumeFileName}`, (_request, response) => {
+				server.middlewares.use((request, response, next) => {
+					const path = request.url?.split('?')[0]
+					const isPreview = path === `/${resumePreviewFileName}`
+
+					if (path !== `/${resumeFileName}` && !isPreview) {
+						next()
+
+						return
+					}
+
 					const build = buildResume()
 
 					if (!build.ok) {
@@ -39,13 +48,23 @@ export function resumeIntegration(): AstroIntegration {
 						return
 					}
 
-					response.setHeader('Content-Type', 'application/pdf')
+					response.setHeader(
+						'Content-Type',
+						isPreview ? 'image/svg+xml' : 'application/pdf',
+					)
 					response.setHeader('Cache-Control', 'no-store')
-					response.end(build.pdf)
+					response.end(isPreview ? build.preview : build.pdf)
 				})
 			},
 			'astro:build:done': async ({ dir }) => {
-				await writeFile(new URL(resumeFileName, dir), compileResume())
+				const build = buildResume()
+
+				if (!build.ok) throw new Error(build.message)
+
+				await Promise.all([
+					writeFile(new URL(resumeFileName, dir), build.pdf),
+					writeFile(new URL(resumePreviewFileName, dir), build.preview),
+				])
 			},
 		},
 	}
