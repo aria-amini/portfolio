@@ -1,0 +1,35 @@
+---
+import Hero from '@/components/hero.astro'
+import SelectedWork from '@/components/selected-work.astro'
+import { SiteDialogs } from '@/components/site-dialogs'
+import SiteHeader from '@/components/site-header.astro'
+import { Separator } from '@/components/ui/separator'
+import Base from '@/layouts/base.astro'
+import { readDialog } from '@/lib/dialog-url'
+
+export const prerender = true
+
+const dialog = readDialog(Astro.url)
+---
+
+<Base>
+	<div class="flex-1">
+		<a
+			href="#main"
+			class="bg-card text-foreground focus-visible:ring-ring sr-only z-50 rounded-lg font-semibold focus:not-sr-only focus:fixed focus:top-[calc(var(--safe-area-top)+0.75rem)] focus:left-[max(1.5rem,var(--safe-area-left))] focus:border focus:px-4 focus:py-3 focus-visible:ring-3"
+		>
+			Skip to content
+		</a>
+		<SiteHeader />
+		<main
+			id="main"
+			tabindex="-1"
+			class="page-gutter page-bottom mx-auto w-full max-w-5xl"
+		>
+			<Hero />
+			<Separator />
+			<SelectedWork />
+		</main>
+		<SiteDialogs client:load open={dialog} />
+	</div>
+</Base>

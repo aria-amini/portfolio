@@ -15,6 +15,7 @@ test('portfolio loads and recruiter paths work after hydration', async ({
 	const resume = await page.request.get('/aria-amini-resume.pdf')
 	expect(resume.status()).toBe(200)
 	expect(resume.headers()['content-type']).toContain('application/pdf')
+	expect((await resume.body()).subarray(0, 5).toString()).toBe('%PDF-')
 
 	await page.getByRole('link', { name: /view resume/i }).click()
 	await expect(page).toHaveURL(/dialog=resume/)
@@ -36,4 +37,51 @@ test('proxies PostHog assets through the app', async ({ request }) => {
 
 	expect(response.status()).toBe(200)
 	expect(response.headers()['content-type']).toContain('javascript')
+})
+
+for (const alias of ['/book', '/book-a-call']) {
+	test(`${alias} redirects to the booking dialog`, async ({ request }) => {
+		const response = await request.get(alias, { maxRedirects: 0 })
+		expect(response.status()).toBe(307)
+		expect(response.headers().location).toBe('/?dialog=book')
+	})
+}
+
+test('renders the portfolio content without JavaScript', async ({
+	browser,
+	baseURL,
+}) => {
+	const context = await browser.newContext({
+		javaScriptEnabled: false,
+		baseURL: baseURL!,
+	})
+
+	const page = await context.newPage()
+
+	try {
+		await page.goto('/')
+		await expect(
+			page.getByRole('heading', { name: /aria amini/i }),
+		).toBeVisible()
+		await expect(
+			page.getByText('Microsoft · Azure', { exact: true }),
+		).toBeVisible()
+		await expect(
+			page.getByRole('heading', { name: 'imdbgraph.org' }),
+		).toBeVisible()
+	} finally {
+		await context.close()
+	}
+})
+
+test('serves canonical and social metadata in the HTML', async ({
+	request,
+}) => {
+	const response = await request.get('/')
+	const html = await response.text()
+	expect(html).toContain('href="https://www.ariaamini.dev/"')
+	expect(html).toContain(
+		'property="og:image" content="https://www.ariaamini.dev/icon.png"',
+	)
+	expect(html).toContain('name="twitter:card" content="summary"')
 })

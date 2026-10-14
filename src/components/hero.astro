@@ -1,0 +1,78 @@
+---
+import { CalendarDotsIcon, FileTextIcon } from '@phosphor-icons/react/dist/ssr'
+import { Image } from 'astro:assets'
+
+import portrait from '@/assets/aria-amini.jpg'
+import { ButtonLink } from '@/components/button-link'
+import { CopyEmail } from '@/components/copy-email'
+import ExperiencePanel from '@/components/experience-panel.astro'
+import { Badge } from '@/components/ui/badge'
+import { Separator } from '@/components/ui/separator'
+import { profile } from '@/lib/profile'
+---
+
+<section
+	aria-labelledby="intro-title"
+	class="grid gap-10 py-12 md:grid-cols-2 lg:gap-16"
+>
+	<div class="@container flex flex-col">
+		<div class="mb-6 flex items-center gap-4 @md:gap-6">
+			<div class="bg-secondary ink-shadow size-20 shrink-0 -rotate-3 overflow-hidden rounded-full border @md:size-28">
+				<Image
+					src={portrait}
+					alt=""
+					width={112}
+					height={112}
+					widths={[80, 112, 160, 224, 336]}
+					sizes="(min-width: 984px) 112px, (min-width: 768px) 80px, (min-width: 496px) 112px, 80px"
+					quality={90}
+					priority
+					class="size-full object-cover"
+				/>
+			</div>
+			<div class="min-w-0">
+				<h1
+					id="intro-title"
+					class="ink-roll text-4xl leading-none font-extrabold tracking-tight whitespace-nowrap @md:text-6xl"
+				>
+					{profile.name}
+				</h1>
+				<p class="text-muted-foreground mt-3 text-base font-medium @md:text-lg">
+					{profile.title}
+				</p>
+			</div>
+		</div>
+		<p class="text-muted-foreground max-w-md leading-7">{profile.about}</p>
+		<ul aria-label="Focus areas" class="mt-4 flex flex-wrap gap-2">
+			{profile.focus.map((area) => (
+				<li>
+					<Badge variant="muted">{area}</Badge>
+				</li>
+			))}
+		</ul>
+		<div class="mt-6 flex flex-wrap gap-3">
+			<ButtonLink
+				size="xl"
+				className="w-full @md:w-auto"
+				href="/?dialog=book"
+				data-dialog="book"
+			>
+				<CalendarDotsIcon data-icon="inline-start" />
+				Book a {profile.callMinutes}-min call
+			</ButtonLink>
+			<ButtonLink
+				size="xl"
+				variant="outline"
+				className="w-full @md:w-auto"
+				href="/?dialog=resume"
+				data-dialog="resume"
+			>
+				<FileTextIcon data-icon="inline-start" />
+				View resume
+			</ButtonLink>
+		</div>
+		<CopyEmail client:load className="mt-3" />
+	</div>
+	<Separator className="md:hidden" />
+	<ExperiencePanel />
+</section>

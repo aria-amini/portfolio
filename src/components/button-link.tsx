@@ -1,4 +1,3 @@
-import { Link, type LinkComponentProps } from '@tanstack/react-router'
 import type { VariantProps } from 'class-variance-authority'
 import { cn } from 'cn'
 import type { ComponentProps } from 'react'
@@ -22,20 +21,5 @@ export function ButtonLink({
 		>
 			{children}
 		</a>
-	)
-}
-
-export function RouterButtonLink({
-	variant,
-	size,
-	className,
-	...props
-}: LinkComponentProps<'a'> & ButtonStyle) {
-	return (
-		<Link
-			data-slot="button"
-			className={cn(buttonVariants({ variant, size, className }))}
-			{...props}
-		/>
 	)
 }

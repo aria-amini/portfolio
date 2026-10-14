@@ -1,16 +1,16 @@
 # portfolio
 
-This is a Vite + Tanstack Start + React + Tailwind project for Aria Amini's
-portfolio site.
+This is a Astro + React islands + Tailwind project for Aria Amini's portfolio
+site.
 
 ## Using Vite+, the Unified Toolchain for the Web
 
 This project uses Vite+, a unified toolchain built on top of Vite, Rolldown,
 Vitest, tsdown, Oxlint, Oxfmt, and Vite Task. Vite+ wraps runtime management,
 package management, and frontend tooling in a single global CLI called `vp`.
-Vite+ is distinct from Vite, and it invokes Vite through `vp dev` and
-`vp build`. Run `vp help` to print a list of commands and `vp <command> --help`
-for information about a specific command.
+Vite+ is distinct from Vite, and Astro owns the dev server and build through
+`vp run dev` and `vp run build`. Run `vp help` to print a list of commands and
+`vp <command> --help` for information about a specific command.
 
 Docs are local at `node_modules/vite-plus/docs` or online at:
 [https://viteplus.dev/guide/]
@@ -18,15 +18,17 @@ Docs are local at `node_modules/vite-plus/docs` or online at:
 ### Review Checklist
 
 - [ ] Run `vp install` after pulling remote changes and before getting started.
-- [ ] Run `vp check` and `vp test` to format, lint, type check and test changes.
+- [ ] Run `vp run check` and `vp test` to format, lint, type check and test
+      changes.
 - [ ] Check if there are `vite.config.ts` tasks or `package.json` scripts
       necessary for validation, run via `vp run <script>`.
 
 ## Template
 
-This repo follows `~/templates/tanstack` (Copier). It uses the template tooling,
-lint, `src/components/ui` (shadcn `base-vega`, Base UI), and theme code. It does
-not use the template database, auth, S3, or Docker parts.
+This repo follows `~/toolkit/templates/astro` (Copier). It uses the template
+tooling, Astro markup lint, `src/components/ui` (shadcn `base-vega`, Base UI),
+and theme code. It does not use the template database, auth, S3, or Docker
+parts.
 
 ## Local development
 
@@ -45,7 +47,7 @@ Bootstrap sets the daemon namespace to the URL slug, for example
 `portfolio-animations/dev`.
 
 The dev server is a Pitchfork daemon (`pitchfork.toml`). Interactive shells
-auto-start it on `cd`. Pitchfork passes its assigned `PORT` to Vite as
+auto-start it on `cd`. Pitchfork passes its assigned `PORT` to Astro as
 `APP_PORT` and probes that same port. Start the daemon through bootstrap first;
 daemon auto-start alone does not register the proxy URL.
 
@@ -53,6 +55,12 @@ daemon auto-start alone does not register the proxy URL.
 
 - Build `className` with `cn()` from `cn`. Never use template literals.
 - Take every color from theme tokens in `src/styles.css`. Do not use raw colors.
-- Use `ButtonLink` or `RouterButtonLink` for links that look like buttons. Base
-  UI `Button` with `nativeButton={false}` sets `role="button"` on anchors.
-- Run `vp check` and `vp test run` before every commit.
+- Use `ButtonLink` for links that look like buttons. Base UI `Button` with
+  `nativeButton={false}` sets `role="button"` on anchors.
+- Run `vp run check`, `vp test run`, and `vp run e2e` before every commit.
+
+## T3 setup
+
+Import the Bootstrap action from `t3.json` in T3 project Actions settings. It
+runs before the agent starts in a new worktree. Existing worktrees still need
+`mise run bootstrap` when their proxy mapping or daemon is stale.

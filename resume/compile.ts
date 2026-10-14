@@ -6,6 +6,8 @@ export const resumeDir = import.meta.dirname
 
 export const resumeFileName = 'aria-amini-resume.pdf'
 
+export const resumePreviewFileName = 'aria-amini-resume.svg'
+
 const maxPages = 1
 
 interface Diagnostic {
@@ -20,7 +22,7 @@ function describe(diagnostics: Diagnostic[] | undefined) {
 }
 
 export type ResumeBuild =
-	| { ok: true; pdf: Buffer }
+	| { ok: true; pdf: Buffer; preview: string }
 	| { ok: false; message: string }
 
 /**
@@ -63,7 +65,11 @@ export function buildResume(): ResumeBuild {
 		}
 	}
 
-	return { ok: true, pdf: compiler.pdf(document) }
+	return {
+		ok: true,
+		pdf: compiler.pdf(document),
+		preview: compiler.plainSvg(document),
+	}
 }
 
 export function compileResume() {

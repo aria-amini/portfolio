@@ -6,24 +6,26 @@ import {
 
 const deploymentURL = process.env.BASE_URL?.trim()
 
-// Playwright never starts a server. CI tests deployed URLs only; locally it
-// falls back to the dev server that Pitchfork already runs.
-if (process.env.CI && !deploymentURL) {
-	throw new Error('Set BASE_URL to a deployed URL; CI does not start a server.')
-}
-
-const baseURL =
-	deploymentURL || `http://127.0.0.1:${process.env.APP_PORT ?? '3000'}`
+const baseURL = deploymentURL || 'http://127.0.0.1:4321'
 
 const launchOptions: NonNullable<
 	NonNullable<PlaywrightTestConfig['use']>['launchOptions']
-> = { args: ['--headless=new'] }
+> = { args: ['--disable-lcd-text', '--headless=new'] }
 
 if (process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH) {
 	launchOptions.executablePath = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH
 }
 
 const config: PlaywrightTestConfig = {
+	snapshotPathTemplate:
+		'{testDir}/{testFilePath}-snapshots/{arg}-{projectName}-{platform}{ext}',
+	webServer: deploymentURL
+		? []
+		: {
+				command: 'vp run build && HOST=127.0.0.1 PORT=4321 vp run start',
+				url: baseURL,
+				timeout: 120_000,
+			},
 	testDir: './e2e',
 	outputDir: '.playwright/test-results',
 	fullyParallel: true,
@@ -37,19 +39,28 @@ const config: PlaywrightTestConfig = {
 		baseURL,
 		ignoreHTTPSErrors: !process.env.CI && baseURL.startsWith('https://'),
 		trace: 'retain-on-failure',
-		channel: 'chromium',
-		launchOptions,
+		reducedMotion: 'reduce',
 	},
 	timeout: 15_000,
 	expect: { timeout: 5_000 },
 	projects: [
-		{ name: 'desktop', use: { ...devices['Desktop Chrome'] } },
+		{
+			name: 'desktop',
+			use: { ...devices['Desktop Chrome'], channel: 'chromium', launchOptions },
+		},
 		{
 			name: 'mobile',
 			use: {
 				...devices['Desktop Chrome'],
-				viewport: { width: 390, height: 844 },
+				channel: 'chromium',
+				launchOptions,
+				viewport: { width: 375, height: 812 },
 			},
+		},
+		{
+			name: 'mobile-webkit',
+			testIgnore: ['**/visual.spec.ts', '**/domains.spec.ts'],
+			use: { ...devices['iPhone 13'], browserName: 'webkit' },
 		},
 	],
 }
