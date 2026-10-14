@@ -22,7 +22,8 @@ jobs:
       github.event_name == 'workflow_dispatch' ||
       (github.event.deployment_status.state == 'success' &&
       (github.event.deployment.environment == 'portfolio / production' ||
-      contains(github.event.deployment.environment, 'pr-')))
+      startsWith(github.event.deployment.environment, 'portfolio /
+      portfolio-pr-')))
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     env:
@@ -77,6 +78,8 @@ jobs:
           done
           echo "Deployment never became reachable at $url" >&2
           exit 1
+      # CI test-visual compares screenshots against a local build. Deployed runs
+      # check behavior only, because third-party embeds differ per environment.
       - name: Run Playwright tests
         run: vp exec playwright test --ignore-snapshots
       - name: Upload Playwright report
