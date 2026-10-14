@@ -41,15 +41,22 @@ vp run build
 ```
 
 Vitest runs proxy unit tests and the dither browser test. Playwright checks
-Astro's production server on desktop and mobile, including screenshots, booking
-redirects, dialog history, keyboard focus, and HTML without JavaScript. Without
-`BASE_URL`, it builds and starts the Node server on port 4321. Set `BASE_URL` to
-test an existing development server or deployment.
+Astro's production server in Chromium and mobile WebKit, including screenshots,
+booking redirects, dialog history, keyboard focus, and HTML without JavaScript.
+Without `BASE_URL`, it builds and starts the Node server on port 4321. Set
+`BASE_URL` to test an existing development server or deployment.
 
-Install the browser with `vp exec playwright install chromium --no-shell`. For
-Ubuntu 26.04 ARM64, set `PLAYWRIGHT_HOST_PLATFORM_OVERRIDE=ubuntu24.04-arm64`
-for browser installation and test commands. To use an existing Chromium binary,
-set `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH`.
+Install browsers with
+`vp exec playwright install chromium webkit --with-deps --no-shell`. The
+safe-area suite injects portrait and landscape insets, then captures the
+scrolled page and the full resume viewport. Headless WebKit does not include the
+iPhone's Safari bars. Verify those bars on a physical iPhone after changes to
+viewport sizing or fixed elements.
+
+If a Nix shell overrides `XDG_DATA_DIRS`, run Linux tests with
+`GSETTINGS_SCHEMA_DIR=/usr/share/glib-2.0/schemas`. WebKit needs those desktop
+schemas. To use an existing Chromium binary, set
+`PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH`.
 
 ## Production
 

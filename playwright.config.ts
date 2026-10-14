@@ -39,20 +39,28 @@ const config: PlaywrightTestConfig = {
 		baseURL,
 		ignoreHTTPSErrors: !process.env.CI && baseURL.startsWith('https://'),
 		trace: 'retain-on-failure',
-		channel: 'chromium',
-		launchOptions,
 		reducedMotion: 'reduce',
 	},
 	timeout: 15_000,
 	expect: { timeout: 5_000 },
 	projects: [
-		{ name: 'desktop', use: { ...devices['Desktop Chrome'] } },
+		{
+			name: 'desktop',
+			use: { ...devices['Desktop Chrome'], channel: 'chromium', launchOptions },
+		},
 		{
 			name: 'mobile',
 			use: {
 				...devices['Desktop Chrome'],
+				channel: 'chromium',
+				launchOptions,
 				viewport: { width: 375, height: 812 },
 			},
+		},
+		{
+			name: 'mobile-webkit',
+			testIgnore: ['**/visual.spec.ts', '**/domains.spec.ts'],
+			use: { ...devices['iPhone 13'], browserName: 'webkit' },
 		},
 	],
 }

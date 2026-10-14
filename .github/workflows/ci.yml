@@ -62,7 +62,7 @@ jobs:
           node-version-file: .node-version
           cache: true
       - name: Install Playwright Browsers
-        run: vp exec playwright install chromium --with-deps --no-shell
+        run: vp exec playwright install chromium webkit --with-deps --no-shell
       - name: Run Tests
         run: |
           vp test run --project browser

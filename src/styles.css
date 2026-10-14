@@ -7,6 +7,10 @@
 /* Riso: two-ink print on warm paper. Every color on the site comes from these tokens. */
 :root {
 	color-scheme: light;
+	--safe-area-top: env(safe-area-inset-top, 0px);
+	--safe-area-bottom: env(safe-area-inset-bottom, 0px);
+	--safe-area-left: env(safe-area-inset-left, 0px);
+	--safe-area-right: env(safe-area-inset-right, 0px);
 
 	--radius: 0.75rem;
 	--shadow-size: 4px;
@@ -90,10 +94,32 @@
 
 	html {
 		scroll-behavior: smooth;
-		scroll-padding-top: 6.5rem;
+		scroll-padding-top: calc(6.5rem + var(--safe-area-top));
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
-		@apply font-sans;
+		@apply bg-background font-sans;
+	}
+
+	/* Safari can paint outside the layout viewport behind its translucent bars. */
+	html::before,
+	html::after {
+		content: '';
+		position: fixed;
+		left: 0;
+		right: 0;
+		z-index: 40;
+		pointer-events: none;
+		background-color: var(--background);
+	}
+
+	html::before {
+		top: calc(-1 * var(--safe-area-top));
+		height: calc(2 * var(--safe-area-top));
+	}
+
+	html::after {
+		bottom: calc(-1 * var(--safe-area-bottom));
+		height: calc(2 * var(--safe-area-bottom));
 	}
 
 	body {
@@ -152,6 +178,30 @@
 	border-top-width: 2px;
 }
 
+@utility site-header {
+	padding-top: var(--safe-area-top);
+}
+
+[data-slot='dialog-content'] {
+	--dialog-top: max(1rem, var(--safe-area-top));
+	--dialog-bottom: max(1rem, var(--safe-area-bottom));
+	--dialog-left: max(1rem, var(--safe-area-left));
+	--dialog-right: max(1rem, var(--safe-area-right));
+	top: calc(50% + (var(--dialog-top) - var(--dialog-bottom)) / 2);
+	left: calc(50% + (var(--dialog-left) - var(--dialog-right)) / 2);
+	width: calc(100% - var(--dialog-left) - var(--dialog-right));
+	max-height: calc(100dvh - var(--dialog-top) - var(--dialog-bottom));
+}
+
+@utility page-gutter {
+	padding-left: max(1.5rem, var(--safe-area-left));
+	padding-right: max(1.5rem, var(--safe-area-right));
+}
+
+@utility page-bottom {
+	padding-bottom: calc(var(--spacing) * 20 + var(--safe-area-bottom));
+}
+
 @utility label-mono {
 	font-size: 0.8125rem;
 	line-height: 1.4;
@@ -167,9 +217,11 @@
 			translate 80ms,
 			box-shadow 80ms;
 
-		&:hover {
-			translate: var(--shadow-size) var(--shadow-size);
-			box-shadow: 0 0 0 0 transparent;
+		@media (hover: hover) and (pointer: fine) {
+			&:hover {
+				translate: var(--shadow-size) var(--shadow-size);
+				box-shadow: 0 0 0 0 transparent;
+			}
 		}
 
 		@media (prefers-reduced-motion: reduce) {
