@@ -1,0 +1,52 @@
+---
+import {
+	ArrowUpRightIcon,
+	GithubLogoIcon,
+} from '@phosphor-icons/react/dist/ssr'
+
+import { ButtonLink } from '@/components/button-link'
+import { project } from '@/lib/profile'
+---
+
+<section id="projects" aria-labelledby="projects-title" class="py-12">
+	<h2 id="projects-title" class="mb-6 text-3xl">
+		Side projects
+	</h2>
+	<div class="grid items-center gap-8 md:grid-cols-[2fr_3fr]">
+		<a
+			href={project.exampleUrl}
+			target="_blank"
+			rel="noreferrer"
+			aria-label="Explore Game of Thrones episode ratings on imdbgraph.org"
+			class="group bg-card ink-shadow block max-w-sm rounded-xl border p-2"
+		>
+			<img
+				src={project.preview}
+				width={1400}
+				height={1200}
+				alt={project.previewAlt}
+				loading="lazy"
+				class="ring-border/30 rounded-md ring-1"
+			/>
+		</a>
+		<article>
+			<h3 class="text-xl">{project.name}</h3>
+			<p class="text-muted-foreground mt-2 leading-7">{project.summary}</p>
+			<div class="mt-6 flex flex-wrap items-center gap-3">
+				<ButtonLink
+					variant="outline"
+					className="h-11"
+					href={project.liveUrl}
+					target="_blank"
+					rel="noreferrer"
+				>
+					Visit Site <ArrowUpRightIcon />
+				</ButtonLink>
+				<ButtonLink variant="link" className="h-11" href={project.sourceUrl}>
+					<GithubLogoIcon data-icon="inline-start" />
+					View Source Code
+				</ButtonLink>
+			</div>
+		</article>
+	</div>
+</section>

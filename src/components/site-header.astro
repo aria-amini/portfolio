@@ -1,0 +1,44 @@
+---
+import {
+	CalendarDotsIcon,
+	GithubLogoIcon,
+	LinkedinLogoIcon,
+} from '@phosphor-icons/react/dist/ssr'
+
+import { ButtonLink } from '@/components/button-link'
+import { NycSkyline } from '@/components/nyc-skyline'
+import { profile } from '@/lib/profile'
+---
+
+<header class="bg-background sticky top-0 z-20 border-b">
+	<div class="mx-auto flex h-20 w-full max-w-5xl items-center justify-end px-6">
+		<NycSkyline client:load className="mr-auto self-stretch" />
+		<nav aria-label="Main navigation" class="flex items-center gap-1 sm:gap-2">
+			<ButtonLink
+				variant="ghost"
+				className="size-11 md:w-auto md:px-3"
+				href={profile.github}
+			>
+				<GithubLogoIcon className="size-5" />
+				<span class="sr-only md:not-sr-only">GitHub</span>
+			</ButtonLink>
+			<ButtonLink
+				variant="ghost"
+				className="size-11 md:w-auto md:px-3"
+				href={profile.linkedin}
+			>
+				<LinkedinLogoIcon className="size-5" />
+				<span class="sr-only md:not-sr-only">LinkedIn</span>
+			</ButtonLink>
+			<ButtonLink
+				size="sm"
+				className="h-11"
+				href="/?dialog=book"
+				data-dialog="book"
+			>
+				<CalendarDotsIcon data-icon="inline-start" />
+				Book a call
+			</ButtonLink>
+		</nav>
+	</div>
+</header>

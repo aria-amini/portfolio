@@ -1,8 +1,8 @@
 # Changes here will be overwritten by Copier; do not edit manually
-_commit: v0.0.42
-_src_path: /home/aria-amini.guest/templates/tanstack
+_commit: v0.0.43-11-g975674b
+_src_path: https://github.com/aria-amini/toolkit
 app_name: portfolio
-google_auth: false
-posthog: true
-posthog_project_token: phc_placeholder
-sentry: false
+astro_output: node
+react: true
+site_url: https://www.ariaamini.dev
+template: astro

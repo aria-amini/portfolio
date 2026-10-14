@@ -39,6 +39,7 @@ jobs:
       - name: setup vite+
         uses: voidzero-dev/setup-vp@v1
         with:
+          version: '1.1.0'
           node-version-file: .node-version
           cache: true
       - name: Install Playwright Browsers
@@ -60,7 +61,7 @@ jobs:
           echo "Deployment never became reachable at $url" >&2
           exit 1
       - name: Run Playwright tests
-        run: vp exec playwright test
+        run: vp exec playwright test --ignore-snapshots
       - name: Upload Playwright report
         if: failure()
         uses: actions/upload-artifact@v4

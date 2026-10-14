@@ -1,7 +1,7 @@
 #:schema https://pitchfork.jdx.dev/schema.json
 
 [daemons.dev]
-run = 'APP_PORT="$PORT" exec vp dev --strictPort'
+run = 'APP_PORT="$PORT" exec vp run dev'
 auto = ["start", "stop"]
 retry = 3
 port = { expect = [3000], bump = 10 }

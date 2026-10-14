@@ -1,6 +1,5 @@
 import { CornersOutIcon, FilePdfIcon } from '@phosphor-icons/react/dist/ssr'
-import { useNavigate } from '@tanstack/react-router'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { ButtonLink } from '@/components/button-link'
 import {
@@ -9,14 +8,19 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from '@/components/ui/dialog'
+import { dialogUrl, readDialog } from '@/lib/dialog-url'
 import { type DialogName, profile } from '@/lib/profile'
 
 const resumePreviewUrl = `${profile.resumeUrl}#navpanes=0&pagemode=none&view=FitH`
 
 const resumeFullScreenUrl = `${profile.resumeUrl}#navpanes=0&pagemode=none&zoom=100`
 
-export function SiteDialogs({ open }: { open: DialogName | undefined }) {
-	const navigate = useNavigate({ from: '/' })
+export function SiteDialogs({
+	open: initialDialog,
+}: {
+	open: DialogName | undefined
+}) {
+	const [open, setOpen] = useState(initialDialog)
 	const returnFocus = useRef<HTMLElement | null>(null)
 
 	useEffect(() => {
@@ -31,9 +35,61 @@ export function SiteDialogs({ open }: { open: DialogName | undefined }) {
 			}
 		}
 
-		document.addEventListener('focusin', rememberFocus)
+		function syncDialog() {
+			setOpen(readDialog(new URL(window.location.href)))
+		}
 
-		return () => document.removeEventListener('focusin', rememberFocus)
+		function onClick(event: MouseEvent) {
+			if (
+				event.defaultPrevented ||
+				event.button !== 0 ||
+				event.metaKey ||
+				event.ctrlKey ||
+				event.shiftKey ||
+				event.altKey
+			)
+				return
+			const target = event.target
+
+			if (!(target instanceof Element)) return
+			const link = target.closest('a[data-dialog]')
+
+			if (
+				!(link instanceof HTMLAnchorElement) ||
+				link.target ||
+				link.hasAttribute('download')
+			)
+				return
+			const next = new URL(link.href)
+
+			if (
+				next.origin !== window.location.origin ||
+				next.pathname !== window.location.pathname
+			)
+				return
+			const dialog = readDialog(next)
+
+			if (!dialog) return
+			event.preventDefault()
+			returnFocus.current = link
+			history.pushState(
+				null,
+				'',
+				dialogUrl(new URL(window.location.href), dialog),
+			)
+			setOpen(dialog)
+		}
+
+		syncDialog()
+		document.addEventListener('focusin', rememberFocus)
+		document.addEventListener('click', onClick)
+		window.addEventListener('popstate', syncDialog)
+
+		return () => {
+			document.removeEventListener('focusin', rememberFocus)
+			document.removeEventListener('click', onClick)
+			window.removeEventListener('popstate', syncDialog)
+		}
 	}, [])
 
 	function restoreFocus() {
@@ -43,10 +99,12 @@ export function SiteDialogs({ open }: { open: DialogName | undefined }) {
 	function onOpenChange(name: DialogName) {
 		return (isOpen: boolean) => {
 			if (!isOpen && open === name) {
-				void navigate({
-					search: (prev) => ({ ...prev, dialog: undefined }),
-					resetScroll: false,
-				})
+				history.pushState(
+					null,
+					'',
+					dialogUrl(new URL(window.location.href), undefined),
+				)
+				setOpen(undefined)
 			}
 		}
 	}

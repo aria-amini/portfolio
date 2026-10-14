@@ -9,7 +9,7 @@ import {
 } from '@/lib/dither-print'
 import { readInks } from '@/lib/ink'
 
-declare module 'vite-plus/test/browser' {
+declare module 'vitest/browser' {
 	interface BrowserCommands {
 		writePublicPng: (name: string, base64: string) => Promise<void>
 	}

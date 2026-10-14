@@ -1,17 +1,10 @@
 import { writeFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
 
-import babel from '@rolldown/plugin-babel'
 import tailwindcss from '@tailwindcss/vite'
-import { devtools } from '@tanstack/devtools-vite'
-import { tanstackStart } from '@tanstack/react-start/plugin/vite'
-import { varlockVitePlugin } from '@varlock/vite-integration'
-import viteReact, { reactCompilerPreset } from '@vitejs/plugin-react'
-import { nitro } from 'nitro/vite'
+import viteReact from '@vitejs/plugin-react'
 import { defineConfig, type UserConfig } from 'vite-plus'
 import { playwright } from 'vite-plus/test/browser-playwright'
-
-import { resumePlugin } from './resume/vite-plugin.ts'
 
 const fmt = {
 	singleQuote: true,
@@ -28,7 +21,7 @@ const fmt = {
 		'**/dist/**',
 		'pnpm-lock.yaml',
 		'env.d.ts',
-		'**/routeTree.gen.ts',
+		'.astro/**',
 		'tools/oxlint/anti-slop/**',
 	],
 	overrides: [
@@ -160,7 +153,7 @@ const lint = {
 	},
 	env: { builtin: true },
 	globals: {},
-	ignorePatterns: ['**/dist/**', 'tools/oxlint/anti-slop/**'],
+	ignorePatterns: ['**/dist/**', '.astro/**', 'tools/oxlint/anti-slop/**'],
 } satisfies UserConfig['lint']
 
 const root = import.meta.dirname
@@ -174,22 +167,9 @@ export default defineConfig({
 	// discovered lazily mid-run, and the re-optimization reload aborts
 	// whichever test file is loading.
 	optimizeDeps: {
-		include: [
-			'vite-plus/test',
-			'vite-plus/test/browser',
-			'vitest-browser-react',
-			'msw',
-			'msw/browser',
-		],
+		include: ['vite-plus/test', 'vite-plus/test/browser'],
 	},
 	server: { host: '127.0.0.1', port: Number(process.env.APP_PORT ?? 3000) },
-	// TanStack Router ships RSC "use client" directives in its dist for RSC
-	// compat; this app builds no RSC graph, so the bundling warnings are noise.
-	build: {
-		rollupOptions: {
-			checks: { moduleLevelDirective: false },
-		},
-	},
 	resolve: {
 		tsconfigPaths: true,
 		dedupe: ['react', 'react-dom'],
@@ -199,27 +179,7 @@ export default defineConfig({
 			{ find: '@tests', replacement: resolve(root, 'tests') },
 		],
 	},
-	plugins: [
-		tanstackStart({
-			router: { routeFileIgnorePattern: '(\\.test\\.tsx$|__screenshots__)' },
-			server: {
-				build: {
-					inlineCss: true,
-				},
-			},
-		}),
-		...(process.env.VITEST === 'true'
-			? []
-			: [
-					devtools({ injectSource: { enabled: false } }),
-					nitro({ sourcemap: true, experimental: { sourcemapMinify: false } }),
-				]),
-		resumePlugin(),
-		tailwindcss(),
-		viteReact(),
-		babel({ presets: [reactCompilerPreset()] }),
-		varlockVitePlugin({ ssrInjectMode: 'resolved-env' }),
-	],
+	plugins: [tailwindcss(), viteReact()],
 	fmt,
 	lint,
 	test: {

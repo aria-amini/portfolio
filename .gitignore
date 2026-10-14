@@ -26,3 +26,7 @@ html
 .pnpm-store
 .worktrees
 .vite
+
+# Astro
+.astro/
+dist/

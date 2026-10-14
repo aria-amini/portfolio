@@ -1,0 +1,46 @@
+---
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Separator } from '@/components/ui/separator'
+import { jobs, yearsOfExperience } from '@/lib/profile'
+---
+
+<Card className="self-start">
+	<CardHeader>
+		<CardTitle>
+			Experience{' '}
+			<span class="text-muted-foreground font-normal">
+				({yearsOfExperience} yoe)
+			</span>
+		</CardTitle>
+	</CardHeader>
+	<CardContent>
+		<ul>
+			{jobs.map((job) => (
+				<li>
+					<Separator />
+					<div class="flex items-start gap-3.5 py-4">
+						<img
+							src={job.logo}
+							alt=""
+							class="mt-0.5 size-7 shrink-0 object-contain"
+						/>
+						<div class="min-w-0 flex-1">
+							<div class="flex flex-wrap items-baseline justify-between gap-x-4">
+								<div>
+									<strong class="block text-sm font-medium">{job.role}</strong>
+									<span class="text-muted-foreground text-xs">
+										{job.company}
+									</span>
+								</div>
+								<time class="text-muted-foreground text-xs">{job.period}</time>
+							</div>
+							<ul class="text-muted-foreground mt-2 list-disc pl-4 text-xs leading-5">
+								<li>{job.highlight}</li>
+							</ul>
+						</div>
+					</div>
+				</li>
+			))}
+		</ul>
+	</CardContent>
+</Card>

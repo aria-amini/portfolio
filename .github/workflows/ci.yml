@@ -22,9 +22,10 @@ jobs:
       - name: setup vite+
         uses: voidzero-dev/setup-vp@v1
         with:
+          version: '1.1.0'
           node-version-file: .node-version
           cache: true
-      - run: vp check
+      - run: vp run check
       - run: vp test run --project unit
 
   resume:
@@ -36,6 +37,7 @@ jobs:
       - name: setup vite+
         uses: voidzero-dev/setup-vp@v1
         with:
+          version: '1.1.0'
           node-version-file: .node-version
           cache: true
       # Fails on Typst errors, unknown fonts, or a second page.
@@ -56,16 +58,21 @@ jobs:
       - name: setup vite+
         uses: voidzero-dev/setup-vp@v1
         with:
+          version: '1.1.0'
           node-version-file: .node-version
           cache: true
       - name: Install Playwright Browsers
         run: vp exec playwright install chromium --with-deps --no-shell
       - name: Run Tests
-        run: vp test run --project browser
+        run: |
+          vp test run --project browser
+          vp run e2e
       - name: Upload visual test diagnostics
         if: failure()
         uses: actions/upload-artifact@v4
         with:
           name: visual-test-diagnostics
-          path: .vitest-attachments/
+          path: |
+            .vitest-attachments/
+            .playwright/
           include-hidden-files: true

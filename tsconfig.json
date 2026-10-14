@@ -1,12 +1,12 @@
 {
-	"include": ["**/*.ts", "**/*.tsx"],
-	"exclude": [".output", "tools/oxlint/anti-slop/**/*.test.ts"],
+	"include": [".astro/types.d.ts", "**/*.ts", "**/*.tsx", "**/*.astro"],
+	"exclude": ["dist", ".output", "tools/oxlint/anti-slop/**/*.test.ts"],
 	"compilerOptions": {
 		"target": "ES2022",
 		"jsx": "react-jsx",
 		"module": "ESNext",
 		"lib": ["ES2022", "DOM", "DOM.Iterable"],
-		"types": ["vite-plus/client"],
+		"types": ["astro/client", "node"],
 		"moduleResolution": "bundler",
 		"allowImportingTsExtensions": true,
 		"verbatimModuleSyntax": false,
@@ -28,5 +28,6 @@
 			"@tests/*": ["./tests/*"],
 			"@/mocks/*": ["./__mocks__/*"]
 		}
-	}
+	},
+	"extends": "@aamini/config/tsconfig/astro.json"
 }
