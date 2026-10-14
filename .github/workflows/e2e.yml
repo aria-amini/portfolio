@@ -2,8 +2,7 @@ name: E2E
 
 # Railway waits for CI before it deploys, so e2e cannot be part of CI.
 # Railway's GitHub integration posts deployment statuses; this runs the
-# Playwright suite against the live site after each production deploy.
-# It is never a required check.
+# Playwright suite against each successful PR environment and production deploy.
 on:
   deployment_status:
   workflow_dispatch:
@@ -22,15 +21,33 @@ jobs:
     if: >-
       github.event_name == 'workflow_dispatch' ||
       (github.event.deployment_status.state == 'success' &&
-      github.event.deployment.environment == 'portfolio / production')
+      (github.event.deployment.environment == 'portfolio / production' ||
+      contains(github.event.deployment.environment, 'pr-')))
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     env:
-      # Railway reports dashboard URLs in deployment_status, not the site URL.
-      CANDIDATE_URL: ${{ inputs.base_url || 'https://www.ariaamini.dev' }}
-      CHECK_DOMAINS:
-        ${{ github.event_name == 'deployment_status' && '1' || '' }}
+      DEPLOYMENT_ENVIRONMENT: ${{ github.event.deployment.environment }}
+      MANUAL_BASE_URL: ${{ inputs.base_url }}
     steps:
+      # Railway reports dashboard URLs in deployment_status, not the site URL.
+      # PR environments are named "<service> / <environment>" and serve
+      # https://<service>-<environment>.up.railway.app.
+      - name: Resolve deployment URL
+        run: |
+          if [ -n "$MANUAL_BASE_URL" ]; then
+            url="$MANUAL_BASE_URL"
+          elif [ "$DEPLOYMENT_ENVIRONMENT" = "portfolio / production" ]; then
+            url="https://www.ariaamini.dev"
+            echo "CHECK_DOMAINS=1" >> "$GITHUB_ENV"
+          else
+            service="${DEPLOYMENT_ENVIRONMENT%%/*}"
+            environment="${DEPLOYMENT_ENVIRONMENT##*/}"
+            service="${service//[[:space:]]/}"
+            environment="${environment//[[:space:]]/}"
+            url="https://${service}-${environment}.up.railway.app"
+          fi
+          echo "CANDIDATE_URL=${url%/}" >> "$GITHUB_ENV"
+          echo "Will test ${url%/}"
       - name: checkout
         uses: actions/checkout@v6
         with:
@@ -47,7 +64,7 @@ jobs:
       # Railway can report success before the new release takes traffic.
       - name: Wait for deployment to be reachable
         run: |
-          url="${CANDIDATE_URL%/}"
+          url="$CANDIDATE_URL"
           for attempt in $(seq 1 30); do
             status=$(curl -sL -o /dev/null -w '%{http_code}' --max-time 20 "$url" || true)
             if [ "$status" = "200" ]; then
