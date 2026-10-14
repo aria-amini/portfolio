@@ -113,8 +113,8 @@
 	}
 
 	html::before {
-		top: calc(-1 * var(--safe-area-top));
-		height: calc(2 * var(--safe-area-top));
+		bottom: calc(100% - var(--safe-area-top));
+		height: 100dvh;
 	}
 
 	html::after {
