@@ -3,6 +3,7 @@ import {
 	ArrowUpRightIcon,
 	GithubLogoIcon,
 } from '@phosphor-icons/react/dist/ssr'
+import { Image } from 'astro:assets'
 
 import { ButtonLink } from '@/components/button-link'
 import { project } from '@/lib/profile'
@@ -20,12 +21,15 @@ import { project } from '@/lib/profile'
 			aria-label="Explore Game of Thrones episode ratings on imdbgraph.org"
 			class="group bg-card ink-shadow block max-w-sm rounded-xl border p-2"
 		>
-			<img
+			<Image
 				src={project.preview}
 				width={1400}
 				height={1200}
 				alt={project.previewAlt}
 				loading="lazy"
+				widths={[320, 384, 640, 768, 1152]}
+				sizes="auto, (min-width: 768px) 384px, (min-width: 432px) 364px, calc(100vw - 68px)"
+				quality={90}
 				class="ring-border/30 rounded-md ring-1"
 			/>
 		</a>

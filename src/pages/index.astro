@@ -7,6 +7,8 @@ import { Separator } from '@/components/ui/separator'
 import Base from '@/layouts/base.astro'
 import { readDialog } from '@/lib/dialog-url'
 
+export const prerender = true
+
 const dialog = readDialog(Astro.url)
 ---
 
