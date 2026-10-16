@@ -1,0 +1,105 @@
+name: Deploy
+
+# Production deploys on main. Each same-repo PR gets a Preview named
+# pr-<number>. Fork PRs get no Cloudflare credentials, so they skip both.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: deploy-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: false
+
+env:
+  CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+  CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+jobs:
+  production:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      APP_ENV: production
+    steps:
+      - name: checkout
+        uses: actions/checkout@v6
+      - name: setup vite+
+        uses: voidzero-dev/setup-vp@v1
+        with:
+          version: '1.1.0'
+          node-version-file: .node-version
+          cache: true
+      - run: vp run deploy
+      - name: Install Playwright Browsers
+        run: vp exec playwright install chromium --with-deps --no-shell
+      - name: Check live domains
+        run: vp run e2e:domains
+
+  preview:
+    if: >-
+      github.event_name == 'pull_request' && github.event.action != 'closed' &&
+      github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      APP_ENV: preview
+      PREVIEW_NAME: pr-${{ github.event.pull_request.number }}
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: checkout
+        uses: actions/checkout@v6
+      - name: setup vite+
+        uses: voidzero-dev/setup-vp@v1
+        with:
+          version: '1.1.0'
+          node-version-file: .node-version
+          cache: true
+      - run: vp run build
+      # Wrangler prints banner lines before the JSON document.
+      - name: Create or update Preview
+        id: preview
+        run: |
+          set -o pipefail
+          vp exec varlock-wrangler preview --name "$PREVIEW_NAME" --json > preview.log
+          url="$(sed -n '/^{/,$p' preview.log | jq -er '.preview.urls[0]')"
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+      - name: Wait for Preview
+        run: |
+          for attempt in $(seq 1 12); do
+            status=$(curl -sL -o /dev/null -w '%{http_code}' --max-time 20 "${{ steps.preview.outputs.url }}" || true)
+            [ "$status" = "200" ] && exit 0
+            echo "attempt $attempt: HTTP $status"
+            sleep 5
+          done
+          exit 1
+      - name: Comment Preview URL
+        run: >-
+          gh pr comment "${{ github.event.pull_request.number }}" --edit-last
+          --create-if-none --body "Preview: ${{ steps.preview.outputs.url }}"
+
+  cleanup:
+    if: >-
+      github.event_name == 'pull_request' && github.event.action == 'closed' &&
+      github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: checkout
+        uses: actions/checkout@v6
+      - name: setup vite+
+        uses: voidzero-dev/setup-vp@v1
+        with:
+          version: '1.1.0'
+          node-version-file: .node-version
+          cache: true
+      - name: Delete Preview
+        run: >-
+          vp exec varlock-wrangler preview delete --name "pr-${{
+          github.event.pull_request.number }}" --skip-confirmation

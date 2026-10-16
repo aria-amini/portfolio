@@ -67,10 +67,12 @@ vp run preview
 
 `vp run preview` serves the build in workerd, the Cloudflare Workers runtime.
 `vp run deploy` builds the site and deploys the Worker with `varlock-wrangler`.
-Static files come from `dist/client`. The Worker only serves `/api/ingest`.
-Workers Builds deploys `main` with `npx varlock-wrangler deploy` and builds PR
-branches with `npx varlock-wrangler preview`. CI runs the e2e suite against a
-local workerd build.
+Static files come from `dist/client`. The Worker only serves `/api/ingest`. The
+Deploy workflow ships `main` to production and gives each same-repo PR a Preview
+named `pr-<number>`. It needs the `CLOUDFLARE_API_TOKEN` and
+`CLOUDFLARE_ACCOUNT_ID` secrets. Production builds set `APP_ENV=production`,
+which loads the PostHog key from `.env.production`. CI runs the e2e suite
+against a local workerd build.
 
 ## Agent setup
 
