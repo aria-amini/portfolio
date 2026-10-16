@@ -62,11 +62,15 @@ schemas. To use an existing Chromium binary, set
 
 ```sh
 vp run build
-vp run start
+vp run preview
 ```
 
-The production server uses `dist/server/entry.mjs`. Railway runs the same start
-command with Varlock.
+`vp run preview` serves the build in workerd, the Cloudflare Workers runtime.
+`vp run deploy` builds the site and deploys the Worker with `varlock-wrangler`.
+Static files come from `dist/client`. The Worker only serves `/api/ingest`.
+Workers Builds deploys `main` with `npx varlock-wrangler deploy` and builds PR
+branches with `npx varlock-wrangler preview`. CI runs the e2e suite against a
+local workerd build.
 
 ## Agent setup
 
