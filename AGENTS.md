@@ -57,7 +57,9 @@ daemon auto-start alone does not register the proxy URL.
 - Take every color from theme tokens in `src/styles.css`. Do not use raw colors.
 - Use `ButtonLink` for links that look like buttons. Base UI `Button` with
   `nativeButton={false}` sets `role="button"` on anchors.
-- Run `vp run check`, `vp test run`, and `vp run e2e` before every commit.
+- Run `vp run check`, `vp test run`, and `BASE_URL=<dev url> vp run e2e` before
+  every commit. Playwright starts no server. Use the URL from
+  `mise run bootstrap`.
 
 ## T3 setup
 

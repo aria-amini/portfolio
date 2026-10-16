@@ -4,9 +4,13 @@ import {
 	type PlaywrightTestConfig,
 } from '@playwright/test'
 
-const deploymentURL = process.env.BASE_URL?.trim()
+const baseURL = process.env.BASE_URL?.trim()
 
-const baseURL = deploymentURL || 'http://127.0.0.1:4321'
+if (!baseURL) {
+	throw new Error(
+		'Set BASE_URL to the site under test, for example a Cloudflare preview URL.',
+	)
+}
 
 const launchOptions: NonNullable<
 	NonNullable<PlaywrightTestConfig['use']>['launchOptions']
@@ -19,13 +23,6 @@ if (process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH) {
 const config: PlaywrightTestConfig = {
 	snapshotPathTemplate:
 		'{testDir}/{testFilePath}-snapshots/{arg}-{projectName}-{platform}{ext}',
-	webServer: deploymentURL
-		? []
-		: {
-				command: 'vp run build && HOST=127.0.0.1 PORT=4321 vp run start',
-				url: baseURL,
-				timeout: 120_000,
-			},
 	testDir: './e2e',
 	outputDir: '.playwright/test-results',
 	fullyParallel: true,

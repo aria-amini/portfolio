@@ -64,9 +64,7 @@ jobs:
       - name: Install Playwright Browsers
         run: vp exec playwright install chromium webkit --with-deps --no-shell
       - name: Run Tests
-        run: |
-          vp test run --project browser
-          vp run e2e
+        run: vp test run --project browser
       - name: Upload visual test diagnostics
         if: failure()
         uses: actions/upload-artifact@v4
