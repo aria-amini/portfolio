@@ -22,7 +22,7 @@ const config: PlaywrightTestConfig = {
 	webServer: deploymentURL
 		? []
 		: {
-				command: 'vp run build && HOST=127.0.0.1 PORT=4321 vp run start',
+				command: 'vp run build && vp run preview --ip 127.0.0.1 --port 4321',
 				url: baseURL,
 				timeout: 120_000,
 			},
