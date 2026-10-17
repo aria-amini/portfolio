@@ -36,15 +36,16 @@ vp exec varlock load --agent
 ```sh
 vp run check
 vp test run
-vp run e2e
+BASE_URL=<site url> vp run e2e
 vp run build
 ```
 
-Vitest runs proxy unit tests and the dither browser test. Playwright checks
-Astro's production server in Chromium and mobile WebKit, including screenshots,
-booking redirects, dialog history, keyboard focus, and HTML without JavaScript.
-Without `BASE_URL`, it builds and starts the Node server on port 4321. Set
-`BASE_URL` to test an existing development server or deployment.
+Vitest runs proxy unit tests and the dither browser test. Playwright checks a
+running site in Chromium and mobile WebKit, including screenshots, booking
+redirects, dialog history, keyboard focus, and HTML without JavaScript.
+Playwright starts no server. `BASE_URL` is required: use the dev server URL from
+`mise run bootstrap`, or a Cloudflare Preview URL. The E2E workflow runs the
+suite against each PR's Preview and, after a merge, against the live domains.
 
 Install browsers with
 `vp exec playwright install chromium webkit --with-deps --no-shell`. The
@@ -69,8 +70,10 @@ vp run preview
 `vp run deploy` builds the site and deploys the Worker with `varlock-wrangler`.
 Static files come from `dist/client`. The Worker only serves `/api/ingest`.
 Workers Builds deploys `main` with `npx varlock-wrangler deploy` and builds PR
-branches with `npx varlock-wrangler preview`. CI runs the e2e suite against a
-local workerd build.
+branches with `npx varlock-wrangler preview`.
+
+Set `APP_ENV=production` as a Workers Builds build variable. Varlock then loads
+the PostHog key from `.env.production`. Without it the build has no analytics.
 
 ## Agent setup
 
