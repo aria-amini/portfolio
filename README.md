@@ -72,6 +72,9 @@ Workers Builds deploys `main` with `npx varlock-wrangler deploy` and builds PR
 branches with `npx varlock-wrangler preview`. CI runs the e2e suite against a
 local workerd build.
 
+Set `APP_ENV=production` as a Workers Builds build variable. Varlock then loads
+the PostHog key from `.env.production`. Without it the build has no analytics.
+
 ## Agent setup
 
 Import the Bootstrap action from `t3.json` in T3's project Actions settings. Its
