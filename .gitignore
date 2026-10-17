@@ -30,3 +30,4 @@ html
 # Astro
 .astro/
 dist/
+.wrangler/
