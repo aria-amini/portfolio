@@ -55,7 +55,6 @@
 		"@aamini/config": "0.2.0",
 		"@astrojs/check": "^0.9.10",
 		"@myriaddreamin/typst-ts-node-compiler": "^0.7.0",
-		"@oxlint/plugins": "1.83.0",
 		"@playwright/test": "^1.64.0",
 		"@shadcn/lint": "^0.2.1",
 		"@types/node": "^24.19.2",
