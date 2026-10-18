@@ -26,6 +26,7 @@
 		"test:ui": "vp test dev --ui --open=false --project browser --api.port ${APP_PORT:-5123} --api.strictPort",
 		"e2e": "playwright test",
 		"e2e:domains": "CHECK_DOMAINS=1 BASE_URL=https://www.ariaamini.dev varlock run -- playwright test e2e/domains.spec.ts",
+		"e2e:update": "playwright test --update-snapshots",
 		"report": "playwright show-report .playwright/report",
 		"fmt": "vp fmt && prettier --write \"**/*.astro\""
 	},

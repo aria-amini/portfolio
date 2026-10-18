@@ -1,8 +1,6 @@
 # Changes here will be overwritten by Copier; do not edit manually
-_commit: v0.0.43-12-gcef3a1a
+_commit: v0.0.43-14-g227028d2
 _src_path: https://github.com/aria-amini/toolkit
 app_name: portfolio
-astro_output: node
-react: true
 site_url: https://www.ariaamini.dev
 template: astro

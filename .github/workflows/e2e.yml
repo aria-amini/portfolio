@@ -58,14 +58,16 @@ jobs:
             url="https://www.ariaamini.dev"
             echo "CHECK_DOMAINS=1" >> "$GITHUB_ENV"
           else
-            # Cloudflare's PR comment names the Preview URL and its commit.
+            # The build for this commit succeeded, so the Preview alias in
+            # Cloudflare's PR comment serves it. The comment's per-commit table
+            # can lag behind the check run.
             for attempt in $(seq 1 30); do
               url=$(gh api "repos/$REPO/issues/$PR_NUMBER/comments" --paginate \
                 --jq '.[] | select(.user.login == "cloudflare-workers-and-pages[bot]") | .body' \
-                | grep -oE "Preview URL: https://[^ ]+ \(commit ${SHA:0:7}\)" \
-                | head -n1 | sed -E 's/Preview URL: (https:\/\/[^ ]+) .*/\1/')
+                | grep -oE "Preview URL: https://[^ ]+" \
+                | head -n1 | sed 's/Preview URL: //')
               [ -n "$url" ] && break
-              echo "attempt $attempt: no Preview URL for ${SHA:0:7} yet"
+              echo "attempt $attempt: no Preview URL yet"
               sleep 10
             done
             [ -n "$url" ] || { echo "No Preview URL found." >&2; exit 1; }
