@@ -1,6 +1,6 @@
 {
 	"include": [".astro/types.d.ts", "**/*.ts", "**/*.tsx", "**/*.astro"],
-	"exclude": ["dist", ".output", "tools/oxlint/anti-slop/**/*.test.ts"],
+	"exclude": ["dist", ".output"],
 	"compilerOptions": {
 		"target": "ES2022",
 		"jsx": "react-jsx",

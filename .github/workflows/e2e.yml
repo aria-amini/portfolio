@@ -1,59 +1,34 @@
 name: E2E
 
-# Railway waits for CI before it deploys, so e2e cannot be part of CI.
-# Railway's GitHub integration posts deployment statuses; this runs the
-# Playwright suite against each successful PR environment and production deploy.
+# Cloudflare Workers Builds deploys each PR as a Preview and each push to main
+# as production. This workflow waits for that build, then runs Playwright
+# against the deployed site. Playwright starts no local server.
 on:
-  deployment_status:
-  workflow_dispatch:
-    inputs:
-      base_url:
-        description: Public URL to test, e.g. https://www.ariaamini.dev
-        required: true
-        type: string
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  checks: read
+  pull-requests: read
 
 concurrency:
-  group: e2e-${{ github.event.deployment.environment || inputs.base_url }}
+  group: e2e-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
   e2e:
-    if: >-
-      github.event_name == 'workflow_dispatch' ||
-      (github.event.deployment_status.state == 'success' &&
-      (github.event.deployment.environment == 'portfolio / production' ||
-      startsWith(github.event.deployment.environment, 'portfolio /
-      portfolio-pr-')))
-    runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
     env:
-      DEPLOYMENT_ENVIRONMENT: ${{ github.event.deployment.environment }}
-      MANUAL_BASE_URL: ${{ inputs.base_url }}
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      REPO: ${{ github.repository }}
+      SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+      PR_NUMBER: ${{ github.event.pull_request.number }}
     steps:
-      # Railway reports dashboard URLs in deployment_status, not the site URL.
-      # PR environments are named "<service> / <environment>" and serve
-      # https://<service>-<environment>.up.railway.app.
-      - name: Resolve deployment URL
-        run: |
-          if [ -n "$MANUAL_BASE_URL" ]; then
-            url="$MANUAL_BASE_URL"
-          elif [ "$DEPLOYMENT_ENVIRONMENT" = "portfolio / production" ]; then
-            url="https://www.ariaamini.dev"
-            echo "CHECK_DOMAINS=1" >> "$GITHUB_ENV"
-          else
-            service="${DEPLOYMENT_ENVIRONMENT%%/*}"
-            environment="${DEPLOYMENT_ENVIRONMENT##*/}"
-            service="${service//[[:space:]]/}"
-            environment="${environment//[[:space:]]/}"
-            url="https://${service}-${environment}.up.railway.app"
-          fi
-          echo "CANDIDATE_URL=${url%/}" >> "$GITHUB_ENV"
-          echo "Will test ${url%/}"
       - name: checkout
         uses: actions/checkout@v6
-        with:
-          # Manual dispatch: empty ref checks out the branch picked in the UI.
-          ref: ${{ github.event.deployment.sha }}
       - name: setup vite+
         uses: voidzero-dev/setup-vp@v1
         with:
@@ -62,26 +37,54 @@ jobs:
           cache: true
       - name: Install Playwright Browsers
         run: vp exec playwright install chromium webkit --with-deps --no-shell
-      # Railway can report success before the new release takes traffic.
-      - name: Wait for deployment to be reachable
+      - name: Wait for Workers Builds
         run: |
-          url="$CANDIDATE_URL"
-          for attempt in $(seq 1 30); do
-            status=$(curl -sL -o /dev/null -w '%{http_code}' --max-time 20 "$url" || true)
-            if [ "$status" = "200" ]; then
-              echo "BASE_URL=$url" >> "$GITHUB_ENV"
-              echo "Deployment is up at $url (attempt $attempt)"
-              exit 0
-            fi
-            echo "attempt $attempt: $url returned HTTP $status"
+          # Workers Builds posts its check run a few seconds after the push.
+          for attempt in $(seq 1 90); do
+            state=$(gh api "repos/$REPO/commits/$SHA/check-runs" \
+              --jq '.check_runs[] | select(.name | startswith("Workers Builds")) | "\(.status) \(.conclusion)"' | head -n1)
+            echo "attempt $attempt: ${state:-no check run yet}"
+            case "$state" in
+              "completed success") exit 0 ;;
+              completed*) echo "Workers Builds did not succeed." >&2; exit 1 ;;
+            esac
             sleep 10
           done
-          echo "Deployment never became reachable at $url" >&2
+          echo "Workers Builds never finished." >&2
           exit 1
-      # CI test-visual compares screenshots against a local build. Deployed runs
-      # check behavior only, because third-party embeds differ per environment.
+      - name: Resolve site URL
+        run: |
+          if [ "${{ github.event_name }}" = "push" ]; then
+            url="https://www.ariaamini.dev"
+            echo "CHECK_DOMAINS=1" >> "$GITHUB_ENV"
+          else
+            # The build for this commit succeeded, so the Preview alias in
+            # Cloudflare's PR comment serves it. The comment's per-commit table
+            # can lag behind the check run.
+            for attempt in $(seq 1 30); do
+              url=$(gh api "repos/$REPO/issues/$PR_NUMBER/comments" --paginate \
+                --jq '.[] | select(.user.login == "cloudflare-workers-and-pages[bot]") | .body' \
+                | grep -oE "Preview URL: https://[^ ]+" \
+                | head -n1 | sed 's/Preview URL: //')
+              [ -n "$url" ] && break
+              echo "attempt $attempt: no Preview URL yet"
+              sleep 10
+            done
+            [ -n "$url" ] || { echo "No Preview URL found." >&2; exit 1; }
+          fi
+          echo "BASE_URL=$url" >> "$GITHUB_ENV"
+          echo "Testing $url"
+      - name: Wait for the site
+        run: |
+          for attempt in $(seq 1 30); do
+            status=$(curl -sL -o /dev/null -w '%{http_code}' --max-time 20 "$BASE_URL" || true)
+            [ "$status" = "200" ] && exit 0
+            echo "attempt $attempt: $BASE_URL returned HTTP $status"
+            sleep 10
+          done
+          exit 1
       - name: Run Playwright tests
-        run: vp exec playwright test --ignore-snapshots
+        run: vp exec playwright test
       - name: Upload Playwright report
         if: failure()
         uses: actions/upload-artifact@v4

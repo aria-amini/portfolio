@@ -30,3 +30,5 @@ html
 # Astro
 .astro/
 dist/
+.wrangler/
+.dev.vars*

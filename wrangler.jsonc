@@ -1,0 +1,22 @@
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "portfolio",
+	"main": "@astrojs/cloudflare/entrypoints/server",
+	"compatibility_date": "2026-10-01",
+	"compatibility_flags": ["nodejs_compat"],
+	// Custom domains turn workers.dev off unless it is set here.
+	"workers_dev": true,
+	"observability": { "enabled": true },
+	// Preview builds from Workers Builds run `varlock-wrangler preview`, which
+	// needs this block. preview_urls gives each Preview a workers.dev URL.
+	"previews": {},
+	"preview_urls": true,
+	"assets": { "binding": "ASSETS" },
+	// www is canonical. Redirect Rules on the zone send the apex to www before
+	// requests reach the Worker. The apex route keeps the site up if its rule is
+	// removed.
+	"routes": [
+		{ "pattern": "ariaamini.dev", "custom_domain": true },
+		{ "pattern": "www.ariaamini.dev", "custom_domain": true },
+	],
+}
