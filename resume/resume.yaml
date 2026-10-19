@@ -105,5 +105,4 @@ projects:
   - name: imdbgraph.org
     url: https://www.imdbgraph.org
     summary:
-      Built and ran IMDb Graph since 2018, a production app serving *~2K unique
-      visits/month*.
+      Built IMDb Graph since 2018, serving *~2K visits/month*.
