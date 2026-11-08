@@ -24,12 +24,11 @@
 
 // ===== Helpers =====
 // Only *term* is markup. Everything else stays literal, so ~, @, and # in the YAML need no escapes.
-// The box keeps an emphasized term on one line.
 #let rich(source) = {
   source
     .split("*")
     .enumerate()
-    .map(((index, part)) => if calc.odd(index) { strong(box(part)) } else { part })
+    .map(((index, part)) => if calc.odd(index) { strong(part) } else { part })
     .join()
 }
 
