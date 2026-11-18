@@ -32,11 +32,8 @@
     .join()
 }
 
-// YYYY-MM shows as "Dec 2021"; a bare YYYY shows as the year.
 #let date(value) = {
-  let parts = str(value).split("-").map(int)
-  if parts.len() == 1 { return str(parts.first()) }
-  let (year, month) = parts
+  let (year, month) = str(value).split("-").map(int)
   datetime(year: year, month: month, day: 1).display("[month repr:short] [year]")
 }
 
@@ -93,7 +90,7 @@
 #for job in data.experience {
   if "roles" in job {
     block(below: 1.35em)[
-      #heading-line(company-name(job), period(job))
+      #company-name(job)
       #for role in job.roles {
         block(breakable: false, above: 0.85em)[
           #heading-line(emph(role.title), period(role))

@@ -1,7 +1,6 @@
 # Source of truth for the resume PDF at /aria-amini-resume.pdf.
 # Wrap a term in *asterisks* to give it the soft tech emphasis (Inter Medium).
-# Dates use YYYY-MM, or YYYY for a role inside a company. Omit `end` for a
-# current role.
+# Dates use YYYY-MM. Omit `end` for a current role.
 
 name: Aria Amini
 contact:
@@ -22,16 +21,14 @@ summary: >-
   Software engineer with 8 years of experience, most recently building
   LLM-powered developer tooling and cloud infrastructure at Microsoft Azure.
 
-# A company with several roles lists them under `roles`, each with its own
-# dates. A company with one role gives `role` and `bullets` directly.
+# A company with several roles lists them under `roles`, and only the roles
+# carry dates. A company with one role gives `role` and `bullets` directly.
 experience:
   - company: Microsoft Azure
-    start: 2021-12
-    end: 2026-09
     roles:
       - title: Software Engineer II
-        start: 2023
-        end: 2026
+        start: 2023-03
+        end: 2026-09
         bullets:
           - >-
             Owned the design and delivery of a service that safely executes
@@ -54,8 +51,8 @@ experience:
             natural-language requests from new users into deployed Azure
             resources.
       - title: Software Engineer I
-        start: 2021
-        end: 2023
+        start: 2021-12
+        end: 2023-03
         bullets:
           - >-
             Built an interactive terminal tutorial (*Go*, *BubbleTea*) that
