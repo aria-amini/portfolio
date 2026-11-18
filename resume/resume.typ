@@ -9,7 +9,7 @@
 #let hairline = oklch(88%, 0.03, 270deg)
 
 #set document(title: data.name + " — Resume", author: data.name)
-#set page(paper: "us-letter", margin: (x: 0.65in, y: 0.6in))
+#set page(paper: "us-letter", margin: (x: 0.65in, y: 0.5in))
 // fallback: false keeps machine fonts out, so every build renders identical glyphs.
 #set text(font: "Inter", size: 10.5pt, fill: body-ink, lang: "en", fallback: false)
 #set par(leading: 0.62em, spacing: 0.62em)
@@ -17,7 +17,7 @@
   marker: text(fill: muted, size: 8pt, baseline: -0.05em, sym.bullet),
   indent: 0.1em,
   body-indent: 0.55em,
-  spacing: 0.7em,
+  spacing: 0.6em,
 )
 #show strong: set text(weight: "medium", fill: ink)
 #show link: underline.with(stroke: 0.5pt + hairline, offset: 2pt)
@@ -32,17 +32,20 @@
     .join()
 }
 
-#let month(value) = {
-  let (year, month) = str(value).split("-").map(int)
+// YYYY-MM shows as "Dec 2021"; a bare YYYY shows as the year.
+#let date(value) = {
+  let parts = str(value).split("-").map(int)
+  if parts.len() == 1 { return str(parts.first()) }
+  let (year, month) = parts
   datetime(year: year, month: month, day: 1).display("[month repr:short] [year]")
 }
 
-#let period(job) = month(job.start) + " – " + if "end" in job { month(job.end) } else { "Present" }
+#let period(entry) = date(entry.start) + " – " + if "end" in entry { date(entry.end) } else { "Present" }
 
 #let meta(body) = text(size: 9.5pt, fill: muted, body)
 
 #let section(title) = {
-  v(1.7em, weak: true)
+  v(1.5em, weak: true)
   grid(
     columns: (auto, 1fr),
     column-gutter: 0.6em,
@@ -70,7 +73,7 @@
 #let contact-lines = (
   (contact.phone, link("mailto:" + contact.email, contact.email), ..links(contact.links)),
   links(contact.profiles),
-  (contact.location,),
+  contact.location,
 )
 #for line in contact-lines {
   meta(line.join(divider))
@@ -78,21 +81,32 @@
 }
 
 // ===== Body =====
-#section("Education")
-#for school in data.education [
-  #text(weight: "semibold", fill: ink, school.degree)#separator#emph(school.school)#separator#meta(school.details)
-]
+#section("Summary")
+#rich(data.summary)
 
 #section("Experience")
+#let company-name(job) = text(weight: "semibold", fill: ink, job.company)
+#let bullets(entry) = {
+  v(0.65em, weak: true)
+  list(..entry.bullets.map(rich))
+}
 #for job in data.experience {
-  block(breakable: false, below: 1.35em)[
-    #heading-line(
-      [#text(weight: "semibold", fill: ink, job.company)#separator#job.role],
-      period(job),
-    )
-    #v(0.65em, weak: true)
-    #list(..job.bullets.map(rich))
-  ]
+  if "roles" in job {
+    block(below: 1.35em)[
+      #heading-line(company-name(job), period(job))
+      #for role in job.roles {
+        block(breakable: false, above: 0.85em)[
+          #heading-line(emph(role.title), period(role))
+          #bullets(role)
+        ]
+      }
+    ]
+  } else {
+    block(breakable: false, below: 1.35em)[
+      #heading-line([#company-name(job)#separator#job.role], period(job))
+      #bullets(job)
+    ]
+  }
 }
 
 #section("Projects")
@@ -101,4 +115,12 @@
 ]
 
 #section("Skills")
-#data.skills.join([~#text(fill: muted)[·] ])
+#for (group, items) in data.skills [
+  #text(weight: "semibold", fill: ink, group)#text(fill: muted)[:] #items.join([~#text(fill: muted)[·] ])
+  \
+]
+
+#section("Education")
+#for school in data.education [
+  #text(weight: "semibold", fill: ink, school.degree)#separator#emph(school.school)#separator#meta(school.details)
+]
