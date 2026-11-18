@@ -10,13 +10,8 @@ contact:
   location:
     - New York, NY
     - US Citizen
-  # Line 1 follows phone and email with these links.
-  links:
-    # /book opens the booking dialog on the site, so the PDF link survives a
-    # change of booking provider.
-    - label: Book a call
-      url: https://www.ariaamini.dev/book
-  # Line 2. Line 3 joins the location parts.
+  # Line 1 is phone and email. Line 2 is these profiles. Line 3 joins the
+  # location parts.
   profiles:
     - label: LinkedIn
       url: https://linkedin.com/in/aria-amini
