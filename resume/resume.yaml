@@ -13,10 +13,10 @@ contact:
   # Line 1 is phone and email. Line 2 is these profiles. Line 3 joins the
   # location parts.
   profiles:
-    - label: LinkedIn
+    - label: linkedin.com/in/aria-amini
       url: https://linkedin.com/in/aria-amini
-    - label: GitHub
-      url: https://github.com/aamini11
+    - label: github.com/aria-amini
+      url: https://github.com/aria-amini
 
 summary: >-
   Software engineer with 8 years across cloud infrastructure, AI developer

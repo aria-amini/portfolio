@@ -33,7 +33,7 @@ export const profile: Profile = {
 		'Full Stack - React/TS',
 	],
 	email: 'aamini1024@gmail.com',
-	github: 'https://github.com/aamini11',
+	github: 'https://github.com/aria-amini',
 	linkedin: 'https://linkedin.com/in/aria-amini',
 	resumeUrl: '/aria-amini-resume.pdf',
 	resumePreviewUrl: '/aria-amini-resume.svg',
