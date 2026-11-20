@@ -68,8 +68,7 @@
 #let divider = h(0.45em) + text(fill: hairline, "|") + h(0.45em)
 #let links(items) = items.map(item => link(item.url, item.label))
 #let contact-lines = (
-  (contact.phone, link("mailto:" + contact.email, contact.email)),
-  links(contact.profiles),
+  (contact.phone, link("mailto:" + contact.email, contact.email), ..links(contact.profiles)),
   contact.location,
 )
 #for line in contact-lines {

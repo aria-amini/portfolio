@@ -10,8 +10,8 @@ contact:
   location:
     - New York, NY
     - US Citizen
-  # Line 1 is phone and email. Line 2 is these profiles. Line 3 joins the
-  # location parts.
+  # Line 1 is phone, email, and these profiles. Line 2 joins the location
+  # parts.
   profiles:
     - label: linkedin.com/in/aria-amini
       url: https://linkedin.com/in/aria-amini
