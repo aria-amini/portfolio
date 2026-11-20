@@ -34,15 +34,15 @@ experience:
         bullets:
           - >-
             Sole owner of the execution layer for a customer-facing Copilot
-            chatbot: runs untrusted AI-generated infrastructure code for
+            chatbot, running untrusted AI‑generated infrastructure code for
             external Azure customers in containerized sandboxes (Python,
-            FastAPI, Kubernetes, Kafka). Blocked *remote code execution* by
-            sanitizing inputs against path traversal, and made jobs durable with
-            queued retries.
+            FastAPI, Kubernetes, Kafka).
           - >-
-            Ran memory-heavy parsing jobs on separately scaled workers,
-            spreading load away from the API. Operated the service in
-            production, including on-call, with Terraform, FluxCD, and Grafana.
+            Secured and scaled it: *prevented remote code execution* by blocking
+            path-traversal file names, kept jobs from being lost with
+            Kafka-queued retries, and ran heavy parsing on separately scaled
+            workers. Operated it in production, including on-call (Terraform,
+            FluxCD, Grafana).
           - >-
             Built the CI harness the team used to gate Copilot's AI-generated
             Azure code (Bicep): golden prompts defined with PMs, each output
