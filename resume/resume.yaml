@@ -18,8 +18,9 @@ contact:
       url: https://github.com/aamini11
 
 summary: >-
-  Software engineer with 8 years of experience, most recently building
-  LLM-powered developer tooling and cloud infrastructure at Microsoft Azure.
+  Software engineer with 8 years of experience. At Microsoft Azure, built and
+  ran a secure service that runs AI-generated code for customers, plus the
+  testing that measured Copilot's code quality.
 
 # A company with several roles lists them under `roles`, and only the roles
 # carry dates. A company with one role gives `role` and `bullets` directly.
@@ -36,17 +37,15 @@ experience:
             customers in *isolated sandboxes*, built for *security and
             durability* (*Python*, *FastAPI*, *Kubernetes*, *Kafka*).
           - >-
-            Kept heavy execution out of the API: job queues feed separate
-            workers sized for the ~100 MB parsing CLI each job loads. Ran it in
-            production, including on-call, with *Terraform*, *FluxCD*, and
-            *Grafana*.
+            Kept the service reliable under heavy jobs: queues feed separate
+            workers sized for a ~100 MB parsing CLI. Ran it in production,
+            including on-call, with *Terraform*, *FluxCD*, and *Grafana*.
           - >-
-            Built the evaluation harness for Copilot's *Bicep* code generation:
-            defined a golden prompt set with PMs, then wrote a verification
-            chain that compiles each output, runs an Azure what-if deployment,
-            and diffs it against expected results. Ran in CI and tracked
-            generated code from failing nearly every golden case to *passing the
-            full set*.
+            Built automated testing that measured whether Copilot's AI-generated
+            Azure code (*Bicep*) worked: a golden prompt set defined with PMs
+            and a CI chain that compiles each output, runs an Azure what-if
+            deployment, and diffs the result. Tracked it from failing nearly
+            every case to *passing the full set*.
           - >-
             Built the backend for a customer-facing Copilot chatbot that turns
             natural-language requests from new users into deployed Azure
