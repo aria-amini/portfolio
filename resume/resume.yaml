@@ -32,14 +32,15 @@ experience:
         end: 2026-09
         bullets:
           - >-
-            Sole owner of the design and delivery of a service that runs
-            untrusted, Copilot-generated infrastructure code for external Azure
-            customers in *isolated sandboxes*, built for *security and
-            durability* (*Python*, *FastAPI*, *Kubernetes*, *Kafka*).
+            Sole owner of a service that runs untrusted, Copilot-generated
+            infrastructure code for external Azure customers in containerized
+            sandboxes (*Python*, *FastAPI*, *Kubernetes*, *Kafka*). Blocked
+            *remote code execution* by sanitizing inputs against path traversal,
+            and made jobs *durable* with queued retries.
           - >-
-            Kept the service reliable under heavy jobs: queues feed separate
-            workers sized for a ~100 MB parsing CLI. Ran it in production,
-            including on-call, with *Terraform*, *FluxCD*, and *Grafana*.
+            Spread load across worker processes separate from the API, sized for
+            a ~100 MB parsing CLI. Ran it in production, including on-call, with
+            *Terraform*, *FluxCD*, and *Grafana*.
           - >-
             Built automated testing that measured whether Copilot's AI-generated
             Azure code (*Bicep*) worked: a golden prompt set defined with PMs
@@ -97,7 +98,7 @@ skills:
   Languages: [TypeScript, JavaScript, Python, Go, Java, SQL]
   Frameworks: [React, TanStack Start, FastAPI, Spring Boot]
   Infrastructure:
-    [Kubernetes, Docker, Terraform, Pulumi, Azure, AWS, PostgreSQL]
+    [Kubernetes, Docker, Terraform, FluxCD, Azure, AWS, PostgreSQL]
   AI: [LLM evaluation, structured outputs]
 
 education:
