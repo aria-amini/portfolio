@@ -32,25 +32,22 @@ experience:
         end: 2026-10
         bullets:
           - >-
-            Sole owner of a service that runs untrusted, Copilot-generated
-            infrastructure code for external Azure customers in containerized
-            sandboxes (*Python*, *FastAPI*, *Kubernetes*, *Kafka*). Blocked
-            *remote code execution* by sanitizing inputs against path traversal,
-            and made jobs *durable* with queued retries.
+            Sole owner of the execution layer behind a customer-facing Copilot
+            chatbot: runs untrusted, AI-generated infrastructure code for
+            external Azure customers in containerized sandboxes (*Python*,
+            *FastAPI*, *Kubernetes*, *Kafka*). Blocked *remote code execution*
+            by sanitizing inputs against path traversal, and made jobs *durable*
+            with queued retries.
           - >-
             Spread load across worker processes separate from the API, sized for
             a ~100 MB parsing CLI. Ran it in production, including on-call, with
             *Terraform*, *FluxCD*, and *Grafana*.
           - >-
-            Built automated testing that measured whether Copilot's AI-generated
-            Azure code (*Bicep*) worked: a golden prompt set defined with PMs
-            and a CI chain that compiles each output, runs an Azure what-if
-            deployment, and diffs the result. Tracked it from failing nearly
-            every case to *passing the full set*.
-          - >-
-            Built the backend for a customer-facing Copilot chatbot that turns
-            natural-language requests from new users into deployed Azure
-            resources.
+            Built the CI harness the team used to gate Copilot's AI-generated
+            Azure code (*Bicep*): golden prompts defined with PMs, each output
+            compiled, run through an Azure what-if deployment, and diffed. It
+            measured the team's progress from failing nearly every case to
+            *passing the full set*.
       - title: Software Engineer I
         start: 2021-12
         end: 2023-09
@@ -99,7 +96,7 @@ skills:
   Frameworks: [React, TanStack Start, FastAPI, Spring Boot]
   Infrastructure:
     [Kubernetes, Docker, Terraform, FluxCD, Azure, AWS, PostgreSQL]
-  AI: [LLM evaluation, structured outputs]
+  AI: [LLM evaluation, 'agentic coding (Claude Code, Codex)']
 
 education:
   - degree: B.S. Computer Science
