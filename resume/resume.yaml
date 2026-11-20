@@ -31,11 +31,10 @@ experience:
         end: 2026-09
         bullets:
           - >-
-            Owned the design and delivery of a service that runs untrusted,
-            Copilot-generated infrastructure code for external Azure customers
-            in *isolated sandboxes*, built for *security and durability*
-            (*Python*, *FastAPI*, *Kubernetes*, *Kafka*); partnered with a
-            principal engineer on architecture.
+            Sole owner of the design and delivery of a service that runs
+            untrusted, Copilot-generated infrastructure code for external Azure
+            customers in *isolated sandboxes*, built for *security and
+            durability* (*Python*, *FastAPI*, *Kubernetes*, *Kafka*).
           - >-
             Kept heavy execution out of the API: job queues feed separate
             workers sized for the ~100 MB parsing CLI each job loads. Ran it in
