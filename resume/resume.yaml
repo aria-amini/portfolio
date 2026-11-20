@@ -27,32 +27,34 @@ experience:
   - company: Microsoft Azure
     roles:
       - title: Software Engineer II
-        start: 2023-03
+        start: 2023-09
         end: 2026-09
         bullets:
           - >-
-            Owned the design and delivery of a service that safely executes
-            Copilot-generated infrastructure code in sandboxes (*Python*,
-            *FastAPI*, *Kubernetes*, *Kafka*), handling *hundreds of executions
-            a day* from external Azure customers; partnered with a principal
-            engineer on architecture.
+            Owned the design and delivery of a service that runs untrusted,
+            Copilot-generated infrastructure code for external Azure customers
+            in *isolated sandboxes*, built for *security and durability*
+            (*Python*, *FastAPI*, *Kubernetes*, *Kafka*); partnered with a
+            principal engineer on architecture.
           - >-
-            Ran the service in production, including on-call, with *Terraform*
-            and *FluxCD* deployments and *Grafana* observability.
+            Kept heavy execution out of the API: job queues feed separate
+            workers sized for the ~100 MB parsing CLI each job loads. Ran it in
+            production, including on-call, with *Terraform*, *FluxCD*, and
+            *Grafana*.
           - >-
-            Built the evaluation pipeline for Copilot's *Bicep* code generation:
+            Built the evaluation harness for Copilot's *Bicep* code generation:
             defined a golden prompt set with PMs, then wrote a verification
             chain that compiles each output, runs an Azure what-if deployment,
-            and diffs it against expected results. Ran in CI and took generated
-            code from failing nearly every golden case to *passing the full
-            set*.
+            and diffs it against expected results. Ran in CI and tracked
+            generated code from failing nearly every golden case to *passing the
+            full set*.
           - >-
             Built the backend for a customer-facing Copilot chatbot that turns
             natural-language requests from new users into deployed Azure
             resources.
       - title: Software Engineer I
         start: 2021-12
-        end: 2023-03
+        end: 2023-09
         bullets:
           - >-
             Built an interactive terminal tutorial (*Go*, *BubbleTea*) that
