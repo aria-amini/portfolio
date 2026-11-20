@@ -37,11 +37,14 @@ experience:
             customer-facing Copilot chatbot: ran untrusted, LLM-generated
             infrastructure code in containerized sandboxes on `Kubernetes`.
           - >-
-            Secured and scaled it: *prevented remote code execution* by blocking
-            path-traversal file names, kept jobs from being lost with
-            `Kafka`-queued retries, and ran heavy parsing on separately scaled
-            workers. Operated it in production and on-call: `Terraform` and
-            `FluxCD` deploys, `Grafana` monitoring.
+            *Prevented remote code execution* with defense in depth:
+            least-privilege identities, network isolation, non-root read-only
+            containers, resource limits and timeouts, isolated secrets, and
+            input sanitization.
+          - >-
+            Kept jobs from being lost with `Kafka`-queued retries and ran heavy
+            parsing on separately scaled workers. Operated it in production and
+            on-call: `Terraform` and `FluxCD` deploys, `Grafana` monitoring.
           - >-
             Built the CI harness that gated Copilot's AI-generated Azure code
             (`Bicep`): golden prompts defined with PMs, each output compiled,
