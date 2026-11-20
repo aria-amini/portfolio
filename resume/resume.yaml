@@ -33,8 +33,8 @@ experience:
         end: 2026-10
         bullets:
           - >-
-            Sole owner of the execution layer behind a customer-facing Copilot
-            chatbot: runs untrusted, AI-generated infrastructure code for
+            Sole owner of the execution layer for a customer-facing Copilot
+            chatbot: runs untrusted AI-generated infrastructure code for
             external Azure customers in containerized sandboxes (Python,
             FastAPI, Kubernetes, Kafka). Blocked *remote code execution* by
             sanitizing inputs against path traversal, and made jobs durable with
@@ -85,8 +85,8 @@ projects:
   - name: imdbgraph.org
     url: https://www.imdbgraph.org
     summary: >-
-      TV show ratings visualizer; full-stack TypeScript and React app. *~2K
-      visits/month* since 2018.
+      TV show ratings visualizer in TypeScript and React. *~2K visits/month*
+      since 2018.
 
 skills:
   Languages: [TypeScript, JavaScript, Python, Go, Java, SQL]
