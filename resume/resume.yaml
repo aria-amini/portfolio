@@ -1,7 +1,7 @@
 # Source of truth for the resume PDF at /aria-amini-resume.pdf.
-# Wrap a result in *asterisks* to emphasize it (Inter Medium). Keep it to a
-# few per page; leave technology names plain.
-# Dates use YYYY-MM. Omit `end` for a current role.
+# Wrap a result in *asterisks* to emphasize it (Inter Medium); keep it to a
+# few per page. Wrap a technology in backticks to give it the heading color.
+# Dates use YYYY-MM. Omit the end date for a current role.
 
 name: Aria Amini
 contact:
@@ -33,34 +33,39 @@ experience:
         end: 2026-10
         bullets:
           - >-
-            Sole owner of the Python/FastAPI execution layer behind a
+            Sole owner of the `Python/FastAPI` execution layer behind a
             customer-facing Copilot chatbot: ran untrusted, LLM-generated
-            infrastructure code in containerized sandboxes on Kubernetes.
+            infrastructure code in containerized sandboxes on `Kubernetes`.
           - >-
             Secured and scaled it: *prevented remote code execution* by blocking
             path-traversal file names, kept jobs from being lost with
-            Kafka-queued retries, and ran heavy parsing on separately scaled
-            workers. Operated it in production and on-call: Terraform and FluxCD
-            deploys, Grafana monitoring.
+            `Kafka`-queued retries, and ran heavy parsing on separately scaled
+            workers. Operated it in production and on-call: `Terraform` and
+            `FluxCD` deploys, `Grafana` monitoring.
           - >-
             Built the CI harness that gated Copilot's AI-generated Azure code
-            (Bicep): golden prompts defined with PMs, each output compiled, run
-            through an Azure what-if deployment, and diffed. It became *the
+            (`Bicep`): golden prompts defined with PMs, each output compiled,
+            run through an Azure what-if deployment, and diffed. It became *the
             team's yardstick*, tracking progress from failing nearly every case
             to passing the full set.
+          - >-
+            Shipped an interactive terminal tutorial (`Go`, `BubbleTea`) that
+            converts Microsoft Docs into sandboxed runnable commands; users who
+            completed it were *~20% more likely* to retain Azure resources after
+            3 months.
       - title: Software Engineer I
         start: 2021-12
         end: 2023-09
         bullets:
           - >-
-            Shipped an interactive terminal tutorial (Go, BubbleTea) that
-            converts Microsoft Docs into sandboxed runnable commands; users who
-            completed it were *~20% more likely* to retain Azure resources after
-            3 months.
+            Wrote a `TypeScript/React` plugin that visualizes nested Azure
+            network topologies; *multiple Azure teams adopted* its layout
+            algorithm as a generic renderer.
           - >-
-            Wrote a TypeScript/React plugin that visualizes nested Azure network
-            topologies; *multiple Azure teams adopted* its layout algorithm as a
-            generic renderer.
+            Set up one-click debugging in `VS Code`: the Debug button launched
+            `Chrome` with breakpoints synced between editor and browser.
+            Presented it to the team, and the guide went into *onboarding docs
+            used across teams*.
 
   - company: Cirrus Logic
     role: Software Engineer
@@ -68,8 +73,8 @@ experience:
     end: 2021-12
     bullets:
       - >-
-        Built Java desktop tools that let a team of hardware engineers read and
-        write chip registers and visualize signal data while debugging audio
+        Built `Java` desktop tools that let a team of hardware engineers read
+        and write chip registers and visualize signal data while debugging audio
         chips shipped in iPhone speakers and AirPods.
 
   - company: American Express
@@ -78,14 +83,14 @@ experience:
     end: 2019-12
     bullets:
       - >-
-        Co-built an automated card processing pipeline (Java, Spring Boot,
-        PostgreSQL) that replaced a manual legacy application.
+        Co-built an automated card processing pipeline (`Java`, `Spring Boot`,
+        `PostgreSQL`) that replaced a manual legacy application.
 
 projects:
   - name: imdbgraph.org
     url: https://www.imdbgraph.org
     summary: >-
-      TV show ratings visualizer in TypeScript and React. *~2K visits/month*
+      TV show ratings visualizer in `TypeScript` and `React`. *~2K visits/month*
       since 2018.
 
 skills:
