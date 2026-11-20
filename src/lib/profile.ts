@@ -33,7 +33,7 @@ export const profile: Profile = {
 		'Full Stack - React/TS',
 	],
 	email: 'aamini1024@gmail.com',
-	github: 'https://github.com/aamini11',
+	github: 'https://github.com/aria-amini',
 	linkedin: 'https://linkedin.com/in/aria-amini',
 	resumeUrl: '/aria-amini-resume.pdf',
 	resumePreviewUrl: '/aria-amini-resume.svg',
@@ -48,10 +48,10 @@ export const jobs = [
 	{
 		company: 'Microsoft · Azure',
 		role: 'Software Engineer II',
-		period: 'Dec 2021 – Sep 2026',
+		period: 'Dec 2021 – Oct 2026',
 		logo: microsoft,
 		highlight:
-			'Owned a Python/FastAPI service that safely executes Copilot-generated infrastructure code.',
+			'Sole owner of a Python/FastAPI service that safely runs Copilot-generated infrastructure code.',
 	},
 	{
 		company: 'Cirrus Logic',
@@ -59,7 +59,7 @@ export const jobs = [
 		period: 'Jan 2020 – Dec 2021',
 		logo: cirrus,
 		highlight:
-			'Developed Java applications that hardware engineers used to debug chips sold to Apple.',
+			'Built Java tools that hardware engineers used to debug audio chips shipped in iPhones and AirPods.',
 	},
 	{
 		company: 'American Express',
@@ -67,7 +67,7 @@ export const jobs = [
 		period: 'Jul 2018 – Dec 2019',
 		logo: amex,
 		highlight:
-			'Co-developed a fully automated Java/Spring credit card processing pipeline.',
+			'Co-built an automated card processing pipeline that replaced a manual legacy application.',
 	},
 ] as const
 
