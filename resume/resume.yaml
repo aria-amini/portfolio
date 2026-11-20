@@ -42,9 +42,9 @@ experience:
             resource limits and timeouts, isolated secrets, and input
             sanitization.
           - >-
-            Kept jobs from being lost with `Kafka`-queued retries and ran heavy
-            parsing on separately scaled workers. Operated it in production and
-            on-call: `Terraform` and `FluxCD` deploys, `Grafana` monitoring.
+            Ran it in production and on-call (`Terraform` and `FluxCD` deploys,
+            `Grafana` monitoring); `Kafka`-queued retries kept jobs from being
+            lost, and separately scaled workers took heavy parsing off the API.
           - >-
             Built the CI harness that gated Copilot-generated Azure code
             (`Bicep`): golden prompts defined with PMs, each output compiled,
