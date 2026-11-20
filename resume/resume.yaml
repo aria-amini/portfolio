@@ -20,8 +20,8 @@ contact:
 
 summary: >-
   Software engineer with 8 years across cloud infrastructure, AI developer
-  tooling, and full-stack web. Most recently at Microsoft Azure, owning systems
-  end to end, from design through production on-call.
+  tooling, and full-stack web. Most recently at Microsoft Azure, sole owner of a
+  production service from design through on-call.
 
 # A company with several roles lists them under `roles`, and only the roles
 # carry dates. A company with one role gives `role` and `bullets` directly.
@@ -37,14 +37,14 @@ experience:
             customer-facing Copilot chatbot: ran untrusted, LLM-generated
             infrastructure code in containerized sandboxes on `Kubernetes`.
           - >-
-            *Contained untrusted code* with defense in depth: least-privilege
-            identities, network isolation, non-root read-only containers,
-            resource limits and timeouts, isolated secrets, and input
-            sanitization.
+            Hardened it with defense in depth: least-privilege identities,
+            network isolation, non-root read-only containers, resource limits
+            and timeouts, isolated secrets, and input sanitization.
           - >-
-            Ran it in production and on-call (`Terraform` and `FluxCD` deploys,
-            `Grafana` monitoring); `Kafka`-queued retries kept jobs from being
-            lost, and separately scaled workers took heavy parsing off the API.
+            Operated it in production, including on-call (`Terraform` and
+            `FluxCD` deploys, `Grafana` monitoring); `Kafka`-queued retries
+            prevented lost jobs, and separately scaled workers offloaded heavy
+            parsing.
           - >-
             Built the CI harness that gated Copilot-generated Azure code
             (`Bicep`): golden prompts defined with PMs, each output compiled,
@@ -52,9 +52,10 @@ experience:
             team's yardstick*, tracking progress from failing nearly every case
             to passing the full set.
           - >-
-            Shipped a terminal tutorial (`Go`, `BubbleTea`) that turns Microsoft
-            Docs into sandboxed commands; accounts that finished it were *~20%
-            more likely* to stay on Azure than a control group.
+            Shipped a terminal tutorial (`Go`, `BubbleTea`) that lets users run
+            Microsoft Docs examples as sandboxed commands; accounts that
+            finished it were *~20% more likely* to stay on Azure than a control
+            group.
       - title: Software Engineer I
         start: 2021-12
         end: 2023-09
@@ -65,8 +66,8 @@ experience:
             algorithm as a generic renderer.
           - >-
             Set up one-click `VS Code` debugging that launched `Chrome` with
-            synced breakpoints; presented it to the org, and the guide went into
-            *onboarding docs used across teams*.
+            synced breakpoints; presented it to the org and *added the guide to
+            cross-team onboarding docs*.
 
   - company: Cirrus Logic
     role: Software Engineer
@@ -91,14 +92,14 @@ projects:
   - name: imdbgraph.org
     url: https://www.imdbgraph.org
     summary: >-
-      TV show ratings visualizer in `TypeScript` and `React`. *~2K visits/month*
-      since 2018.
+      TV show ratings visualizer in `TypeScript` and `React`. Live since 2018,
+      *~2K visits/month*.
 
 skills:
-  Languages: [TypeScript, JavaScript, Python, Go, Java, SQL]
+  Languages: [TypeScript, JavaScript, Python, Go, Java, 'SQL (PostgreSQL)']
   Frameworks: [React, TanStack Start, FastAPI, Spring Boot]
   Infrastructure:
-    [Kubernetes, Docker, Terraform, FluxCD, Azure, AWS, PostgreSQL]
+    [Kubernetes, Docker, Kafka, Terraform, Bicep, FluxCD, Grafana, Azure, AWS]
   AI workflow:
     [
       Claude Code,
