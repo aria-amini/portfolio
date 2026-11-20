@@ -33,9 +33,9 @@ experience:
         end: 2026-10
         bullets:
           - >-
-            Sole owner of the execution layer behind a customer-facing Copilot
-            chatbot: ran untrusted, LLM-generated infrastructure code in
-            containerized sandboxes on Kubernetes (Python, FastAPI).
+            Sole owner of the Python/FastAPI execution layer behind a
+            customer-facing Copilot chatbot: ran untrusted, LLM-generated
+            infrastructure code in containerized sandboxes on Kubernetes.
           - >-
             Secured and scaled it: *prevented remote code execution* by blocking
             path-traversal file names, kept jobs from being lost with
