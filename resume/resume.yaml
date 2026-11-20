@@ -37,24 +37,24 @@ experience:
             customer-facing Copilot chatbot: ran untrusted, LLM-generated
             infrastructure code in containerized sandboxes on `Kubernetes`.
           - >-
-            *Prevented remote code execution* with defense in depth:
-            least-privilege identities, network isolation, non-root read-only
-            containers, resource limits and timeouts, isolated secrets, and
-            input sanitization.
+            *Contained untrusted code* with defense in depth: least-privilege
+            identities, network isolation, non-root read-only containers,
+            resource limits and timeouts, isolated secrets, and input
+            sanitization.
           - >-
             Kept jobs from being lost with `Kafka`-queued retries and ran heavy
             parsing on separately scaled workers. Operated it in production and
             on-call: `Terraform` and `FluxCD` deploys, `Grafana` monitoring.
           - >-
-            Built the CI harness that gated Copilot's AI-generated Azure code
+            Built the CI harness that gated Copilot-generated Azure code
             (`Bicep`): golden prompts defined with PMs, each output compiled,
             run through an Azure what-if deployment, and diffed. It became *the
             team's yardstick*, tracking progress from failing nearly every case
             to passing the full set.
           - >-
             Shipped a terminal tutorial (`Go`, `BubbleTea`) that turns Microsoft
-            Docs into sandboxed commands; subscriptions that finished it were
-            *~20% more likely* to stay on Azure than a control group.
+            Docs into sandboxed commands; accounts that finished it were *~20%
+            more likely* to stay on Azure than a control group.
       - title: Software Engineer I
         start: 2021-12
         end: 2023-09
@@ -64,10 +64,9 @@ experience:
             network topologies; *multiple Azure teams adopted* its layout
             algorithm as a generic renderer.
           - >-
-            Set up one-click debugging in `VS Code`: the Debug button launched
-            `Chrome` with breakpoints synced between editor and browser.
-            Presented it to the org, and the guide went into *onboarding docs
-            used across teams*.
+            Set up one-click `VS Code` debugging that launched `Chrome` with
+            synced breakpoints; presented it to the org, and the guide went into
+            *onboarding docs used across teams*.
 
   - company: Cirrus Logic
     role: Software Engineer

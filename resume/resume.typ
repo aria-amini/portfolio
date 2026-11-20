@@ -27,8 +27,8 @@
 
 // ===== Helpers =====
 // Only *term* and `term` are markup. Everything else stays literal, so ~, @, and # in the YAML need no escapes.
-// *term* is a result (bold); `term` is a technology (heading color, regular
-// weight).
+// *term* is a result (bold, kept on one line); `term` is a technology (heading
+// color, regular weight).
 #let tech(source) = {
   source
     .split("`")
@@ -40,7 +40,7 @@
   source
     .split("*")
     .enumerate()
-    .map(((index, part)) => if calc.odd(index) { strong(part) } else { tech(part) })
+    .map(((index, part)) => if calc.odd(index) { box(strong(part)) } else { tech(part) })
     .join()
 }
 
