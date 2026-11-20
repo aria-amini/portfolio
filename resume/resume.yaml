@@ -28,7 +28,7 @@ summary: >-
 experience:
   - company: Microsoft Azure
     roles:
-      - title: Software Engineer II (promoted)
+      - title: Software Engineer II
         start: 2023-09
         end: 2026-10
         bullets:
@@ -59,8 +59,8 @@ experience:
             it were *~20% more likely* to retain Azure resources after 3 months.
           - >-
             Built a TypeScript/React plugin that visualizes nested Azure network
-            topologies; the layout algorithm was *adopted by another Azure team*
-            for SAP visualization.
+            topologies; *multiple Azure teams adopted* its layout algorithm as a
+            generic renderer.
 
   - company: Cirrus Logic
     role: Software Engineer
