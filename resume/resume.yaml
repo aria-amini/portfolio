@@ -88,8 +88,8 @@ projects:
   - name: imdbgraph.org
     url: https://www.imdbgraph.org
     summary: >-
-      TV show ratings visualizer; full-stack *TanStack Start* app in
-      *TypeScript* and *React*. *~2K visits/month* since 2018.
+      TV show ratings visualizer; full-stack *TypeScript* and *React* app. *~2K
+      visits/month* since 2018.
 
 skills:
   Languages: [TypeScript, JavaScript, Python, Go, Java, SQL]
