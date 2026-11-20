@@ -96,7 +96,13 @@ skills:
   Frameworks: [React, TanStack Start, FastAPI, Spring Boot]
   Infrastructure:
     [Kubernetes, Docker, Terraform, FluxCD, Azure, AWS, PostgreSQL]
-  AI: [LLM evaluation, 'agentic coding (Claude Code, Codex)']
+  AI workflow:
+    [
+      Claude Code,
+      Codex,
+      parallel agents in git worktrees,
+      adversarial AI code review,
+    ]
 
 education:
   - degree: B.S. Computer Science
