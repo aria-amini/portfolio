@@ -60,8 +60,8 @@ experience:
         bullets:
           - >-
             Wrote a `TypeScript/React` plugin that visualizes nested Azure
-            network topologies; *multiple Azure teams adopted* its layout
-            algorithm as a generic renderer.
+            network topologies; its layout algorithm was *adopted by multiple
+            Azure teams* as a generic renderer.
           - >-
             Set up one-click `VS Code` debugging across a ~40-extension
             micro-frontend repo, launching `Chrome` with synced breakpoints.
