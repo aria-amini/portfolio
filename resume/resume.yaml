@@ -98,7 +98,7 @@ projects:
 
 skills:
   Languages: [Python, Go, TypeScript, Java, 'SQL (PostgreSQL)']
-  Frameworks: [FastAPI, React, Spring Boot, TanStack Start]
+  Frameworks: [FastAPI, Spring Boot, React, TanStack Start]
   Infrastructure:
     [Kubernetes, Docker, Kafka, Terraform, Bicep, FluxCD, Grafana, Azure, AWS]
   AI workflow:
