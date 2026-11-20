@@ -35,13 +35,13 @@ experience:
           - >-
             Sole owner of the execution layer behind a customer-facing Copilot
             chatbot: ran untrusted, LLM-generated infrastructure code in
-            containerized sandboxes (Python, FastAPI, Kubernetes, Kafka).
+            containerized sandboxes on Kubernetes (Python, FastAPI).
           - >-
             Secured and scaled it: *prevented remote code execution* by blocking
             path-traversal file names, kept jobs from being lost with
             Kafka-queued retries, and ran heavy parsing on separately scaled
-            workers. Operated it in production, including on-call (Terraform,
-            FluxCD, Grafana).
+            workers. Operated it in production and on-call: Terraform and FluxCD
+            deploys, Grafana monitoring.
           - >-
             Built the CI harness that gated Copilot's AI-generated Azure code
             (Bicep): golden prompts defined with PMs, each output compiled, run
