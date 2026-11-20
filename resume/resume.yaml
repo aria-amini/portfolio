@@ -97,8 +97,8 @@ projects:
       *~2K visits/month*.
 
 skills:
-  Languages: [TypeScript, JavaScript, Python, Go, Java, 'SQL (PostgreSQL)']
-  Frameworks: [React, TanStack Start, FastAPI, Spring Boot]
+  Languages: [Python, Go, TypeScript, Java, 'SQL (PostgreSQL)']
+  Frameworks: [FastAPI, React, Spring Boot, TanStack Start]
   Infrastructure:
     [Kubernetes, Docker, Kafka, Terraform, Bicep, FluxCD, Grafana, Azure, AWS]
   AI workflow:
