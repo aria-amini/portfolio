@@ -21,6 +21,9 @@
 )
 #show strong: set text(weight: "medium", fill: ink)
 #show link: underline.with(stroke: 0.5pt + hairline, offset: 2pt)
+// Keep hyphenated words like "LLM-generated" on one line, with a plain hyphen
+// so the PDF text still searches as typed.
+#show regex("\\w+(-\\w+)+"): box
 
 // ===== Helpers =====
 // Only *term* is markup. Everything else stays literal, so ~, @, and # in the YAML need no escapes.

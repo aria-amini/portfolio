@@ -33,10 +33,9 @@ experience:
         end: 2026-10
         bullets:
           - >-
-            Sole owner of the execution layer for a customer-facing Copilot
-            chatbot, running untrusted AI‑generated infrastructure code for
-            external Azure customers in containerized sandboxes (Python,
-            FastAPI, Kubernetes, Kafka).
+            Sole owner of the execution layer behind a customer-facing Copilot
+            chatbot: ran untrusted, LLM-generated infrastructure code in
+            containerized sandboxes (Python, FastAPI, Kubernetes, Kafka).
           - >-
             Secured and scaled it: *prevented remote code execution* by blocking
             path-traversal file names, kept jobs from being lost with
@@ -44,21 +43,22 @@ experience:
             workers. Operated it in production, including on-call (Terraform,
             FluxCD, Grafana).
           - >-
-            Built the CI harness the team used to gate Copilot's AI-generated
-            Azure code (Bicep): golden prompts defined with PMs, each output
-            compiled, run through an Azure what-if deployment, and diffed. It
-            measured the team's progress from failing nearly every case to
-            *passing the full set*.
+            Built the CI harness that gated Copilot's AI-generated Azure code
+            (Bicep): golden prompts defined with PMs, each output compiled, run
+            through an Azure what-if deployment, and diffed. It became *the
+            team's yardstick*, tracking progress from failing nearly every case
+            to passing the full set.
       - title: Software Engineer I
         start: 2021-12
         end: 2023-09
         bullets:
           - >-
-            Built an interactive terminal tutorial (Go, BubbleTea) that converts
-            Microsoft Docs into sandboxed runnable commands; users who completed
-            it were *~20% more likely* to retain Azure resources after 3 months.
+            Shipped an interactive terminal tutorial (Go, BubbleTea) that
+            converts Microsoft Docs into sandboxed runnable commands; users who
+            completed it were *~20% more likely* to retain Azure resources after
+            3 months.
           - >-
-            Built a TypeScript/React plugin that visualizes nested Azure network
+            Wrote a TypeScript/React plugin that visualizes nested Azure network
             topologies; *multiple Azure teams adopted* its layout algorithm as a
             generic renderer.
 
@@ -98,7 +98,7 @@ skills:
       Claude Code,
       Codex,
       parallel agents in git worktrees,
-      adversarial AI code review,
+      cross-model adversarial review,
     ]
 
 education:
