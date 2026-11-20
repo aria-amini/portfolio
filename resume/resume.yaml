@@ -40,9 +40,9 @@ experience:
             sanitizing inputs against path traversal, and made jobs durable with
             queued retries.
           - >-
-            Spread load across worker processes separate from the API, sized for
-            a ~100 MB parsing CLI. Ran it in production, including on-call, with
-            Terraform, FluxCD, and Grafana.
+            Ran memory-heavy parsing jobs on separately scaled workers,
+            spreading load away from the API. Operated the service in
+            production, including on-call, with Terraform, FluxCD, and Grafana.
           - >-
             Built the CI harness the team used to gate Copilot's AI-generated
             Azure code (Bicep): golden prompts defined with PMs, each output
