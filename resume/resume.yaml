@@ -52,10 +52,9 @@ experience:
             team's yardstick*, tracking progress from failing nearly every case
             to passing the full set.
           - >-
-            Shipped an interactive terminal tutorial (`Go`, `BubbleTea`) that
-            converts Microsoft Docs into sandboxed runnable commands; users who
-            completed it were *~20% more likely* to retain Azure resources after
-            3 months.
+            Shipped a terminal tutorial (`Go`, `BubbleTea`) that turns Microsoft
+            Docs into sandboxed commands; subscriptions that finished it were
+            *~20% more likely* to stay on Azure than a control group.
       - title: Software Engineer I
         start: 2021-12
         end: 2023-09
