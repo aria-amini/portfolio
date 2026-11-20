@@ -41,16 +41,16 @@ experience:
             network isolation, non-root read-only containers, resource limits
             and timeouts, isolated secrets, and input sanitization.
           - >-
-            Operated it in production, including on-call (`Terraform` and
-            `FluxCD` deploys, `Grafana` monitoring); `Kafka`-queued retries
-            prevented lost jobs, and separately scaled workers offloaded heavy
-            parsing.
+            Operated it in production, including on-call, with
+            `Terraform`/`FluxCD` deploys and `Grafana` monitoring;
+            `Kafka`-queued retries prevented lost jobs, and heavy parsing ran on
+            a separately scaled worker pool.
           - >-
-            Built the CI harness that gated Copilot-generated Azure code
-            (`Bicep`): golden prompts defined with PMs, each output compiled,
-            run through an Azure what-if deployment, and diffed. It became *the
-            team's yardstick*, tracking progress from failing nearly every case
-            to passing the full set.
+            Built the CI harness that gated merges to Copilot's Azure code
+            generation (`Bicep`): golden prompts defined with PMs, each output
+            compiled, run through an Azure what-if deployment, and diffed. The
+            team used it to go from failing nearly every case to passing the
+            full set.
           - >-
             Shipped a terminal tutorial (`Go`, `BubbleTea`) that lets users run
             Microsoft Docs examples as sandboxed commands; accounts that
@@ -65,9 +65,10 @@ experience:
             network topologies; *multiple Azure teams adopted* its layout
             algorithm as a generic renderer.
           - >-
-            Set up one-click `VS Code` debugging that launched `Chrome` with
-            synced breakpoints; presented it to the org and *added the guide to
-            cross-team onboarding docs*.
+            Set up one-click `VS Code` debugging across a ~40-extension
+            micro-frontend repo, launching `Chrome` with synced breakpoints.
+            Presented it to the org and added the guide to cross-team onboarding
+            docs.
 
   - company: Cirrus Logic
     role: Software Engineer
