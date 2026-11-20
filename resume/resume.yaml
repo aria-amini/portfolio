@@ -64,8 +64,8 @@ experience:
           - >-
             Set up one-click debugging in `VS Code`: the Debug button launched
             `Chrome` with breakpoints synced between editor and browser.
-            Presented it to the team, and the guide went into *onboarding docs
-            used across teams*.
+            Presented it to the ~60-person org, and the guide went into
+            *onboarding docs used across teams*.
 
   - company: Cirrus Logic
     role: Software Engineer
